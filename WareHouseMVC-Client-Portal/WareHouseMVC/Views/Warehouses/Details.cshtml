@@ -1,0 +1,36 @@
+@model WareHouseMVC.Models.Warehouse
+
+@{
+    ViewBag.Title = "WareHouse Details";
+}
+
+<div class="pagetitle">
+    <h1>
+       WareHouse Details </h1>
+    <span> Warehouses details below....</span>
+</div>
+
+<fieldset>
+
+    <table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+        <td class="width30">Warehouse Name</td>
+        <td>
+        @Model.WarehouseName
+        </td>
+        </tr>
+        <tr>
+        <td>Warehouse Code</td>
+        <td>@Model.WarehouseCode</td>
+        
+        </tr>
+        </tbody>
+        </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.WarehouseID }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

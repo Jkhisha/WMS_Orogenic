@@ -1,0 +1,52 @@
+@model WareHouseMVC.Models.Project
+
+@{
+    ViewBag.Title = "Project Details";
+}
+
+<div class="pagetitle">
+    <h1>
+      Project Details </h1>
+    <span>Project Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">ProjectName</td>
+        <td>
+       @Model.ProjectName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">ProjectCode</td>
+        <td>
+       @Model.ProjectCode
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Client</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Client.ClientName).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Department</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Department.DepartmentName).ToString()
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ProjectId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

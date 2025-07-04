@@ -1,0 +1,133 @@
+﻿@model WareHouseMVC.Models.Item
+@{
+    ViewBag.Title = "UpdateDestructionPeriod";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>
+      Update Destruction Period</h1>
+    <span>Update Destruction Period Below....</span>
+</div>
+
+@{ 
+
+    if (ViewBag.Flag == true)
+    {
+   <div class="alert alert-success">
+                              <button type="button" class="close" data-dismiss="alert">×</button>
+                              <strong>Well done!</strong> You successfully Updated Destruction Period.
+                            </div>
+    }
+    if (ViewBag.Flag == false)
+    {
+    }
+    
+    
+}
+
+<div class="contentinner">
+
+<div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Client Name :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.ClientName</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Department :
+                        </td>
+                        <td>@ViewBag.Department
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Project :
+                        </td>
+                        <td>@ViewBag.Project
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+       <div class="span6">
+          <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Box Name :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.BoxName</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Box No :
+                        </td>
+                        <td>@ViewBag.BoxNo
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Year :
+                        </td>
+                        <td>@ViewBag.Year
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="clearfix">
+        <br/>
+    </div>
+
+
+
+
+    @using (Html.BeginForm("UpdatePeriod", "BoxLocations", FormMethod.Post, ""))
+{
+    @Html.ValidationSummary(true)
+       @Html.HiddenFor(model => model.ItemId, new { @Value = ViewBag.Id })
+    
+    <table class="table table-bordered table-invoice">
+ <tbody>
+ <tr>
+<td class="width30">
+  Update Date
+</td>
+  <td class="width70">
+ <input id="datepicker" type="text" name="DestructionPeriod" value="@ViewBag.Period" />
+</td>
+</tr>
+
+ 
+
+ 
+
+ <tr>
+                <td  class="width30">
+                
+                </td>
+                <td  class="width70">
+                <input type="submit" value="Update" class="btn btn-primary" />
+                </td>
+            </tr>
+
+</tbody>
+</table>
+    
+    
+}
+
+  @Html.ActionLink("Back to List", "BoxSearch", "BoxLocations","", new { @class = "btn btn-primary" })
+
+</div>

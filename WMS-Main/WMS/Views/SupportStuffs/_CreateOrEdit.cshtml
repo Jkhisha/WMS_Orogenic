@@ -1,0 +1,54 @@
+@model WareHouseMVC.Models.SupportStuff
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+ <tr>
+<td class="width30">
+    ORBLDepartment
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.ORBLDepartmentID, ((IEnumerable<WareHouseMVC.Models.ORBLDepartment>)ViewBag.PossibleORBLDepartments).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option.ORBLDepartmentName).ToString(), 
+        Value = option.ORBLDepartmentID.ToString(),
+        Selected = (Model != null) && (option.ORBLDepartmentID == Model.ORBLDepartmentID) || (Model == null) && (option.ORBLDepartmentID == ViewBag.dPID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.ORBLDepartmentID)
+</td></tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.SupportStuffName)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.SupportStuffName)
+    @Html.ValidationMessageFor(model => model.SupportStuffName)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.SupportStuffCode)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.SupportStuffCode)
+    @Html.ValidationMessageFor(model => model.SupportStuffCode)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.SupportStuffMobileNo)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.SupportStuffMobileNo)
+    @Html.ValidationMessageFor(model => model.SupportStuffMobileNo)
+</td>
+</tr>
+
+
+</tbody>
+</table>
+ 

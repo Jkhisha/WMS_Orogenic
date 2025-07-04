@@ -1,0 +1,107 @@
+@model IEnumerable<WareHouseMVC.Models.BoxDestruction>
+
+    @{
+        ViewBag.Title = "Destruction Log";
+    }
+
+    <div class="pagetitle">
+        <h1>
+            Destruction Log
+        </h1>
+        <span>List of Destructions....</span>
+    </div>
+    <p>
+        @Html.ActionLink("Create New Request", "Create", "", new { @class = "btn btn-primary" })
+    </p>
+
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        Client Name
+                    </th>
+                    <th>
+                        Department Name
+                    </th>
+                    <th>
+                        Request Date
+                    </th>
+
+                    <th>
+                        Request By
+                    </th>
+                    <th>
+                        Current Status
+                    </th>
+                    <th>
+                        DestructionDate
+                    </th>
+                    <th>
+                        DestructedBy
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+
+                           
+                        </td>
+                        <td>
+                            @item.ClientName
+                        </td>
+                        <td>
+                            @item.DepartmentName
+                        </td>
+                        <td>
+                            @String.Format("{0:g}", item.RequestDate)
+                        </td>
+                        <td>
+                            @item.RequestBy
+                        </td>
+                        <td>
+                            @{
+                    string status = string.Empty;
+                    if (item.CurrentStatus == 1)
+                    {
+                        status = "Destructed";
+                    }
+                    else
+                    {
+                        status = "Not Destructed";
+                    }
+
+                            }
+
+                            @status
+
+                        </td>
+                        <td>
+                            @{
+                    string date = String.Format("{0:g}", item.DestructionDate);
+                    if (item.CurrentStatus == 0)
+                    {
+                        date = string.Empty;
+                    }
+                    else
+                    {
+                        
+                    }
+                            }
+
+                            @date
+                        </td>
+                        <td>
+                            @item.DestructedBy
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>

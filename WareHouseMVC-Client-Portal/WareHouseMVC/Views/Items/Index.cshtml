@@ -1,0 +1,81 @@
+@model IEnumerable<WareHouseMVC.Models.Item>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="pagetitle">
+    <h1>
+        Index List</h1>
+    <span>List of Indexs....</span>
+</div>
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered" id="dyntable">
+        <thead>
+            <tr>
+                <th>
+                </th>
+             @*   <th>
+                    ItemName
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Unit
+                </th>*@
+                <th>
+                    BoxNo
+                </th>
+                <th>
+                    DestructionPeriod
+                </th>
+                @*<th>
+                    IsNew
+                </th>*@
+                <th>
+                    TransmittalINs
+                </th>
+                <th>
+                    TrasmittalOUTs
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(" ", "Edit", new { id = item.ItemId }, new { @class = "icon-edit" })
+                        |
+                        @Html.ActionLink(" ", "Details", new { id = item.ItemId }, new { @class = "icon-list-alt" })
+                        |
+                        @Html.ActionLink(" ", "Delete", new { id = item.ItemId }, new { @class = "icon-trash" })
+                    </td>
+                  @*  <td>
+                        @item.ItemName
+                    </td>
+                    <td>
+                        @item.Quantity
+                    </td>
+                    <td>
+                        @item.Unit
+                    </td>*@
+                    <td>
+                        @item.BoxNo
+                    </td>
+                    <td>
+                        @item.DestructionPeriod
+                    </td>
+                    @*<td>
+                        @item.IsNew
+                    </td>*@
+                    <td>
+                        @(item.TransmittalINs == null ? "None" : item.TransmittalINs[0].TransmittalNo.ToString())
+                    </td>
+                    <td>
+                        @(item.TrasmittalOUTs == null ? "None" : item.TrasmittalOUTs.Count.ToString())
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,122 @@
+@model WareHouseMVC.Models.EmptyBox
+
+@{
+    ViewBag.Title = "Details Empty Box Recuisition";
+    List<string> barcodes = new List<string>();
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const printBarcodeBtn = document.getElementById("printBarcodeButton");
+        printBarcodeBtn.addEventListener("click", function (event) {
+            const barcodeInfo = document.getElementById("barcodeInfo");
+            if (barcodeInfo.getAttribute("data-has-barcodes") === "false") {
+                alert("No barcodes available!");
+                event.preventDefault();
+            }
+        });
+    });
+</script>
+
+<div class="pagetitle">
+    <h1>
+     Empty Box Recuisition Details </h1>
+    <span>Empty Box Recuisition Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+      <tbody>
+
+          <tr>
+              <td class="width30">RecuisitionID</td>
+              <td>
+                  @Model.EmptyBoxNo
+              </td>
+          </tr>
+
+          <tr>
+              <td class="width30">No of Boxes</td>
+              <td>
+                  @Model.NoofBoxes
+              </td>
+          </tr>
+
+          <tr>
+              <td class="width30">Recuisition Date</td>
+              <td>
+                  @String.Format("{0:g}", Model.RecuisitionDate.ToShortDateString())
+              </td>
+          </tr>
+
+          <tr>
+              <td class="width30">Client</td>
+              <td>
+                  @Html.DisplayTextFor(_ => Model.Client.ClientName).ToString()
+              </td>
+          </tr>
+
+          <tr>
+              <td class="width30">Department</td>
+              <td>
+                  @Html.DisplayTextFor(_ => Model.Department.DepartmentName).ToString()
+              </td>
+          </tr>
+
+          <tr>
+              <td class="width30">
+                  Sub department
+              </td>
+              <td>
+                  @Html.DisplayTextFor(_ => Model.SubDepartment).ToString()
+              </td>
+          </tr>
+
+          <tr>
+              <td class="width30">Deliver To</td>
+              <td>
+                  @Model.DeliverTo
+              </td>
+          </tr>
+
+          <tr>
+              <td class="width30">Position</td>
+              <td>
+                  @Model.Position
+              </td>
+          </tr>
+
+          <tr>
+              <td class="width30">Address</td>
+              <td>
+                  @Model.Address
+              </td>
+          </tr>
+
+          <tr>
+              <td class="width30">Barcodes</td>
+              <td id="barcodeInfo" data-has-barcodes="@((Model.EmptyBoxBarcodes != null && Model.EmptyBoxBarcodes.Any()) ? "true" : "false")">
+                  @if (Model.EmptyBoxBarcodes != null && Model.EmptyBoxBarcodes.Any())
+                  {
+                      barcodes = Model.EmptyBoxBarcodes.Select(b => b.BarCodeText).ToList();
+                      @String.Join(", ", barcodes) <!-- Join barcodes with comma and space -->
+                  }
+                  else
+                  {
+                      <span>No Barcodes Available</span>
+                  }
+              </td>
+          </tr>
+
+      </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EmptyBoxId }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+    @Html.ActionLink("Get Client Barcode", "ClientBarcode", "EmptyBoxes", new { barcodes = String.Join(",", barcodes) },  new { @class = "btn" })
+    @Html.ActionLink("Print", "PrintEmptyBox", "Reports", new { empId = Model.EmptyBoxId }, new { @target = "_blank", @class = "btn btn-warning" })
+    @Html.ActionLink("Print Barcode", "PrintEmptyBoxBarCode", "Reports", new { barcodes = String.Join(",", barcodes) }, new { @id = "printBarcodeButton", @target = "_blank", @class = "btn btn-warning" })
+</p>
+
+

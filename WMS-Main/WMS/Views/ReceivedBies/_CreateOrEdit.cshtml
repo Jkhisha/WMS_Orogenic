@@ -1,0 +1,41 @@
+@model WareHouseMVC.Models.ReceivedBy
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.Name)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</td>
+
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.Address)
+</td>
+<td class="width70">
+    @Html.TextAreaFor(model => model.Address,3,5,"")
+    @Html.ValidationMessageFor(model => model.Address)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+ @Html.LabelFor(model => model.Date)
+</td>
+<td class="width70">
+   <input id="datepicker" type="text" name="Date" />
+    @Html.ValidationMessageFor(model => model.Date)
+</td>
+</tr>
+
+</tbody>
+</table>
+ 

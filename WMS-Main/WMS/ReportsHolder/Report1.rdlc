@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition">
+  <DataSets>
+    <DataSet Name="DataSet1">
+      <Fields>
+        <Field Name="BarcodeText">
+          <DataField>BarcodeText</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+  <Body>
+    <ReportItems>
+      <Textbox Name="BarcodeDisplay">
+        <Value>=Fields!BarcodeText.Value</Value>
+        <Style>
+          <FontSize>20pt</FontSize>
+          <TextAlign>Center</TextAlign>
+          <VerticalAlign>Middle</VerticalAlign>
+        </Style>
+        <Height>1in</Height>
+        <Width>3in</Width>
+      </Textbox>
+    </ReportItems>
+    <Height>1.5in</Height>
+  </Body>
+  <Page>
+    <PageHeight>2in</PageHeight>
+    <PageWidth>4in</PageWidth>
+  </Page>
+</Report>

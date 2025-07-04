@@ -1,0 +1,127 @@
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Web;
+
+namespace WareHouseMVC.Models
+{ 
+    public class UserRepository : IUserRepository
+    {
+
+        public UserRepository()
+            : this(new WareHouseMVCContext())
+        {
+
+        }
+        public UserRepository(WareHouseMVCContext context)
+        {
+
+            this.context = context;
+        }
+        // WareHouseMVCContext context = new WareHouseMVCContext();
+        WareHouseMVCContext context;
+        public IQueryable<User> All
+        {
+            get { return context.Users; }
+        }
+
+        public IQueryable<User> AllIncluding(params Expression<Func<User, object>>[] includeProperties)
+        {
+            IQueryable<User> query = context.Users;
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+            return query;
+        }
+
+        public User Find(int id)
+        {
+            return context.Users.Find(id);
+        }
+
+        public void InsertOrUpdate(User User)
+        {
+            if (User.UserId == default(Guid))
+            {
+                // New entity
+                context.Users.Add(User);
+            }
+            else
+            {
+                // Existing entity
+                context.Entry(User).State = EntityState.Modified;
+            }
+        }
+
+        public void Delete(int id)
+        {
+            var User = context.Users.Find(id);
+            context.Users.Remove(User);
+        }
+
+        public void Save()
+        {
+            context.SaveChanges();
+        }
+
+        public void Dispose()
+        {
+            context.Dispose();
+        }
+
+        internal dynamic GetAllUser()
+        {
+            return context.Users.Select(h => h.Username).ToList();
+        }
+
+        public  List<User> GetAll()
+        {
+            return context.Users.ToList();
+        }
+
+        public  User GetUserByUserName(string userName)
+        {
+            return context.Users.Where(u => u.Username == userName).FirstOrDefault();
+        }
+
+        public UserforEdit GetUserByUserNameWithRoles(string userName)
+        {
+            User user = new User();
+            UserforEdit userEdit = new UserforEdit();
+
+            user = context.Users.Where(u => u.Username == userName).Include(s=>s.Roles).FirstOrDefault();
+            userEdit.Email = user.Email;
+            userEdit.Roles = user.Roles.Select(s=>s.RoleName).ToList();
+            userEdit.Username = user.Username;
+
+            return userEdit;
+
+        }
+
+
+        public  User GetByUserId(Guid _uId)
+        {
+            return context.Users.Where(u => u.UserId == _uId).FirstOrDefault();
+        }
+
+        public  User GetByEmail(string email)
+        {
+            return context.Users.Where(s => s.Email == email).FirstOrDefault();
+        }
+    }
+
+    public interface IUserRepository : IDisposable
+    {
+        IQueryable<User> All { get; }
+        IQueryable<User> AllIncluding(params Expression<Func<User, object>>[] includeProperties);
+        User Find(int id);
+        void InsertOrUpdate(User Test);
+        void Delete(int id);
+        void Save();
+        List<User> GetAll();
+        User GetUserByUserName(string userName);
+    }
+}

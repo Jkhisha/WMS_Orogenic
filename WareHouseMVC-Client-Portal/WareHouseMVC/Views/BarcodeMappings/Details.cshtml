@@ -1,0 +1,52 @@
+@model WareHouseMVC.Models.BarcodeMapping
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+      Details </h1>
+    <span>Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">TransmittalNo</td>
+        <td>
+       @Model.TransmittalNo
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">ClientName</td>
+        <td>
+       @Model.ClientName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">DeptName</td>
+        <td>
+       @Model.DeptName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">ImagePath</td>
+        <td>
+       @Model.ImagePath
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.BarcodeMappingId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

@@ -1,0 +1,103 @@
+@model WareHouseMVC.Models.Height
+
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="pagetitle">
+    <h1>
+      Delete Height </h1>
+    <span>Are you sure you want to delete this?</span>
+</div>
+
+@using (Html.BeginForm()) {
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">HeightName</td>
+        <td>
+        @Model.HeightName
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">HeightCode</td>
+        <td>
+        @Model.HeightCode
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Level</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Level.LevelName).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Rack</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Rack.RackName).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Train</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Train.TrainName).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Zone</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Zone.ZoneName).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Floor</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Floor.FloorName).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Warehouse</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Warehouse.WarehouseName).ToString()
+        </td>
+        </tr>
+
+    
+
+ <tr>
+         <td class="width30"></td>
+        <td>
+    <input type="submit" value="Delete" class="btn btn-danger" /> 
+        </td>
+        </tr>
+		  </tbody>
+        </table>
+    <p>
+       
+      @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+  
+    </p>
+}
+
+

@@ -1,0 +1,58 @@
+@model WareHouseMVC.Models.Vehicle
+
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="pagetitle">
+    <h1>
+      Delete Vehicle </h1>
+    <span>Are you sure you want to delete this?</span>
+</div>
+
+@using (Html.BeginForm()) {
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">Type</td>
+        <td>
+        @Model.Type
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">RegistrationNumber</td>
+        <td>
+        @Model.RegistrationNumber
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">TransportVendor</td>
+        <td>
+        @(Model.TransportVendor == null ? "None" : Model.TransportVendor.Name)
+        </td>
+        </tr>
+
+    
+
+ <tr>
+         <td class="width30"></td>
+        <td>
+    <input type="submit" value="Delete" class="btn btn-danger" /> 
+        </td>
+        </tr>
+		  </tbody>
+        </table>
+    <p>
+       
+      @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+  
+    </p>
+}
+
+

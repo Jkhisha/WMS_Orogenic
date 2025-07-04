@@ -1,0 +1,101 @@
+@model PagedList.IPagedList<WareHouseMVC.Models.Column>
+    @using PagedList.Mvc;
+
+    @{
+        ViewBag.Title = "Columns";
+    }
+
+    0
+    <div class="pagetitle">
+        <h1>
+            Clumn List
+        </h1>
+        <span>List of Columns....</span>
+    </div>
+    <p>
+        @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+    </p>
+
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        ColumnName
+                    </th>
+                    <th>
+                        ColumnCode
+                    </th>
+                    <th>
+                        Height
+                    </th>
+                    <th>
+                        Level
+                    </th>
+                    <th>
+                        Rack
+                    </th>
+                    <th>
+                        Train
+                    </th>
+                    <th>
+                        Zone
+                    </th>
+                    <th>
+                        Floor
+                    </th>
+                    <th>
+                        Warehouse
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(" ", "Edit", new { id = item.ColumnID }, new { @class = "icon-edit" }) |
+                            @Html.ActionLink(" ", "Details", new { id = item.ColumnID }, new { @class = "icon-list-alt" }) |
+                            @Html.ActionLink(" ", "Delete", new { id = item.ColumnID }, new { @class = "icon-trash" })  |
+                            @Html.ActionLink("Add Row", "CreateWithColumn", "Rows", new { clid = item.ColumnID }, "")
+                        </td>
+                        <td>
+                            @item.ColumnName
+                        </td>
+                        <td>
+                            @item.ColumnCode
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(_ => item.Height.HeightName).ToString()
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(_ => item.Level.LevelName).ToString()
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(_ => item.Rack.RackName).ToString()
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(_ => item.Train.TrainName).ToString()
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(_ => item.Zone.ZoneName).ToString()
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(_ => item.Floor.FloorName).ToString()
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(_ => item.Warehouse.WarehouseName).ToString()
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+        <br />
+        <div style="float:right">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>
+    </div>

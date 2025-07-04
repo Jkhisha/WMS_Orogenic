@@ -1,0 +1,113 @@
+@model IEnumerable<WareHouseMVC.Models.Client>
+@{
+    ViewBag.Title = "Client";
+}
+<div class="pagetitle">
+    <h1>
+        Client List</h1>
+    <span>List of Clients....</span>
+</div>
+<p>
+    @if (HttpContext.Current.User.IsInRole("Management"))
+    {
+    }
+    else
+    {
+
+        @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" });
+    }
+</p>
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered" id="dyntable">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    Client Name
+                </th>
+                <th>
+                    Client Address
+                </th>
+                <th>
+                    Att
+                </th>
+                <th>
+                    Position
+                </th>
+                 <th>
+                    Department
+                </th>
+                <th>
+                    Cell
+                </th>
+                <th>
+                    Tell
+                </th>
+                <th>
+                    Fax
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Supervisor
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (HttpContext.Current.User.IsInRole("Management"))
+                    {<td>
+     </td>
+                    }
+                    else
+                    {
+
+                        <td>
+                            @Html.ActionLink(" ", "Edit", new { id = item.ClientID }, new { @class = "icon-edit" })
+                            |
+                            @Html.ActionLink(" ", "Details", new { id = item.ClientID }, new { @class = "icon-list-alt" })
+                            |
+                            @Html.ActionLink(" ", "Delete", new { id = item.ClientID }, new { @class = "icon-trash" })
+                            |
+                            @Html.ActionLink("Add Department", "AddDept", "Departments", new { clid = item.ClientID }, "")
+                        </td>
+                    }
+                    <td>
+                        @item.ClientName
+                    </td>
+                    <td>
+                        @item.ClientAddress
+                    </td>
+                    <td>
+                        @item.Att
+                    </td>
+                    <td>
+                        @item.Position
+                    </td>
+                     <td>
+                        @item.Department
+                    </td>
+                    <td>
+                        @item.Cell
+                    </td>
+                    <td>
+                        @item.Tell
+                    </td>
+                    <td>
+                        @item.Fax
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <th>
+                        @item.SupportStuff.SupportStuffName
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

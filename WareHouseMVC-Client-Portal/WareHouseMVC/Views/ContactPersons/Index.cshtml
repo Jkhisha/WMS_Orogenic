@@ -1,0 +1,85 @@
+@model IEnumerable<WareHouseMVC.Models.ContactPerson>
+@{
+    ViewBag.Title = "Contact Person";
+}
+<div class="pagetitle">
+    <h1>
+        Contact Person List For @ViewBag.ClientName</h1>
+    <span>List of Contact Persons....</span>
+</div>
+<p>
+    @if (HttpContext.Current.User.IsInRole("Management"))
+    {
+    }
+    else
+    {
+
+        @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" });
+    }
+</p>
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered" id="dyntable">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    ContactPersonName
+                </th>
+                <th>
+                    PhoneNumber
+                </th>
+                <th>
+                    Email
+                </th>
+                
+                <th>
+                    Department
+                </th>
+                <th>
+                    Position
+                </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (HttpContext.Current.User.IsInRole("Management"))
+                    {
+                        <td>
+                        </td>
+                    }
+                    else
+                    {
+
+                        <td>
+                            @Html.ActionLink(" ", "Edit", new { id = item.ContactPersontID }, new { @class = "icon-edit" })
+                            |
+                            @Html.ActionLink(" ", "Details", new { id = item.ContactPersontID }, new { @class = "icon-list-alt" })
+                            |
+                            @Html.ActionLink(" ", "Delete", new { id = item.ContactPersontID }, new { @class = "icon-trash" })
+                        </td>
+                    }
+                    <td>
+                        @item.ContactPersonName
+                    </td>
+                    <td>
+                        @item.PhoneNumber
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    
+                    <td>
+                        @Html.DisplayTextFor(_ => item.Department.DepartmentName).ToString()
+                    </td>
+                      <td>
+                        @Html.DisplayTextFor(_ => item.Position).ToString()
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

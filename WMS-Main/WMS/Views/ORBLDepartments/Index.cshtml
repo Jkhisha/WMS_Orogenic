@@ -1,0 +1,50 @@
+@model IEnumerable<WareHouseMVC.Models.ORBLDepartment>
+
+@{
+    ViewBag.Title = "ORBL Departments";
+}
+
+<div class="pagetitle">
+    <h1>
+      ORBL Departments List</h1>
+    <span>List of ORBL Departments....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            ORBLDepartmentName
+        </th>
+        <th>
+            ORBLDepartmentCode
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.ORBLDepartmentID }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.ORBLDepartmentID }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.ORBLDepartmentID }, new { @class = "icon-trash" }) |
+             @Html.ActionLink("Add Support Stuff", "AddSupportStuff","SupportStuffs", new { dpid=item.ORBLDepartmentID },"")
+        </td>
+        <td>
+			@item.ORBLDepartmentName
+        </td>
+        <td>
+			@item.ORBLDepartmentCode
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

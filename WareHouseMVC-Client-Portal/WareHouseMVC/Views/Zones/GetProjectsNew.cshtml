@@ -1,0 +1,18 @@
+﻿@model WareHouseMVC.Models.Project
+@{
+    Layout = null;
+ 
+    
+    
+    
+    <td class="width70"   id="ddlProjectId">
+                @Html.DropDownListFor(model => model.ProjectId, ((IEnumerable<WareHouseMVC.Models.Project>)ViewBag.PossibleProjects).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.ProjectName).ToString(),
+               Value = option.ProjectId.ToString(),
+               Selected = (Model != null) && (option.ProjectId == Model.ProjectId)
+           }), "Choose...", new { @data_placeholder = "Choose a Country...", @style = "width: 221px", @class = "chzn-select", @tabindex = "2" })
+                @Html.ValidationMessageFor(model => model.ProjectId)
+            </td>
+    
+}

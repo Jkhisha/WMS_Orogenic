@@ -1,0 +1,38 @@
+@model WareHouseMVC.Models.ORBLOperator
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+     Operator Details </h1>
+    <span>Operator Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">Name</td>
+        <td>
+       @Model.Name
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Address</td>
+        <td>
+       @Model.Address
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ORBLOperatorId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

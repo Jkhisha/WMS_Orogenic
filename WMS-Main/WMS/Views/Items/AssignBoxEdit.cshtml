@@ -1,0 +1,116 @@
+﻿@model WareHouseMVC.Models.AssignBox
+@{
+    ViewBag.Title = "AssignBoxEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>
+       Assign Boxes to WareHouse </h1>
+    <span>Assign Boxes below....</span>
+</div>
+
+
+@using (Html.BeginForm())
+{
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+<table class="table table-bordered" id="dyntable">
+
+<thead>
+            <tr>
+             
+               <th class="centeralign"><div class="checker" id="uniform-undefined">
+               <span class="">
+               <input type="checkbox" class="checkall" style="opacity: 0;">
+             
+
+               </span></div></th>
+               
+                <th>
+                    BoxNo
+                </th>
+                <th>
+                    DestructionPeriod
+                </th>
+              <th>
+                    Assigned WareHouse
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                   @* <td class="centeralign"><div class="checker" id="uniform-undefined"><span class=""><input type="checkbox" style="opacity: 0;"></span></div></td>*@
+                    <td class="centeralign"><div class="checker1" id="uniform-undefined">
+                    
+                  @*  <input type="checkbox" >*@
+
+                   @Html.Raw("<input  type='checkbox' name='ItemIds' value='" + item.ItemId + "' id='" + item.ItemId + "' ></input>")
+                    
+                    
+                    </div></td>
+                 
+                    <td>
+                        @item.BoxNo
+                    </td>
+                    <td>
+                        @item.DestructionPeriod
+                    </td>
+                    <td>
+                @*    @{
+                if (String.IsNullOrEmpty(item.AssignBox.IsAssigned.ToString()) == null)
+                {
+                    @Html.Raw("Not Assigned");
+                }
+                
+                else
+                {
+                     @Html.Raw("Assigned");
+                }
+                    
+                        }*@
+                    </td>
+                    
+                </tr>
+            }
+        </tbody>
+</table>
+</div>
+   
+    
+    <div>
+<table>
+<tr>
+<td class="width70">@{
+            if (ViewBag.TransmittalId != null)
+            {
+                long id = Convert.ToInt64(ViewBag.TransmittalId);
+
+          @Html.ActionLink("Back to Add/View Boxes", "CreateWitTrINId", "Items", new { trId = id }, new { @class = "btn btn-primary" })
+            }
+    }</td>
+
+    <td class="width15"><strong>Select WareHouse</strong></td>
+   <td >
+                @Html.DropDownListFor(model => model.WarehouseID, ((IEnumerable<WareHouseMVC.Models.Warehouse>)ViewBag.PossibleWarehouses).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.WarehouseName).ToString(),
+               Value = option.WarehouseID.ToString(),
+               Selected = (Model != null) && (option.WarehouseID == Model.WarehouseID) || (Model == null) && (option.WarehouseID == ViewBag.wHID)
+           }), "Choose...")
+                @Html.ValidationMessageFor(model => model.WarehouseID)
+            </td>
+
+</tr>
+<tr><td>&nbsp;</td><td></td></tr>
+<tr>
+<td class="width70"></td>
+<td></td>
+<td>  <input type="submit" value="Assign" /> ||   @Html.ActionLink("Go To Chalan", "CreateWitTrINId", "", new { @class = "btn btn-info btn-rounded" })</td>
+</tr>
+</table>
+
+</div> 
+}

@@ -1,0 +1,61 @@
+@model IEnumerable<WareHouseMVC.Models.Project>
+
+@{
+    ViewBag.Title = "Projects";
+}
+
+<div class="pagetitle">
+    <h1>
+      Project List</h1>
+    <span>List of Projects....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            ProjectName
+        </th>
+        <th>
+            ProjectCode
+        </th>
+        <th>
+            Client
+        </th>
+        <th>
+            Department
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.ProjectId }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.ProjectId }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.ProjectId }, new { @class = "icon-trash" })
+        </td>
+        <td>
+			@item.ProjectName
+        </td>
+        <td>
+			@item.ProjectCode
+        </td>
+        <td>
+			@Html.DisplayTextFor(_ => item.Client.ClientName).ToString()
+        </td>
+        <td>
+			@Html.DisplayTextFor(_ => item.Department.DepartmentName).ToString()
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

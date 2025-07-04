@@ -1,0 +1,13 @@
+﻿@model IEnumerable<WareHouseMVC.Models.Level>
+
+@{
+    Layout = null;
+    <select id="LevelID" name="LevelID">
+    <option value="-1">Select...</option>
+        @foreach (var item in Model)
+        {
+            
+            <option value="@item.LevelID">@item.LevelName</option>
+        }
+    </select>
+}

@@ -1,0 +1,670 @@
+﻿@model WareHouseMVC.Models.InvoiceViewModel
+@{
+    ViewBag.Title = "Invoice View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#UnitPrice").change(function (evt) {
+
+            if ($("#UnitPrice").val() != "-1") {
+
+                var price = $("#UnitPrice").val();
+                var balance = $("#ClosingBalance").val();
+
+                var total = price * balance;
+
+                $("#TotalAmount").val(total);
+
+            }
+        });
+
+    });
+
+</script>
+
+<script type="text/javascript">
+
+
+    function Calculate() {
+        var TotalAmount = jQuery("#TotalAmount").val();
+            var OthersPrice = jQuery("#OthersPrice").val();
+            var ScanningPrice = jQuery("#ScanningPrice").val();
+            var MagneticTapePrice = jQuery("#MagneticTapePrice").val();
+            var WasteSamplePrice = jQuery("#WasteSamplePrice").val();
+            var PhotocopyPrice = jQuery("#PhotocopyPrice").val();
+            var FileTransferPrice = jQuery("#FileTransferPrice").val();
+            var TransportationEmptyCartoonPrice = jQuery("#TransportationEmptyCartoonPrice").val();
+            var TransportationEmptyBoxPrice = jQuery("#TransportationEmptyBoxPrice").val();
+            var TransportationOUTChrgePrice = jQuery("#TransportationOUTChrgePrice").val();
+            var TransportationInChrgePrice = jQuery("#TransportationInChrgePrice").val();
+            var VATPrice = jQuery("#VAT").val();
+
+            var totalPrice = parseFloat(TotalAmount) + parseFloat(OthersPrice) + parseFloat(ScanningPrice) + parseFloat(MagneticTapePrice) + parseFloat(WasteSamplePrice) + parseFloat(PhotocopyPrice) + parseFloat(FileTransferPrice) +
+            parseFloat(TransportationEmptyCartoonPrice) + parseFloat(TransportationEmptyBoxPrice) + parseFloat(TransportationOUTChrgePrice) + parseFloat(TransportationInChrgePrice);
+
+
+
+            jQuery("#TotalFinalAmount").val(totalPrice);
+            jQuery("#TotalPayable").val(totalPrice);
+
+            if (parseFloat(VATPrice) > 0) {
+                var VATCalculatedPrice = (parseFloat(VATPrice) / 100) * parseFloat(totalPrice);
+                jQuery("#VATCalculatedAmount").val(VATCalculatedPrice);
+            }
+
+        }
+
+        function CalculateVAT() {
+
+           
+
+        }
+
+
+
+
+   
+   
+    </script>
+
+<div class="pagetitle">
+    <h1>
+        Invoice</h1>
+    <span>This is the description for invoice ...</span>
+</div>
+
+
+
+@using (Html.BeginForm("GenerateInvoice", "Bills", FormMethod.Post))
+{
+    <input type="hidden" id="TransmittalINBalance" name="TransmittalINBalance" value=@Model.TransmittalINBalance/>
+    <input type="hidden" id="TransmittalOUTBalance" name="TransmittalOUTBalance" value=@Model.TransmittalOUTBalance />
+    <input type="hidden" id="Month" name="Month" value=@ViewBag.InvoiceMonth />
+    <input type="hidden" id="ClientID" name="ClientID" value=@ViewBag.ClientId />
+    <input type="hidden" id="InvoiceNo" name="InvoiceNo" value=@ViewBag.InvoiceNo />
+    
+    
+    
+    
+    @Html.ValidationSummary(true)
+<div class="contentinner">
+ <h4 class="CustomHeader">Invoice Information</h4>
+             <div class="widgetcontent bordered shadowed">
+    <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tr>
+                    <td class="width30">
+                        Invoice For:
+                    </td>
+                    <td class="width70">
+                        <strong>@ViewBag.ClientName</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Month:
+                    </td>
+                    <td>
+                        @ViewBag.Month
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        Invoice No:
+                    </td>
+                    <td class="width70">
+                        <strong>@ViewBag.InvoiceNo</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Issue Date:
+                    </td>
+                    <td>
+                        @DateTime.Now.ToShortDateString()
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tr>
+                    <td class="width30">
+                        Invoice By:
+                    </td>
+                    <td class="width70">
+                        <strong>@User.Identity.Name</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        From:
+                    </td>
+                    <td class="width70">
+                        <strong>Orogenic Resources (BD) Ltd.</strong>
+                        <br />
+                        S.R Tower,5th Floor (Lift:6th Floor),
+                        <br />
+                        Dhaka 1230,Bangladesh.
+                        <br />
+                        Tel No: 02-8922841
+                        <br />
+                        Email:admin@orogenicgroup-bd.com
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    </div>
+    
+
+     <h4 class="CustomHeader">Invoice Fields</h4>
+             <div class="widgetcontent bordered shadowed">
+    <table class="table table-bordered table-invoice-full">
+        <colgroup>
+            <col class="con0 width20" />
+            <col class="con1 width38" />
+            <col class="con0 width10" />
+            <col class="con1 width10" />
+            <col class="con1 width10" />
+            <col class="con0 width10" />
+        </colgroup>
+        <thead>
+            <tr>
+                <th class="head0">
+                    Item
+                </th>
+                <th class="head1">
+                    Description
+                </th>
+                <th class="head1 right">
+                    Unit / Sft
+                </th>
+                <th class="head0 right">
+                    Quantity
+                </th>
+                <th class="head0 right">
+                    Unit price
+                </th>
+                <th class="head0 right">
+                    Amount
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <strong>Archiving </strong>
+                </td>
+                <td>
+                    @ViewBag.ClosingBalancPreviousMonthe
+                    <br />
+                    @ViewBag.CurrentMonthTransmittalIN<br />
+                    @ViewBag.CurrentMonthTransmittalOut
+                    <br />
+                    @ViewBag.ClosingBalance<br />
+                </td>
+                <td class="right">
+                </td>
+                <td class="right" style="vertical-align: bottom;">
+                    <br />
+                    <br />
+                    <br />
+                    <input type="hidden" id="ClosingBalance" name="ClosingBalance" value=@Model.ClosingBalance />
+                    @Model.ClosingBalance
+                </td>
+                <td class="right">
+                    <br />
+                    <br />
+                    <br />
+                    <input type="text" id="UnitPrice" value="0"  name="UnitPrice" style="width: 71px !important;" />
+                </td>
+                <td class="right">
+                    <br />
+                    <br />
+                    <br />
+                    <strong>
+                        <input type="text" id="TotalAmount" name="TotalAmount" value="0" readonly="readonly" style="width: 71px !important;" /></strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Transportation In Charge</strong>
+                </td>
+                <td>
+                    <textarea id="TransportationInChrgeDes" name="TransportationInChrgeDes" rows="2"
+                        cols="15"></textarea>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="TransportationInChrgeQty" value="0" name="TransportationInChrgeQty"
+                        style="width: 71px !important;" />
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="TransportationInChrgePrice" onchange="Calculate()"  value="0" name="TransportationInChrgePrice"
+                        style="width: 71px !important;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Transportation OUT Charge</strong>
+                </td>
+                <td>
+                    <textarea id="TransportationOUTChrgeDes" name="TransportationOUTChrgeDes" rows="2"
+                        cols="15"></textarea>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="TransportationOUTChrgeQty" value="0"  name="TransportationOUTChrgeQty"
+                        style="width: 71px !important;" />
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="TransportationOUTChrgePrice" onchange="Calculate()"  value="0"  name="TransportationOUTChrgePrice"
+                        style="width: 71px !important;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Transportation Empty Box Charge</strong>
+                </td>
+                <td>
+                    <textarea id="TransportationEmptyBoxDes" name="TransportationEmptyBoxDes" rows="2"
+                        cols="15"></textarea>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="TransportationEmptyBoxQty" value="0"  name="TransportationEmptyBoxQty"
+                        style="width: 71px !important;" />
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="TransportationEmptyBoxPrice" onchange="Calculate()"   value="0"  name="TransportationEmptyBoxPrice"
+                        style="width: 71px !important;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Empty Cartoon</strong>
+                </td>
+                <td>
+                    <textarea id="TransportationEmptyCartoonDes" name="TransportationEmptyCartoonDes"
+                        rows="2" cols="15"></textarea>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="TransportationEmptyCartoonQty" value="0"  name="TransportationEmptyCartoonQty"
+                        style="width: 71px !important;" />
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="TransportationEmptyCartoonPrice" onchange="Calculate()"   value="0"  name="TransportationEmptyCartoonPrice"
+                        style="width: 71px !important;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>File Transfer / Movement</strong>
+                </td>
+                <td>
+                    <textarea id="FileTransferDes" name="FileTransferDes" rows="2" cols="15"></textarea>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="FileTransferQty" name="FileTransferQty" value="0"  style="width: 71px !important;" />
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="FileTransferPrice" name="FileTransferPrice" onchange="Calculate()"   value="0"  style="width: 71px !important;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Photocopy</strong>
+                </td>
+                <td>
+                    <textarea id="PhotocopyDes" name="PhotocopyDes" rows="2" cols="15"></textarea>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="PhotocopyQty" name="PhotocopyQty" value="0"  style="width: 71px !important;" />
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="PhotocopyPrice" name="PhotocopyPrice" onchange="Calculate()"   value="0"  style="width: 71px !important;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Archiving of washed sample</strong>
+                </td>
+                <td>
+                    <textarea id="WasteSampleDes" name="WasteSampleDes" rows="2" cols="15"></textarea>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="WasteSampleQty" name="WasteSampleQty" value="0"  style="width: 71px !important;" />
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="WasteSamplePrice" name="WasteSamplePrice" onchange="Calculate()"   value="0"  style="width: 71px !important;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Magnetic Tapes</strong>
+                </td>
+                <td>
+                    <textarea id="MagneticTapeDes" name="MagneticTapeDes" rows="2" cols="15"></textarea>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="MagneticTapeQty" name="MagneticTapeQty" value="0"  style="width: 71px !important;" />
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="MagneticTapePrice" name="MagneticTapePrice" onchange="Calculate()"   value="0"  style="width: 71px !important;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Imaging / Scanning</strong>
+                </td>
+                <td>
+                    <textarea id="ScanningDes" name="ScanningDes" rows="2" cols="15"></textarea>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="ScanningQty" name="ScanningQty" value="0"  style="width: 71px !important;" />
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="ScanningPrice" name="ScanningPrice" onchange="Calculate()"   value="0"  style="width: 71px !important;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Others</strong>
+                </td>
+                <td>
+                    <textarea id="OthersDes" name="OthersDes" rows="2" cols="15"></textarea>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="OthersQty" name="OthersQty" value="0"  style="width: 71px !important;" />
+                </td>
+                <td>
+                </td>
+                <td>
+                    <input type="text" id="OthersPrice" name="OthersPrice"  onchange="Calculate()"  value="0"  style="width: 71px !important;" />
+                </td>
+            </tr>
+
+             <tr>
+                <td>
+                  
+                </td>
+                <td>
+                  
+                </td>
+                <td>
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                <strong>Total Amount</strong>
+                </td>
+                <td>
+                    <input type="text" id="TotalFinalAmount" name="TotalFinalAmount" value="0" readonly="readonly" style="width: 71px !important;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                  
+                </td>
+                <td>
+                  
+                </td>
+                <td>
+                </td>
+                <td style="text-align: right;">
+                    <strong >VAT</strong>
+                </td>
+                <td>
+               <input type="text" id="VAT" name="VAT" value="0"   onchange="Calculate()"   style="width: 50px !important;" /><span> %</span>
+                </td>
+                <td>
+                      <input type="text" id="VATCalculatedAmount" name="VATCalculatedAmount" value="0"  readonly="readonly"  style="width: 71px !important;" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                  
+                </td>
+                <td>
+                  
+                </td>
+                <td>
+                </td>
+                <td>
+                    
+                </td>
+                <td>
+                <strong>Total Payable</strong>
+                </td>
+                <td>
+                    <input type="text" id="TotalPayable" name="TotalPayable" value="0"  readonly="readonly"  style="width: 71px !important;" />
+                </td>
+            </tr>
+
+
+        </tbody>
+    </table>
+    </div>
+   
+     <h4 class="CustomHeader">Other Fields</h4>
+             <div class="widgetcontent bordered shadowed">
+
+             <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tr>
+                    <td class="width30">
+                        Revision No:
+                    </td>
+                    <td class="width70">
+                       <input type="text" id="RevisionNo" name="RevisionNo" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Revision Date:
+                    </td>
+                    <td>
+                       <input type="text" id="datepickerRev" name="RevisionDate" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                       PO No:
+                    </td>
+                    <td class="width70">
+                        <input type="text" id="PurchaseOrderNo" name="PurchaseOrderNo" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                       PO Date:
+                    </td>
+                    <td>
+                         <input type="text" id="datepickerPO" name="PurchaseOrderDate" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                       VAT Registration No:
+                    </td>
+                    <td>
+                         <input type="text" id="VATRegNo" name="VATRegNo" />
+                    </td>
+                </tr>
+
+                  <tr>
+                    <td>
+                      Note :
+                    </td>
+                    <td>
+                         @Html.TextAreaFor(model => model.Note, 3, 5, "")
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tr>
+                    <td class="width30">
+                       Contract No:
+                    </td>
+                    <td class="width70">
+                         <input type="text" id="ContactNo" name="ContactNo" />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                       Payment Term:
+                    </td>
+                    <td class="width70">
+                        <input type="text" id="PaymentTerm" name="PaymentTerm" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="width30">
+                       GR Date:
+                    </td>
+                    <td class="width70">
+                        <input type="text" id="datepickerGR" name="GRDate" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="width30">
+                       GR No:
+                    </td>
+                    <td class="width70">
+                        <input type="text" id="GRNo" name="GRNo" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                       TAX Registration No:
+                    </td>
+                    <td>
+                         <input type="text" id="TAXRegNo" name="TAXRegNo" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+             </div>
+
+             <h4 class="CustomHeader">Bank Information</h4>
+             <div class="widgetcontent bordered shadowed">
+
+             <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tr>
+                    <td class="width30">
+                        Bank Name:
+                    </td>
+                    <td class="width70">
+                       <input type="text" id="BankName" name="BankName" value=@ViewBag.BankName />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="width30">
+                        Branch Name:
+                    </td>
+                    <td class="width70">
+                        <input type="text" id="BranchName" name="BranchName" value=@ViewBag.BranchName />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                       Bank Address
+                    </td>
+                    <td>
+                       <textarea id="BankAddress" name="BankAddress" rows="2" cols="5" >@ViewBag.BankAddress</textarea>
+                    </td>
+                </tr>
+              
+            </table>
+        </div>
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tr>
+                    <td class="width30">
+                       Bank Telephone:
+                    </td>
+                    <td class="width70">
+                       <input type="text" id="BankTel" name="BankTel" value=@ViewBag.BankTel />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        Bank Account:
+                    </td>
+                    <td class="width70">
+                        <input type="text" id="BankACC" name="BankACC" value=@ViewBag.BankAcc />
+                    </td>
+                </tr>
+
+                 
+                <tr>
+                    <td class="width30">
+                        Swift Code:
+                    </td>
+                    <td class="width70">
+                        <input type="text" id="SwiftCode" name="SwiftCode" value=@ViewBag.SwiftCode />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
+             </div>
+
+              <input type="submit" style="float:right;" value="Generate" class="btn btn-rounded btn-info" />
+
+</div>
+}

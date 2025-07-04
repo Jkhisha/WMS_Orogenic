@@ -1,0 +1,100 @@
+﻿@model IEnumerable<WareHouseMVC.Models.AssignBox>
+@{
+    ViewBag.Title = "Challan";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pagetitle">
+    <h1>
+        Assigned Boxes For Challan
+    </h1>
+    <span>Assigned Boxes below....</span>
+</div>
+@using (Html.BeginForm())
+{
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th>
+                        BoxNo
+                    </th>
+                    <th>
+                        DestructionPeriod
+                    </th>
+                    <th>
+                        Assigned WareHouse
+                    </th>
+                    <th>
+                        Delete WareHouse
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.BoxNo
+                        </td>
+                        <td>
+                            @item.DestructionPeriod
+                        </td>
+                        <td>
+                        @item.WarehouseName
+                        </td>
+                        <td>
+                        @Html.ActionLink("Delete From Challan", "DeleteBox", "Items", new {id=item.AssignBoxId }, "")
+                        </td>
+                    
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<table>
+<tr>
+<td class="width70"></td>
+
+@{
+    if(ViewBag.chkBx==null)
+    {
+<td style="padding: 0px 7px 0px 69px;" class="width40">@Html.ActionLink("Add More Boxes", "AddMoreBox", new { trID = ViewBag.TransmittalId, wID = ViewBag.WID }, new { @class = "btn btn-info btn-rounded" })</td>
+    }
+    else if(ViewBag.ChkBx!=null)
+    {
+        <td style="padding:  0 7px 0 189px;" class="width40"></td>
+      
+    }
+    
+    }
+    
+<td>@Html.ActionLink("Assign Driver", "AssignDriver", "ChallanINs", new { trID = ViewBag.TransmittalId, wID = ViewBag.WID }, new { @class = "btn btn-primary btn-rounded" })</td>
+</tr>
+</table>
+
+ 
+
+  
+
+@*@{
+    if (ViewBag.Assigned == null)
+    {
+        long id = Convert.ToInt64(ViewBag.TransmittalId);
+
+         @Html.ActionLink("Go To Chalan", "CreateWitTrINId", new { trID=id}, new { @class = "btn btn-info btn-rounded",disabled = "disabled" })
+    }
+
+    else
+    {
+         long id = Convert.ToInt64(ViewBag.TransmittalId);
+
+         @Html.ActionLink("Go To Chalan", "CreateWitTrINId", new { trID = id }, new { @class = "btn btn-info btn-rounded" })
+    }
+
+}*@
+
+
+
+

@@ -1,0 +1,12 @@
+{
+  "clientBarCode": [
+    {
+      "encoding": "HSBC1",
+      "lastbarcode": "HSA0026"
+    },
+    {
+      "encoding": "SCB1",
+      "lastbarcode": "ABSC5002A"
+    }
+  ]
+}

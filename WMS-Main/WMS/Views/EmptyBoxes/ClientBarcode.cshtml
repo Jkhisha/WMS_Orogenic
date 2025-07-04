@@ -1,0 +1,190 @@
+﻿@* ~/Views/EmptyBoxes/ClientBarcode.cshtml *@
+@{
+    ViewBag.Title = "Client Barcodes";
+    List<string> barcodes = new List<string>();
+}
+
+<div class="pagetitle">
+    <h1>Client Barcodes</h1>
+    <span>Display client barcode information here...</span>
+</div>
+<div id="barcodeTableContainer">
+    @if (ViewBag.Barcodes != null && ViewBag.Barcodes.Count > 0)
+    {
+        <table class="table" id="barcodeTable">
+            <thead>
+                <tr>
+                    <th>Original Barcode</th>
+                    <th>Client Barcode</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var barcode in ViewBag.Barcodes)
+                {
+                    <tr data-barcode="@barcode">
+                        <td class="orogenic-barcode">@barcode</td>
+                        <td class="client-barcode">(Pending...)</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No barcodes found.</p>
+    }
+</div>
+
+
+<button onclick="window.history.back()" class="btn">Go Back</button>
+@*<button id="executeSql" class="btn btn-warning"  style="display:inline-block">Print Client Barcode</button>*@
+<button id="printClientBarcodes" class="btn btn-warning">Print Client Barcodes</button>
+@*<p>
+        @Html.ActionLink("Print Barcode", "PrintEmptyBoxBarCode", "Reports", new { barcodes = String.Join(",", barcodes) }, new { @id = "printBarcodeButton", @target = "_blank", @class = "btn btn-warning" })
+    </p>*@
+<div id="sqlResults">
+    <!-- Results will appear here -->
+    <table class="table" id="resultsTable" style="display:none;">
+        <thead>
+            <tr>
+                <th>Column 1 Date</th>
+                <th>Column 2 Name</th>
+                <!-- Add more columns as needed -->
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
+
+<canvas id="barcodeCanvas" style="display: none;"></canvas>
+<script type="text/javascript">
+    jQuery(function ($) {  // This ensures $ works even with noConflict
+       $(document).ready(function() {
+            // Process all barcodes on page load
+            $("#barcodeTable tbody tr").each(function() {
+                var originalBarcode = $(this).data("barcode");
+                var $clientBarcodeCell = $(this).find(".client-barcode");
+
+                $.ajax({
+                    url: '@Url.Action("GenerateClientBarcode", "EmptyBoxes")',
+                    type: 'POST',
+                    async: false,
+                    data: { originalBarcode: originalBarcode },
+                    success: function (response) {
+                        console.log(response)
+                        if (response.success) {
+                            $clientBarcodeCell.text(response.barcode);
+                        } else {
+                            $clientBarcodeCell.text("Error: " + response.message);
+                        }
+                    },
+                    error: function() {
+                        $clientBarcodeCell.text("Update failed");
+                    }
+                });
+            });
+           $("#printClientBarcodes").click(function () {
+               // Collect all client barcodes from the table
+               var clientBarcodes = [];
+               $("#barcodeTable tbody tr").each(function () {
+                   var clientBarcode = $(this).find(".client-barcode").text().trim();
+                   if (clientBarcode !== "(Pending...)" && clientBarcode !== "") {
+                       clientBarcodes.push(clientBarcode);
+                   }
+               });
+
+               if (clientBarcodes.length === 0) {
+                   alert("No valid client barcodes found!");
+                   return;
+               }
+
+               // Generate PDF with barcodes
+               generateBarcodePDF(clientBarcodes);
+           });
+
+           function generateBarcodePDF(barcodes) {
+               // Create new jsPDF instance
+               // 4x2 inches = 288x144 points (72 points per inch)
+               const { jsPDF } = window.jspdf;
+               const pdf = new jsPDF({
+                   orientation: 'landscape',
+                   unit: 'pt',
+                   format: [288, 144] // 4x2 inches in points
+               });
+
+               const canvas = document.getElementById('barcodeCanvas');
+               const pageWidth = 288;
+               const pageHeight = 144;
+
+               barcodes.forEach((barcode, index) => {
+                   if (index > 0) {
+                       pdf.addPage([288, 144], 'landscape');
+                   }
+
+                   try {
+                       // Set canvas size for better quality
+                       canvas.width = 500;
+                       canvas.height = 150;
+
+                       // Generate barcode on canvas
+                       JsBarcode(canvas, barcode, {
+                           format: "CODE128",
+                           width: 3,
+                           height: 60,
+                           displayValue: false, // We'll add text separately
+                           fontSize: 12,
+                           margin: 10,
+                           background: "#ffffff",
+                           lineColor: "#000000"
+                       });
+
+                       // Get barcode as image data
+                       const barcodeImgData = canvas.toDataURL('image/png');
+
+                       // Layout for 4x2 inch (288x144 points)
+                       // Top text: "New Client Encoded barcode"
+                       pdf.setFontSize(10);
+                       pdf.setFont("helvetica", "normal");
+                       pdf.text("Updated Barcode:", pageWidth / 2, 20, { align: 'center' });
+
+                       // Add barcode image (centered, larger for better readability)
+                       const barcodeWidth = 220;
+                       const barcodeHeight = 50;
+                       const barcodeX = (pageWidth - barcodeWidth) / 2;
+                       const barcodeY = 35;
+
+                       pdf.addImage(barcodeImgData, 'PNG', barcodeX, barcodeY, barcodeWidth, barcodeHeight);
+
+                       // Add barcode value below the barcode
+                       pdf.setFontSize(18);
+                       pdf.setFont("helvetica", "bold");
+                       pdf.text(barcode, pageWidth / 2, barcodeY + barcodeHeight + 15, { align: 'center' });
+
+                       // Add company name at the bottom
+                       pdf.setFontSize(10);
+                       pdf.setFont("helvetica", "normal");
+                       pdf.text("Orogenic Resources (BD) Limited", pageWidth / 2, pageHeight - 15, { align: 'center' });
+
+                   } catch (error) {
+                       console.error('Error generating barcode for:', barcode, error);
+
+                       // Fallback: add text if barcode generation fails
+                       pdf.setFontSize(10);
+                       pdf.text("New Client Encoded barcode", pageWidth / 2, 20, { align: 'center' });
+                       pdf.setFontSize(12);
+                       pdf.text(barcode, pageWidth / 2, pageHeight / 2, { align: 'center' });
+                       pdf.setFontSize(10);
+                       pdf.text("Orogenic Resources (BD) Limited", pageWidth / 2, pageHeight - 15, { align: 'center' });
+                   }
+               });
+
+               // Save the PDF
+               const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+               pdf.save(`client-barcodes-${timestamp}.pdf`);
+           }
+        });
+    });
+</script>
+

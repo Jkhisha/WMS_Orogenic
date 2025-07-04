@@ -1,0 +1,55 @@
+@model WareHouseMVC.Models.BoxDestruction
+@* This partial view defines form fields that will appear when creating and editing entities *@
+<table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+            <td class="width30">
+                Select Client
+            </td>
+            <td class="width70">
+                <h3>@ViewBag.ClientName</h3>
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Select Department
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.DepartmentID, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+               {
+                   Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+                   Value = option.DepartmentID.ToString(),
+                   Selected = (Model != null) && (option.DepartmentID.ToString() == Model.DepartmentID.ToString())
+               }), "Choose...")
+                @Html.ValidationMessageFor(model => model.DepartmentID)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Box Name
+            </td>
+            <td class="width70">
+                @Html.TextBoxFor(model => model.BoxName)
+                @Html.ValidationMessageFor(model => model.BoxName)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.BoxNumner)
+            </td>
+            <td class="width70">
+                @Html.TextBoxFor(model => model.BoxNumner, new { @maxlength = "10" })
+                @Html.ValidationMessageFor(model => model.BoxNumner)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.BoxYear)
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.BoxYear)
+                @Html.ValidationMessageFor(model => model.BoxYear)
+            </td>
+        </tr>
+    </tbody>
+</table>

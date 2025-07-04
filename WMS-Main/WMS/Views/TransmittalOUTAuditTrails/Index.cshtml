@@ -1,0 +1,120 @@
+@model IEnumerable<WareHouseMVC.Models.TransmittalOUTAuditTrail>
+@{
+    ViewBag.Title = "Transmittal OUT Audit Trail";
+}
+<div class="pagetitle">
+    <h1>
+        Transmittal OUT Audit Trails</h1>
+    <span>List of Transmittal OUT Audit Trails....</span>
+</div>
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered" id="dyntable">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    TransmittalOUT No
+                </th>
+                <th>
+                Boxes</th>
+                <th>
+                    Create By
+                </th>
+                <th>
+                    Create Date
+                </th>
+                <th>
+                    Create Time
+                </th>
+                <th>
+                    Creator IP
+                </th>
+                <th>
+                    BoxOut By
+                </th>
+                <th>
+                    BoxOut Date
+                </th>
+                <th>
+                    BoxOut Time
+                </th>
+                <th>
+                    BoxOuter IP
+                </th>
+              
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        @item.TransmittalOUTNo
+                    </td>
+                    <td>
+                    
+                      @{
+                            WareHouseMVC.Models.UnitOfWork repo = new WareHouseMVC.Models.UnitOfWork();
+                string Boxes = string.Empty;
+                List<WareHouseMVC.Models.Item> allItems = new List<WareHouseMVC.Models.Item>();
+                string trId = item.TransmittalOUTNo;
+                allItems = repo.TransmittalOUTRepository.GetByTrNo(trId).Items;
+                foreach (WareHouseMVC.Models.Item _item in allItems)
+                {
+                    if (!string.IsNullOrEmpty(_item.Year))
+                    {
+                        Boxes = Boxes + _item.ItemName + "-" + _item.BoxNo + "-" + _item.Year+" ,";
+                    }
+                    else
+                    {
+                        Boxes = Boxes + _item.ItemName + "-" + _item.BoxNo + " ,";
+                    }
+                    
+                    
+                }
+            }
+             @Boxes
+                    </td>
+                    <td>
+                        @item.CreateBy
+                    </td>
+                    <td>
+                        @item.CreateDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @item.CreateTime
+                    </td>
+                    <td>
+                        @item.CreatorIP
+                    </td>
+                    <td>
+                        @item.BoxOutBy
+                    </td>
+                    <td>
+                        @{
+                string recDate = string.Empty;
+                if (item.CreateDate == item.BoxOutDate)
+                {
+                }
+                else
+                {
+                    recDate = item.BoxOutDate.ToShortDateString();
+                }
+			
+                        }
+                        @recDate
+                    </td>
+                    <td>
+                        @item.BoxOutTime
+                    </td>
+                    <td>
+                        @item.BoxOutIP
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,201 @@
+﻿@model PagedList.IPagedList<WareHouseMVC.Models.AssignBox>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "File Location";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="pagetitle">
+    <h1>
+      File Location</h1>
+    <span>List of File Locations....</span>
+</div>
+
+
+@{
+    if (ViewBag.Flag == "0")
+    {
+        <div class="alert alert-success">
+                              <button type="button" class="close" data-dismiss="alert">×</button>
+                              <strong>Well done!</strong> You successfully Change File Location to Row
+                            </div>
+        
+    }
+    
+    if (ViewBag.Flag == "1")
+    {
+        <div class="alert alert-success">
+                              <button type="button" class="close" data-dismiss="alert">×</button>
+                              <strong>Well done!</strong> You successfully Change File Location to Pallet
+                            </div>
+        
+    }
+   
+   
+}
+
+
+
+
+
+
+
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered">
+ <thead>
+    <tr>
+       <th></th>
+        <th>
+            Transmittal No
+        </th>
+         
+         <th>
+           Box No
+        </th>
+         <th>
+          Box Name
+        </th>
+         <th>
+          File Number
+        </th>
+         <th>
+          Referrence No
+        </th>
+         <th>
+           Ring No
+        </th>
+         <th>
+          Account No
+        </th>
+        <th>
+          Year
+        </th>
+        <th>
+          Assign Date
+        </th>
+        <th>
+       Transmittal Status
+        </th>
+        <th>
+        Location
+        </th>
+         <th>
+        Box Status
+        </th>
+        <th>
+        Action
+        </th>
+       
+     
+    </tr>
+	 </thead>
+
+     <tbody>
+     @{
+         int i = 0;
+
+         foreach (var item in Model)
+         {
+    <tr>
+       
+        <td>
+         
+           
+           
+        </td>
+
+        <td>
+			@Html.DisplayTextFor(_ => item.TransmittalIN.TransmittalNo).ToString()
+        </td>
+        
+         <td>
+			@Html.DisplayTextFor(_ => item.Item.BoxNo).ToString()
+        </td>
+
+          <td>
+			@Html.DisplayTextFor(_ => item.BoxNameFile).ToString()
+        </td>
+          <td>
+			@Html.DisplayTextFor(_ => item.FileNumber).ToString()
+        </td>
+          <td>
+			@Html.DisplayTextFor(_ => item.ReferrenceNo).ToString()
+        </td>
+          <td>
+			@Html.DisplayTextFor(_ => item.RingNo).ToString()
+        </td>
+          <td>
+			@Html.DisplayTextFor(_ => item.AccountNo).ToString()
+        </td>
+       
+        <td>
+			@Html.DisplayTextFor(_ => item.Item.Year).ToString()
+        </td>
+      <td>
+     	@String.Format("{0:g}", item.AssignDate.ToShortDateString())
+      </td>
+      
+       <td>
+     	@Html.DisplayTextFor(_ => item.TransmittalINStatus.StatusName).ToString()
+      </td>
+      @if (item.BoxLocation[i].Train != null)
+      {
+      <td>
+          @item.BoxLocation[i].Warehouse.WarehouseName -@item.BoxLocation[i].Floor.FloorName - @item.BoxLocation[i].Zone.ZoneName - @item.BoxLocation[i].Train.TrainName - @item.BoxLocation[i].Rack.RackName - @item.BoxLocation[i].Level.LevelName - @item.BoxLocation[i].Height.HeightName - @item.BoxLocation[i].Column.ColumnName - @item.BoxLocation[i].Row.RowName;
+          </td>
+      }
+      else
+      {
+          <td>
+          
+          @item.BoxLocation[i].Warehouse.WarehouseName -@item.BoxLocation[i].Floor.FloorName - @item.BoxLocation[i].Zone.ZoneName - @item.BoxLocation[i].Pallet.PalletName
+          </td>
+      }
+      <td>
+       @item.BoxLocation[i].CurrentStatus
+      
+      </td>
+      <td>
+       @if (!HttpContext.Current.User.IsInRole("Client"))
+       {
+           if (item.BoxLocation[i].CurrentStatus == "In WareHouse")
+           {
+           @Html.ActionLink("Change Location", "ChangeLocationModal", "BoxLocations", new { AssignBoxId = item.AssignBoxId, BoxLocationId = item.BoxLocation[i].BoxLocationId, filter = ViewBag.Filter }, "")
+           }
+       }
+      </td>
+
+    </tr>
+ 
+         }
+}
+ </tbody>
+
+ </table>
+
+ <br />
+
+ <div style="float:right">
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("FileLocationsAll", 
+    new { page}))
+    </div>
+
+ <table>
+ <tr>
+ <td class="width30">
+ @{
+     if (ViewBag.trID != null)
+     {
+  @Html.ActionLink("Back to Box List", "ShowBoxes", "AssignBoxes", new { trID = ViewBag.trID }, new { @Class = "btn btn-info btn-rounded" })
+     }
+     }
+ 
+ </td>
+ </tr>
+ </table>
+</div>

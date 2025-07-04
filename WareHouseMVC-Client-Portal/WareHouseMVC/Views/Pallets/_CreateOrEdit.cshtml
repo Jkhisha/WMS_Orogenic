@@ -1,0 +1,115 @@
+@model WareHouseMVC.Models.Pallet
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+
+<script type="text/javascript">
+    jQuery(function ($) {
+
+
+
+        $("select#WarehouseID").change(function (evt) {
+
+            if ($("select#WarehouseID").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetFloors")",
+                    type: 'POST',
+                    data: { WarehouseID: $("select#WarehouseID").val() },
+                    success: function (response) {
+                        $("select#FloorID").replaceWith(response)
+
+                        $("select#FloorID").change(function (evt) {
+
+                            if ($("select#FloorID").val() != "-1") {
+
+                                $.ajax({
+                                    url: "@Url.Content("~/zones/GetZones")",
+                                    type: 'POST',
+                                    data: { FloorID: $("select#FloorID").val() },
+                                    success: function (response) {
+                                        $("select#ZoneID").replaceWith(response)
+                                    },
+                                    error: function (xhr) {
+                                        alert("Something went wrong, please try again");
+                                    }
+                                });
+                            }
+                        });
+
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+
+</script>
+
+
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+         <tr>
+            <td class="width30">
+                Warehouse
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.WarehouseID, ((IEnumerable<WareHouseMVC.Models.Warehouse>)ViewBag.PossibleWarehouses).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.WarehouseName).ToString(),
+               Value = option.WarehouseID.ToString(),
+               Selected = (Model != null) && (option.WarehouseID == Model.WarehouseID) || (Model == null) && (option.WarehouseID == ViewBag.wHID)
+           }), "Choose...")
+                @Html.ValidationMessageFor(model => model.WarehouseID)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Floor
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.FloorID, ((IEnumerable<WareHouseMVC.Models.Floor>)ViewBag.PossibleFloors).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.FloorName).ToString(),
+               Value = option.FloorID.ToString(),
+               Selected = (Model != null) && (option.FloorID == Model.FloorID) || (Model == null) && (option.FloorID == ViewBag.fLID)
+           }), "Choose...")
+                @Html.ValidationMessageFor(model => model.FloorID)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Zone
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.ZoneID, ((IEnumerable<WareHouseMVC.Models.Zone>)ViewBag.PossibleZones).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.ZoneName).ToString(),
+               Value = option.ZoneID.ToString(),
+               Selected = (Model != null) && (option.ZoneID == Model.ZoneID) || (Model == null) && (option.ZoneID == ViewBag.zNID)
+           }), "Choose...")
+                @Html.ValidationMessageFor(model => model.ZoneID)
+            </td>
+        </tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.PalletName)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.PalletName)
+    @Html.ValidationMessageFor(model => model.PalletName)
+</td>
+</tr>
+
+
+</tbody>
+</table>
+ 

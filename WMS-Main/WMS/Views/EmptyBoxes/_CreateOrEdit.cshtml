@@ -1,0 +1,197 @@
+@model WareHouseMVC.Models.EmptyBox
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ClientID").change(function (evt) {
+
+            if ($("select#ClientID").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetDepts")",
+                    type: 'POST',
+                    data: { ClientID: $("select#ClientID").val() },
+                    success: function (response) {
+                        $("select#DepartmentID").replaceWith(response)
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ORBLOperatorId").change(function (evt) {
+
+            if ($("select#ORBLOperatorId").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetOperatorAddress")",
+                    type: 'POST',
+                    data: { ORBLOperatorId: $("select#ORBLOperatorId").val() },
+                    success: function (response) {
+                        $("#OrblOperatorAddress").val(response)
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+        $("#NoofBoxes").keyup(function () {
+            var noOfBoxes = parseInt($(this).val()); // Get the value entered by the user and convert it to an integer
+
+            if (isNaN(noOfBoxes) || noOfBoxes <= 0) {
+                // Show the warning and disable the submit button if the value is invalid or 0
+                $('#boxWarning').show();
+                $("#btnformSubmit").attr('disabled', true);
+            } else {
+                // Hide the warning and enable the submit button if the value is valid
+                $('#boxWarning').hide();
+                $("#btnformSubmit").attr('disabled', false);
+            }
+        });
+
+
+
+    });
+
+</script>
+
+
+
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+ <tr>
+<td class="width30">
+  RecuisitionID
+</td>
+<td class="width70">
+   @Html.EditorFor(model => model.EmptyBoxNo, new { @Value = @ViewBag.EmptyBoxNo })
+    @Html.ValidationMessageFor(model => model.NoofBoxes)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+  No. of Boxes
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.NoofBoxes)
+    @Html.ValidationMessageFor(model => model.NoofBoxes)
+    <span id="boxWarning" style="color:red; display:none;">Please enter at least 1 box.</span>
+</td>
+</tr>
+
+ 
+
+<tr>
+<td class="width30">
+  Date
+</td>
+<td class="width70">
+   <input id="datepicker" type="text" name="RecuisitionDate" />
+  
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    Client
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem
+{
+    Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+    Value = option.ClientID.ToString(),
+    Selected = (Model != null) && (option.ClientID == Model.ClientID)
+}), "Choose...")
+    @Html.ValidationMessageFor(model => model.ClientID)
+</td></tr>
+
+ <tr>
+            <td class="width30">
+                Department
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.DepartmentID, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+               Value = option.DepartmentID.ToString(),
+               Selected = (Model != null) && (option.DepartmentID == Model.DepartmentID)
+           }), "Choose...", new { required = "required" })
+                @Html.ValidationMessageFor(model => model.DepartmentID)
+            </td>
+        </tr>
+
+<tr>
+<td class="width30">
+   Received By
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.DeliverTo)
+    @Html.ValidationMessageFor(model => model.DeliverTo)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+  Position
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.Position)
+    @Html.ValidationMessageFor(model => model.Position)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+  ReceivedBy Address
+</td>
+<td class="width70">
+   @Html.TextAreaFor(model => model.Address, 3, 5, "")
+    @Html.ValidationMessageFor(model => model.Address)
+</td>
+</tr>
+
+
+<tr>
+<td class="width30">
+    Handover By
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.ORBLOperatorId, ((IEnumerable<WareHouseMVC.Models.ORBLOperator>)ViewBag.PossibleOperator).Select(option => new SelectListItem
+{
+    Text = Html.DisplayTextFor(_ => option.Name).ToString(),
+    Value = option.ORBLOperatorId.ToString(),
+    Selected = (Model != null) && (option.ORBLOperatorId == Model.ORBLOperatorId)
+}), "Choose...")
+    @Html.ValidationMessageFor(model => model.ORBLOperatorId)
+</td></tr>
+
+<tr>
+<td class="width30">
+  HandoverBy Address
+</td>
+<td class="width70">
+   @Html.TextAreaFor(model => model.OrblOperatorAddress, 3, 5, "")
+    @Html.ValidationMessageFor(model => model.OrblOperatorAddress)
+</td>
+</tr>
+
+</tbody>
+</table>
+ 

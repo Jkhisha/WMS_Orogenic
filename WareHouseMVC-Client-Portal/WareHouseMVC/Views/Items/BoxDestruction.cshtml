@@ -1,0 +1,61 @@
+﻿@model IEnumerable<WareHouseMVC.Models.Item>
+    @{
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <div class="pagetitle">
+        <h1>
+            Destruction List
+        </h1>
+        <span>List of upcoming Destruction....</span>
+    </div>
+
+
+
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+
+                    <th>
+                        BoxNo
+                    </th>
+                    <th>
+                        Box Name
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        Destruction Period
+                    </th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td></td>
+
+                        <td>
+                            @item.BoxNo
+                        </td>
+                        <td>
+                            @item.ItemName
+                                        </td>
+                                        <td>
+                                            @item.Year
+                                        </td>
+                                        <td>
+                                            @item.DestructionPeriod
+                                        </td>
+
+                                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>

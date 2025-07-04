@@ -1,0 +1,108 @@
+﻿@model List<WareHouseMVC.Models.ChangeLocation>
+@{
+
+   
+}
+
+<div>
+
+<strong>Box Details :</strong>
+    <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Client :
+                        </td>
+                        <td class="width70">@ViewBag.Client
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Department:
+                        </td>
+                        <td>@ViewBag.Dept
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Project:
+                        </td>
+                        <td>
+                            @ViewBag.Project
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td>
+                            Box Name:
+                        </td>
+                        <td>
+                            @ViewBag.BoxName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Box No. :
+                        </td>
+                        <td>
+                          @ViewBag.BoxNo
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Year :
+                        </td>
+                        <td>
+                           @ViewBag.Year
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="clearfix">
+        <br />
+    </div>
+
+    <strong>Audit/Trail History :</strong>
+    <table class="table table-bordered table-invoice">
+         <thead>
+    <tr>
+       
+        <th>
+            Date
+        </th>
+        <th>
+            Location
+        </th>
+       
+    </tr>
+	 </thead>
+
+     <tbody>
+@foreach (var item in Model) {
+    <tr>
+      
+        <td>
+			@item.AssignDate.ToShortDateString()
+        </td>
+        <td>
+			@item.Location
+        </td>
+        
+    </tr>
+}
+ </tbody>
+    </table>
+
+
+
+
+</div>

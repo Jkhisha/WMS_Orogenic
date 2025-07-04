@@ -1,0 +1,237 @@
+﻿@model WareHouseMVC.Models.BoxSearchViewModel
+@{
+    ViewBag.Title = "FileXLSearch";
+}
+
+<div class="pagetitle">
+    <h1>
+        File XL Search
+    </h1>
+    <span>Search Files and Update Destruction Period if needed</span>
+</div>
+
+
+
+@using (Html.BeginForm("FIleXLSearch", "BoxLocations", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    
+    <table class="table table-bordered table-invoice">
+ <tbody>
+ 
+
+
+<tr>
+                <td class="width30">
+                    <label>
+                        File Upload</label>
+                </td>
+                <td class="width70">
+                     <div data-provides="fileupload" class="fileupload fileupload-exists"><input type="hidden" value="" name="filename">
+				<div class="input-append">
+				<div class="uneditable-input span3">
+				    <i class="icon-file fileupload-exists"></i>
+				    <span class="fileupload-preview"></span>
+				</div>
+				<span class="btn btn-file"><span class="fileupload-new">Select file</span>
+				<span class="fileupload-exists">Change</span>
+				<input type="file" name="filename"></span>
+				<a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+				</div>
+			    </div>
+                <span style="margin-left:75px;"> <a href="@Url.Content("~/Content/StandardXLFiles/FIleXLSearchFormat.xlsx")" >Download Standard CSV Format</a></span>
+                </td>
+ </tr>
+ <tr>
+                <td  class="width30">
+                
+                </td>
+                <td  class="width70">
+                <input type="submit" value="Search" class="btn btn-primary" />
+                </td>
+            </tr>
+
+</tbody>
+</table>
+    
+    
+}
+
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+ <thead>
+    <tr>
+       <th></th>
+       
+        
+         <th>
+           Box No
+        </th>
+         <th>
+          BoxName
+        </th>
+         <th>
+           File No
+        </th>
+         <th>
+           Ref No
+        </th>
+         <th>
+           Ring No
+        </th>
+         <th>
+           Acc. No
+        </th>
+        <th>
+          Year
+        </th>
+
+        <th>
+         Destruction Period
+        </th>
+        <th>
+          Assign Date
+        </th>
+        <th>
+       Transmittal Status
+        </th>
+        <th>
+        Location
+        </th>
+        <th>
+        History
+        </th>
+         <th>
+        Box Status
+        </th>
+        <th>
+        Last Tr.Out Date
+        </th>
+       
+     
+    </tr>
+	 </thead>
+
+     <tbody>
+
+        
+
+         @if (ViewBag.AllBoxes != null)
+         {
+             int i = 0;
+             foreach (var item in ViewBag.AllBoxes)
+         {
+    <tr>
+       
+        <td>
+           
+        </td>
+
+     
+         <td>
+			@item.BoxNo
+        </td>
+          <td>
+			@item.BookNumber
+        </td>
+          <td>
+			@item.FileNumber
+        </td>
+          <td>
+			@item.ReferrenceNo
+        </td>
+          <td>
+			@item.RingNo
+        </td>
+          <td>
+			@item.AccountNo
+        </td>
+       
+        <td>
+			@item.Year
+        </td>
+        <td>
+        @if(item.DestructionPeriod!=null)
+        {
+            @item.DestructionPeriod.ToShortDateString()
+        }
+        else
+        {
+            long _clientID=0;
+            long _deptID=0;
+            
+            if(Model.ClientID!=null)
+            {
+                _clientID = Model.ClientID;
+            }
+            if (Model.DepartmentID.HasValue != false)
+            {
+                _deptID = Model.DepartmentID.Value;
+            }
+            
+              @Html.ActionLink("Update Period", "UpdatePeriod", "BoxLocations", new { ItemId = item.ItemId,clientID=_clientID,deptID=_deptID }, new { @Class = "btn btn-warning btn-rounded" })
+        }
+        
+        </td>
+      <td>
+     	@String.Format("{0:g}", item.AssignDate.ToShortDateString())
+      </td>
+      
+       <td>
+     	@item.TransmittalINStatus.StatusName
+      </td>
+      <td>
+      @if(item.TransmittalINStatusId>=5)
+      {
+          @Html.ActionLink("View Location", "ViewLocationModal", "BoxLocations", new { id = item.AssignBoxId }, new { @class = "modal2" })
+      }
+      else
+      {
+          <b>Location not assigned</b>
+      }
+      
+      </td>
+
+      <td>
+       @Html.ActionLink("View History", "ViewBoxHistory", "BoxLocations", new { id = item.AssignBoxId }, new { @class = "modal3" })
+      
+      </td>
+
+      <td>
+      @if (item.BoxLocation.Count > 0)
+      {
+          
+       @item.BoxLocation[i].CurrentStatus
+      }
+      
+      </td>
+      <td>
+       @if (item.BoxLocation.Count > 0)
+      {
+          
+         if(item.BoxLocation[i].CurrentStatus=="Box Out")
+         {
+             @item.TrOutDate;
+         }
+      }
+      
+      
+      </td>
+     
+
+    </tr>
+        
+}
+}
+
+ </tbody>
+
+ </table>
+
+</div>
+
+@{
+    
+}

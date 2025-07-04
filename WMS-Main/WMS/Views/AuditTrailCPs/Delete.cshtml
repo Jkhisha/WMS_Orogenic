@@ -1,0 +1,70 @@
+@model WareHouseMVC.Models.AuditTrailCP
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<div class="pagetitle">
+    <h1>
+      Delete  </h1>
+    <span>Are you sure you want to delete this?</span>
+</div>
+
+@using (Html.BeginForm()) {
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">TestName</td>
+        <td>
+        @Model.TestName
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Amount</td>
+        <td>
+        @String.Format("{0:F}", Model.Amount)
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Status</td>
+        <td>
+        @Model.Status
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">IsRemoved</td>
+        <td>
+        @Model.IsRemoved
+        </td>
+        </tr>
+
+    
+
+ <tr>
+         <td class="width30"></td>
+        <td>
+    <input type="submit" value="Delete" class="btn btn-danger" /> 
+        </td>
+        </tr>
+		  </tbody>
+        </table>
+    <p>
+       
+      @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+  
+    </p>
+}
+
+

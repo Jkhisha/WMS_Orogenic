@@ -1,0 +1,259 @@
+﻿@model PagedList.IPagedList<WareHouseMVC.Models.AssignBox>
+    @using PagedList.Mvc;
+    @{
+        ViewBag.Title = "Box Location";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    <div class="pagetitle">
+        <h1>
+            Box Location
+        </h1>
+        <span>List of Box Locations....</span>
+    </div>
+    @{
+        if (ViewBag.Flag == "0")
+        {
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">
+                    ×
+                </button>
+                <strong>Well done!</strong> You successfully Change Box Location to Row
+            </div>
+
+        }
+
+        if (ViewBag.Flag == "1")
+        {
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert">
+                    ×
+                </button>
+                <strong>Well done!</strong> You successfully Change Box Location to Pallet
+            </div>
+
+        }
+
+
+    }
+    @using (Html.BeginForm("BoxLocationsAll", "BoxLocations", FormMethod.Get, ""))
+    {
+        @Html.ValidationSummary(true)
+
+
+        <table class="table table-bordered table-invoice">
+            <tbody>
+                <tr>
+                    <td class="width30">
+                        Box No
+                    </td>
+                    <td>
+                        <input id="txtBoxNo" type="text" name="txtBoxNo" ,value=@ViewBag.txtBoxNo />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        Box Name
+                    </td>
+                    <td>
+                        <input id="txtBoxNname" type="text" name="txtBoxNname" ,value=@ViewBag.txtBoxNname />
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                    </td>
+                    <td class="width70">
+                        <input type="submit" value="Search" class="btn btn-primary" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    }
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+                    <th>
+                        Transmittal No
+                    </th>
+                    <th>
+                        Box Name
+                    </th>
+                    <th>
+                        Box No
+                    </th>
+                    <th>
+                        Barcode Text
+                    </th>
+                    <th>
+                        Legal Hold
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        Item No
+                    </th>
+                    <th>
+                        Assign Date
+                    </th>
+                    <th>
+                        Transmittal Status
+                    </th>
+                    <th>
+                        Location
+                    </th>
+                    <th>
+                        Box Status
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    int i = 0;
+
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                @Html.DisplayTextFor(_ => item.TransmittalIN.TransmittalNo).ToString()
+                            </td>
+                            <td>
+                                @Html.DisplayTextFor(_ => item.Item.ItemName).ToString()
+                            </td>
+                            <td>
+                                @Html.DisplayTextFor(_ => item.Item.BoxNo).ToString()
+                            </td>
+                            <td>
+                                @Html.DisplayTextFor(_ => item.Item.BarCodeText).ToString()
+                            </td>
+                            <td>
+                                @if (item.Item.IsLegalHold)
+                                {
+                                    @:Yes
+                                }
+                                else
+                                {
+                                    @:No
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayTextFor(_ => item.Item.Description).ToString()
+                            </td>
+                            <td>
+                                @Html.DisplayTextFor(_ => item.Item.Year).ToString()
+                            </td>
+                            <td>
+                                @item.ItemId
+                            </td>
+                            <td>
+                                @String.Format("{0:g}", item.AssignDate.ToShortDateString())
+                            </td>
+                            <td>
+                                @Html.DisplayTextFor(_ => item.TransmittalINStatus.StatusName).ToString()
+                            </td>
+                            @if (item.BoxLocation[i].Train != null)
+                            {
+                                <td>
+                                    @item.BoxLocation[i].Warehouse.WarehouseName -@item.BoxLocation[i].Floor.FloorName
+                                    - @item.BoxLocation[i].Zone.ZoneName - @item.BoxLocation[i].Train.TrainName - @item.BoxLocation[i].Rack.RackName
+                                    - @item.BoxLocation[i].Level.LevelName - @item.BoxLocation[i].Height.HeightName
+                                    - @item.BoxLocation[i].Column.ColumnName - @item.BoxLocation[i].Row.RowName;
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    @item.BoxLocation[i].Warehouse.WarehouseName -@item.BoxLocation[i].Floor.FloorName
+                                    - @item.BoxLocation[i].Zone.ZoneName - @item.BoxLocation[i].Pallet.PalletName
+                                </td>
+                            }
+                            <td>
+                                @item.BoxLocation[i].CurrentStatus
+                            </td>
+                            <td>
+                                @if (!HttpContext.Current.User.IsInRole("Client"))
+                                {
+                                    if (item.BoxLocation[i].CurrentStatus == "In WareHouse")
+                                    {
+                                        @Html.ActionLink("Change Location", "ChangeLocationModal", "BoxLocations", new { AssignBoxId = item.AssignBoxId, BoxLocationId = item.BoxLocation[i].BoxLocationId, filter = ViewBag.Filter }, "")
+                                    }
+                                }
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </tbody>
+        </table>
+        <br />
+        @{
+
+            if (ViewBag.pager == "1")
+            {
+
+                <div style="float: right">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                    of @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("ViewLocation",
+                    new { page }))
+                </div>
+            }
+
+            else
+            {
+                <div style="float: right">
+                    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                    of @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("BoxLocationsAll",
+                    new { page, txtBoxNo = ViewBag.txtBoxNo, txtBoxNmae = ViewBag.txtBoxNmae }))
+                </div>
+            }
+
+
+            <br />
+            <br />
+
+        }
+        <div style="float: left;width:70%;"></div>
+        <div style="float: right">
+            <p>
+                Jump on :
+            </p>
+            @using (Html.BeginForm("BoxLocationsAll", "BoxLocations", FormMethod.Get, ""))
+            {
+                <input type="hidden" id="txtBoxNo" type="text" name="txtBoxNo" ,value=@ViewBag.txtBoxNo />
+                <input id="txtBoxNname" type="hidden" name="txtBoxNname" value=@ViewBag.txtBoxNname />
+
+
+                <input id="Page" type="text" name="Page" />
+
+                <br />
+                <input style="float: right" type="submit" value="Jump" class="btn btn-info btn-rounded" />
+
+            }
+        </div>
+        <table>
+            <tr>
+                <td class="width30">
+                    @{
+                        if (ViewBag.trID != null)
+                        {
+                            @Html.ActionLink("Back to Box List", "ShowBoxes", "AssignBoxes", new { trID = ViewBag.trID }, new { @Class = "btn btn-info btn-rounded" })
+                        }
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>

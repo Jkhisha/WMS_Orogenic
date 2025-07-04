@@ -1,0 +1,100 @@
+@model WareHouseMVC.Models.TransmittalINAuditTrail
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.TransmittalINNo)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.TransmittalINNo)
+    @Html.ValidationMessageFor(model => model.TransmittalINNo)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.CreateBy)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.CreateBy)
+    @Html.ValidationMessageFor(model => model.CreateBy)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.CreateDate)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.CreateDate)
+    @Html.ValidationMessageFor(model => model.CreateDate)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.CreateTime)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.CreateTime)
+    @Html.ValidationMessageFor(model => model.CreateTime)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.CreateByIP)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.CreateByIP)
+    @Html.ValidationMessageFor(model => model.CreateByIP)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.BoxReceivedBy)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.BoxReceivedBy)
+    @Html.ValidationMessageFor(model => model.BoxReceivedBy)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.BoxReceivedByDate)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.BoxReceivedByDate)
+    @Html.ValidationMessageFor(model => model.BoxReceivedByDate)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.BoxReceivedByTime)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.BoxReceivedByTime)
+    @Html.ValidationMessageFor(model => model.BoxReceivedByTime)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.BoxReceivedByIP)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.BoxReceivedByIP)
+    @Html.ValidationMessageFor(model => model.BoxReceivedByIP)
+</td>
+</tr>
+
+</tbody>
+</table>
+ 

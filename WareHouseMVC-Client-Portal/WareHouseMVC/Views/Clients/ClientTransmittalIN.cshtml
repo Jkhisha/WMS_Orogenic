@@ -1,0 +1,94 @@
+﻿@{
+    ViewBag.Title = "All Transmittal IN";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>
+        Transmittal IN</h1>
+    <span>List of Transmittal IN....</span>
+</div>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered" id="dyntable">
+        <thead>
+            <tr>
+                <th>
+                    Tr. No
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Ref. No
+                </th>
+                <th>
+                    Issued By
+                </th>
+               
+                <th>
+                    Dept.
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Project
+                </th>
+                <th>
+                    Boxes
+                </th>
+                <th>
+                    HandOver By
+                </th>
+                <th>
+                    Received By
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in @ViewBag.allTrIns)
+            {
+                <tr>
+                   
+                    <td>
+                        @item.TransmittalNo
+                    </td>
+                    <td>
+                        @String.Format("{0:g}", item.TransmittalDate.ToShortDateString())
+                    </td>
+                    <td>
+                        @item.ClientRequestreference
+                    </td>
+                    <td>
+                        @item.ContactPerson.ContactPersonName.ToString()
+                    </td>
+                    
+                    <td>
+                        @item.Department.DepartmentName.ToString()
+                    </td>
+                    <td>
+                        @item.TransmittalINStatus.StatusName.ToString()
+                    </td>
+                    <td>
+                        @* @item.Project.ProjectName*@
+                    </td>
+                    <td>
+                    @Html.ActionLink("View Boxes", "CreateWitTrINId", "Items", new { trId = item.TransmittalINId }, new { @target="_blank"})
+                     
+                    </td>
+                    <td>
+                     
+                          @Html.ActionLink("HandOver", "HandOverBy", "HandOverBies", new { trId = item.TransmittalINId }, new { @target = "_blank" })
+                      
+                    </td>
+                    <td>
+                     
+                          @Html.ActionLink("Received", "ReceivedBy", "ReceivedBies", new { trId = item.TransmittalINId }, new { @target = "_blank" })
+                      
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

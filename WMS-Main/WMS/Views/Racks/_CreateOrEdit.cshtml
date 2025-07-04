@@ -1,0 +1,158 @@
+@model WareHouseMVC.Models.Rack
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#WarehouseID").change(function (evt) {
+
+            if ($("select#WarehouseID").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetFloors")",
+                    type: 'POST',
+                    data: { WarehouseID: $("select#WarehouseID").val() },
+                    success: function (response) {
+                        $("select#FloorID").replaceWith(response)
+
+
+                        $("select#FloorID").change(function (evt) {
+
+                            if ($("select#FloorID").val() != "-1") {
+
+                                $.ajax({
+                                    url: "@Url.Content("~/zones/GetZones")",
+                                    type: 'POST',
+                                    data: { FloorID: $("select#FloorID").val() },
+                                    success: function (response) {
+                                        $("select#ZoneID").replaceWith(response)
+
+
+                                        $("select#ZoneID").change(function (evt) {
+
+                                            if ($("select#ZoneID").val() != "-1") {
+
+                                                $.ajax({
+                                                    url: "@Url.Content("~/zones/GetTrains")",
+                                                    type: 'POST',
+                                                    data: { ZoneID: $("select#ZoneID").val() },
+                                                    success: function (response) {
+                                                        $("select#TrainID").replaceWith(response)
+                                                    },
+                                                    error: function (xhr) {
+                                                        alert("Something went wrong, please try again");
+                                                    }
+                                                });
+                                            }
+                                        });
+
+
+                                    },
+                                    error: function (xhr) {
+                                        alert("Something went wrong, please try again");
+                                    }
+                                });
+                            }
+                        });
+
+
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+
+    });
+
+
+
+</script>
+
+
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+ <tr>
+<td class="width30">
+    Warehouse
+</td>
+  <td class="width70">
+    @Html.DropDownListFor(model => model.WarehouseID, ((IEnumerable<WareHouseMVC.Models.Warehouse>)ViewBag.PossibleWarehouses).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option.WarehouseName).ToString(), 
+        Value = option.WarehouseID.ToString(),
+        Selected = (Model != null) && (option.WarehouseID == Model.WarehouseID) || (Model == null) && (option.WarehouseID == ViewBag.wHID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.WarehouseID)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    Floor
+</td>
+  <td class="width70">
+    @Html.DropDownListFor(model => model.FloorID, ((IEnumerable<WareHouseMVC.Models.Floor>)ViewBag.PossibleFloors).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option.FloorName).ToString(), 
+        Value = option.FloorID.ToString(),
+        Selected = (Model != null) && (option.FloorID == Model.FloorID) || (Model == null) && (option.FloorID == ViewBag.fLID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.FloorID)
+</td></tr>
+
+<tr>
+<td class="width30">
+    Zone
+</td>
+  <td class="width70">
+    @Html.DropDownListFor(model => model.ZoneID, ((IEnumerable<WareHouseMVC.Models.Zone>)ViewBag.PossibleZones).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option.ZoneName).ToString(), 
+        Value = option.ZoneID.ToString(),
+        Selected = (Model != null) && (option.ZoneID == Model.ZoneID) || (Model == null) && (option.ZoneID == ViewBag.zNID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.ZoneID)
+</td></tr>
+
+
+<tr>
+<td class="width30">
+    Train
+</td>
+  <td class="width70">
+    @Html.DropDownListFor(model => model.TrainID, ((IEnumerable<WareHouseMVC.Models.Train>)ViewBag.PossibleTrains).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option.TrainName).ToString(), 
+        Value = option.TrainID.ToString(),
+        Selected = (Model != null) && (option.TrainID == Model.TrainID) || (Model == null) && (option.TrainID == ViewBag.tRID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.TrainID)
+</td>
+</tr>
+
+
+
+
+<tr>
+
+<td class="width30">
+    @Html.LabelFor(model => model.RackName)
+</td>
+   <td class="width70">
+    @Html.EditorFor(model => model.RackName)
+    @Html.ValidationMessageFor(model => model.RackName)
+</td>
+</tr>
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.RackCode)
+</td>
+  <td class="width70">
+    @Html.EditorFor(model => model.RackCode)
+    @Html.ValidationMessageFor(model => model.RackCode)
+</td>
+</tr>
+</tbody>
+</table>

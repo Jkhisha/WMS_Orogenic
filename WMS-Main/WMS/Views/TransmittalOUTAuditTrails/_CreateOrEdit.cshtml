@@ -1,0 +1,90 @@
+@model WareHouseMVC.Models.TransmittalOUTAuditTrail
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.TransmittalOUTNo)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.TransmittalOUTNo)
+    @Html.ValidationMessageFor(model => model.TransmittalOUTNo)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.CreateDate)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.CreateDate)
+    @Html.ValidationMessageFor(model => model.CreateDate)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.CreateTime)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.CreateTime)
+    @Html.ValidationMessageFor(model => model.CreateTime)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.CreatorIP)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.CreatorIP)
+    @Html.ValidationMessageFor(model => model.CreatorIP)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.BoxOutBy)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.BoxOutBy)
+    @Html.ValidationMessageFor(model => model.BoxOutBy)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.BoxOutDate)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.BoxOutDate)
+    @Html.ValidationMessageFor(model => model.BoxOutDate)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.BoxOutTime)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.BoxOutTime)
+    @Html.ValidationMessageFor(model => model.BoxOutTime)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.BoxOutIP)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.BoxOutIP)
+    @Html.ValidationMessageFor(model => model.BoxOutIP)
+</td>
+</tr>
+
+</tbody>
+</table>
+ 

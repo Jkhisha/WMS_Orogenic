@@ -1,0 +1,48 @@
+@model WareHouseMVC.Models.Zone
+
+@{
+    ViewBag.Title = "Zone Details";
+}
+
+<div class="pagetitle">
+    <h1>
+       Zone Details </h1>
+    <span> Zone details below....</span>
+</div>
+
+<fieldset>
+    <table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+        <td class="width30">Zone Name</td>
+        <td>
+        @Model.ZoneName
+        </td>
+        </tr>
+        <tr>
+        <td>Zone Code</td>
+        <td>@Model.ZoneCode</td>
+        
+        </tr>
+
+         <tr>
+        <td>Floor</td>
+        <td>@Html.DisplayTextFor(_ => Model.Floor.FloorName).ToString()</td>
+        
+        </tr>
+
+         <tr>
+        <td>WareHouse</td>
+        <td>@Html.DisplayTextFor(_ => Model.Warehouse.WarehouseName).ToString()</td>
+        
+        </tr>
+       
+        </tbody>
+        </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ZoneID }, new { @class = "btn btn-primary" }) |
+     @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

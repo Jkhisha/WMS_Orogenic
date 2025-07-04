@@ -1,0 +1,120 @@
+@model WareHouseMVC.Models.ClientBillingInfo
+
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="pagetitle">
+    <h1>
+      Delete Billing Info </h1>
+    <span>Are you sure you want to delete this?</span>
+</div>
+
+
+
+
+
+
+@using (Html.BeginForm()) {
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">VAT Registration No</td>
+        <td>
+        @Model.VATRegNo
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">TAX Registration No</td>
+        <td>
+        @Model.TAXRegNo
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Bank Name</td>
+        <td>
+        @Model.BankName
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Bank Address</td>
+        <td>
+        @Model.BankAddress
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Bank Telephone</td>
+        <td>
+        @Model.BankTel
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Bank Account</td>
+        <td>
+        @Model.BankACC
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Branch Name</td>
+        <td>
+        @Model.BranchName
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Bank Swift Code</td>
+        <td>
+        @Model.BankSwiftCode
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Client</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Client.ClientName).ToString()
+        </td>
+        </tr>
+
+    
+
+ <tr>
+         <td class="width30"></td>
+        <td>
+    <input type="submit" value="Delete" class="btn btn-danger" /> 
+        </td>
+        </tr>
+		  </tbody>
+        </table>
+    <p>
+       
+      @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+  
+    </p>
+}
+
+
+
+
+

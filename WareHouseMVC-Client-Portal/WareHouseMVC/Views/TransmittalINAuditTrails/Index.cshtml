@@ -1,0 +1,100 @@
+@model IEnumerable<WareHouseMVC.Models.TransmittalINAuditTrail>
+@{
+    ViewBag.Title = "TransmittalIN Audit Trails";
+}
+<div class="pagetitle">
+    <h1>
+        TransmittalIN Audit Trails</h1>
+    <span>List of TransmittalIN Audit Trails....</span>
+</div>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered" id="dyntable">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    TransmittalIN No
+                </th>
+                <th>
+                    Create By
+                </th>
+                <th>
+                    Create Date
+                </th>
+                <th>
+                    Create Time
+                </th>
+                <th>
+                    Creator IP
+                </th>
+                <th>
+                    Received By
+                </th>
+                <th>
+                    Received Date
+                </th>
+                <th>
+                    Received Time
+                </th>
+                <th>
+                    Receiver IP
+                </th>
+                  <th>
+                Barcode Verified By
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        @item.TransmittalINNo
+                    </td>
+                    <td>
+                        @item.CreateBy
+                    </td>
+                    <td>
+                        @item.CreateDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @item.CreateTime
+                    </td>
+                    <td>
+                        @item.CreateByIP
+                    </td>
+                    <td>
+                        @item.BoxReceivedBy
+                    </td>
+                    <td>
+                        @{
+                string recDate = string.Empty;
+                if (item.CreateDate == item.BoxReceivedByDate)
+                {
+                }
+                else
+                {
+                    recDate = item.BoxReceivedByDate.ToShortDateString();
+                }
+			
+                        }
+                        @recDate
+                    </td>
+                    <td>
+                        @item.BoxReceivedByTime
+                    </td>
+                    <td>
+                        @item.BoxReceivedByIP
+                    </td>
+                    <td>
+                    @item.BarcodeVerifiedBy
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,39 @@
+@model WareHouseMVC.Models.AutoZoneSuggention
+
+@{
+    ViewBag.Title = "Zone Suggestion Details";
+}
+
+<div class="pagetitle">
+    <h1>
+     Zone Suggestion Details </h1>
+    <span>Zone Suggestion Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+     <tr>
+        <td class="width30">Client</td>
+        <td>
+       @Model.Client.ClientName
+        </td>
+        </tr> 
+
+        <tr>
+        <td class="width30">Zone</td>
+        <td>
+       @Model.Zone.ZoneName
+        </td>
+        </tr> 
+
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.AutoZoneSuggentionId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

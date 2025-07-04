@@ -1,0 +1,88 @@
+@model WareHouseMVC.Models.ChallanIN
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.ChallanBy)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.ChallanBy)
+    @Html.ValidationMessageFor(model => model.ChallanBy)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.Status)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.Status)
+    @Html.ValidationMessageFor(model => model.Status)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.ChallanDate)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.ChallanDate)
+    @Html.ValidationMessageFor(model => model.ChallanDate)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    TransmittalIN
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.TransmittalINId, ((IEnumerable<WareHouseMVC.Models.TransmittalIN>)ViewBag.PossibleTransmittalINs).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.TransmittalINId.ToString(),
+        Selected = (Model != null) && (option.TransmittalINId == Model.TransmittalINId)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.TransmittalINId)
+</td></tr>
+<tr>
+<td class="width30">
+    Driver
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.DriverId, ((IEnumerable<WareHouseMVC.Models.Driver>)ViewBag.PossibleDrivers).Select(option => new SelectListItem {
+        Text = (option == null ? "None" : option.Name), 
+        Value = option.DriverId.ToString(),
+        Selected = (Model != null) && (option.DriverId == Model.DriverId)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.DriverId)
+</td></tr>
+<tr>
+<td class="width30">
+    Vehicle
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.VehicleId, ((IEnumerable<WareHouseMVC.Models.Vehicle>)ViewBag.PossibleVehicles).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.VehicleId.ToString(),
+        Selected = (Model != null) && (option.VehicleId == Model.VehicleId)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.VehicleId)
+</td></tr>
+<tr>
+<td class="width30">
+    TransportVendor
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.TransportVendorId, ((IEnumerable<WareHouseMVC.Models.TransportVendor>)ViewBag.PossibleTransportVendors).Select(option => new SelectListItem {
+        Text = (option == null ? "None" : option.Name), 
+        Value = option.TransportVendorId.ToString(),
+        Selected = (Model != null) && (option.TransportVendorId == Model.TransportVendorId)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.TransportVendorId)
+</td></tr>
+</tbody>
+</table>
+ 

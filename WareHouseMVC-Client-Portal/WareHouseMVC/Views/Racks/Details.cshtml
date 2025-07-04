@@ -1,0 +1,66 @@
+@model WareHouseMVC.Models.Rack
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+      Details </h1>
+    <span>Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">RackName</td>
+        <td>
+       @Model.RackName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">RackCode</td>
+        <td>
+       @Model.RackCode
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Train</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Train.TrainName).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Zone</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Zone.ZoneName).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Floor</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Floor.FloorName).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Warehouse</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Warehouse.WarehouseName).ToString()
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.RackID }, new { @class = "btn btn-primary" }) |
+       @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

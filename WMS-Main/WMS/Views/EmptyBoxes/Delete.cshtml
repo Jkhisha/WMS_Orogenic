@@ -1,0 +1,97 @@
+@model WareHouseMVC.Models.EmptyBox
+
+@{
+    ViewBag.Title = "Delete Empty Box Recuisition";
+}
+<div class="pagetitle">
+    <h1>
+      Delete Empty Box Recuisition </h1>
+    <span>Are you sure you want to delete this?</span>
+</div>
+
+@using (Html.BeginForm()) {
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+
+     <tr>
+        <td class="width30">RecuisitionID</td>
+        <td>
+        @Model.EmptyBoxNo
+        </td>
+        </tr>
+
+  <tr>
+        <td class="width30">No of Boxes</td>
+        <td>
+        @Model.NoofBoxes
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Recuisition Date</td>
+        <td>
+        @String.Format("{0:g}", Model.RecuisitionDate.ToShortDateString())
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Client</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Client.ClientName).ToString()
+        </td>
+        </tr>
+
+     <tr>
+        <td class="width30">Client</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Department.DepartmentName).ToString()
+        </td>
+        </tr>
+
+  <tr>
+        <td class="width30">Deliver To</td>
+        <td>
+        @Model.DeliverTo
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Position</td>
+        <td>
+        @Model.Position
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Address</td>
+        <td>
+        @Model.Address
+        </td>
+        </tr>
+    
+
+ <tr>
+         <td class="width30"></td>
+        <td>
+    <input type="submit" value="Delete" class="btn btn-danger" /> 
+        </td>
+        </tr>
+		  </tbody>
+        </table>
+    <p>
+       
+      @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+  
+    </p>
+}
+
+

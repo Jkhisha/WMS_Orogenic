@@ -1,0 +1,407 @@
+﻿<div class="pagetitle">
+    <h1>
+        Box Information
+    </h1>
+    <span>Get Box Information By Barcode....</span>
+</div>
+
+@using (Html.BeginForm("ExportData", "BoxLocations", FormMethod.Get))
+{
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <!-- Start Date Row -->
+            <tr>
+                <td class="width30">
+                    Start Date:
+                </td>
+                <td class="width70">
+                    <input type="date" name="startDate" class="form-control" />
+                </td>
+            </tr>
+
+            <!-- End Date Row -->
+            <tr>
+                <td class="width30">
+                    End Date:
+                </td>
+                <td class="width70">
+                    <input type="date" name="endDate" class="form-control" />
+                </td>
+            </tr>
+
+            <!-- Export Button Row -->
+            <tr>
+                <td class="width30"></td>
+                <td class="width70">
+                    <input type="submit" value="Export to Excel" class="btn btn-primary btn-rounded" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+
+
+<div class="pagetitle">
+    <h1>
+        Document Information
+    </h1>
+    <span>Get Document Information By Name....</span>
+</div>
+<div class="contentinner" style="min-height: auto;">
+    <div class="row-fluid">
+
+        @using (Html.BeginForm("GetAddBoxDocbyDoc", "BoxLocations"))
+        {
+            @Html.ValidationSummary(true)
+
+            <table class="table table-bordered table-invoice">
+                <tbody>
+
+                    <tr>
+                        <td class="width30">
+                            Document Name
+                        </td>
+                        <td class="width70">
+                            <input type="text" name="documentName" class="form-control" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="width30">
+                        </td>
+                        <td class="width70">
+                            <input type="submit" value="Search" class="btn btn-info btn-rounded" />
+                        </td>
+
+                    </tr>
+
+                </tbody>
+            </table>}
+    </div>
+    <div class="clearfix"><br /></div>
+
+
+    @{
+        var boxName = ViewBag.newModel != null ? ViewBag.newModel.BoxName : "";
+        var boxNo = ViewBag.newModel != null ? ViewBag.newModel.BoxNo : "";
+        var date = ViewBag.newModel != null ? ViewBag.newModel.date : "";
+        var fileName = ViewBag.newModel != null ? ViewBag.newModel.FileName : "";
+        var transmittalNo = ViewBag.newModel != null ? ViewBag.newModel.TransmittalNo : "";
+        var deptName = ViewBag.newModel != null ? ViewBag.newModel.DeptName : "";
+        var subDeptName = ViewBag.newModel != null ? ViewBag.newModel.SubDeptName : "";
+    }
+
+    <h4 class="CustomHeader">Box Information</h4>
+    <div class="widgetcontent bordered shadowed">
+        <div class="row-fluid">
+            <div class="span6">
+                <table class="table table-bordered table-invoice">
+                    <tbody>
+                        <tr>
+                            <td class="width30">Box Name:</td>
+                            <td class="width70"><strong>@boxName</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Box No:</td>
+                            <td><strong>@boxNo</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Date:</td>
+                            <td><strong>@date</strong></td>
+                        </tr>
+                        <tr>
+                            <td>FileName:</td>
+                            <td><strong>@fileName</strong></td>
+                        </tr>
+                        <tr>
+                            <td>TransmittalNo</td>
+                            <td><strong>@transmittalNo</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Department Name</td>
+                            <td><strong>@deptName</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Sub Department Name</td>
+                            <td><strong>@subDeptName</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td><strong>@ViewBag.BoxDescription</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div><!--span6-->
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+@model WareHouseMVC.Models.BarcodeInfoSearchViewModel
+@{ ViewBag.Title = "Box Info By Barcode";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+<div>
+
+</div>
+<div class="pagetitle">
+    <h1>
+        Box Information by Barcode
+    </h1>
+    <span>Get Box Information By Barcode....</span>
+</div>
+
+<div class="contentinner">
+    <div class="row-fluid">
+        @using (Html.BeginForm("BoxInfoByBarcode", "BoxLocations"))
+        {
+            @Html.ValidationSummary(true)
+
+            <table class="table table-bordered table-invoice">
+                <tbody>
+
+                    <tr>
+                        <td class="width30">
+                            Barcode ID
+                        </td>
+                        <td class="width70">
+                            @Html.EditorFor(model => model.BarcodeID)
+                            @Html.ValidationMessageFor(model => model.BarcodeID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="width30">
+                        </td>
+                        <td class="width70">
+                            <input type="submit" value="Search" class="btn btn-info btn-rounded" />
+                        </td>
+
+                    </tr>
+
+                </tbody>
+            </table>}
+    </div>
+    <div class="clearfix"><br /></div>
+
+
+    @if (ViewBag.outputModel != null)
+    {
+
+
+        <h4 class="CustomHeader">Box Information</h4>
+        <div class="widgetcontent bordered shadowed">
+            <div class="row-fluid">
+
+                <div class="span6">
+
+
+
+                    <table class="table table-bordered table-invoice">
+                        <tbody>
+                            <tr>
+                                <td class="width30">Box Name:</td>
+                                <td class="width70"><strong>@ViewBag.outputModel.BoxName</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Box No:</td>
+                                <td><strong>@ViewBag.outputModel.BoxNo</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Year:</td>
+                                <td><strong>@ViewBag.outputModel.Year</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Destruction Period:</td>
+                                <td><strong>@ViewBag.outputModel.DestructionDate</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Legal Hold</td>
+                                <td><strong>@ViewBag.outputModel.isLegal</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Category</td>
+                                <td><strong>@ViewBag.outputModel.category</strong></td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div><!--span6-->
+
+                <div class="span6">
+
+                    <table class="table table-bordered table-invoice">
+                        <tbody>
+                            <tr>
+                                <td class="width30">Client:</td>
+                                <td class="width70"><strong>@ViewBag.outputModel.Client</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Department:</td>
+                                <td><strong>@ViewBag.outputModel.Dept</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Current Status:</td>
+                                <td><strong>@ViewBag.outputModel.CurrentStatus</strong></td>
+                            </tr>
+
+
+                            <tr>
+                                <td>Transmittal Status:</td>
+                                <td><strong>@ViewBag.outputModel.TransmittalStatus</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Description</td>
+                                <td><strong>@ViewBag.outputModel.titleOfContent</strong></td>
+                            </tr>
+
+
+
+                        </tbody>
+                    </table>
+                </div><!--span6-->
+
+            </div>
+        </div> @*if (ViewBag.BoxLocation != null)
+        {
+
+
+            <h4 class="CustomHeader">Box Location</h4>
+            <div class="widgetcontent bordered shadowed">
+                <table class="table table-bordered table-invoice">
+                    <tbody>
+                        <tr>
+                            <td class="width30">
+                                WareHouse :
+                            </td>
+                            <td class="width70">
+                                @ViewBag.BoxLocation.Warehouse.WarehouseName
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Floor :
+                            </td>
+                            <td>
+                                @ViewBag.BoxLocation.Floor.FloorName
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Zone :
+                            </td>
+                            <td>
+                                @ViewBag.BoxLocation.Zone.ZoneName
+                            </td>
+                        </tr>
+                        @if (ViewBag.BoxLocation.Train != null)
+                        {
+
+
+                            <tr>
+                                <td>
+                                    Train :
+                                </td>
+                                <td>
+                                    @ViewBag.BoxLocation.Train.TrainName
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Rack :
+                                </td>
+                                <td>
+                                    @ViewBag.BoxLocation.Rack.RackName
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Level :
+                                </td>
+                                <td>
+                                    @ViewBag.BoxLocation.Level.LevelName
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Height :
+                                </td>
+                                <td>
+                                    @ViewBag.BoxLocation.Height.HeightName
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Column :
+                                </td>
+                                <td>
+                                    @ViewBag.BoxLocation.Column.ColumnName
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Raw :
+                                </td>
+                                <td>
+                                    @ViewBag.BoxLocation.Row.RowName
+                                </td>
+                            </tr>
+ }
+
+                        else
+                        {
+                            <tr>
+                                <td>
+                                    Pallet :
+                                </td>
+                                <td>
+                                    @ViewBag.BoxLocation.Pallet.PalletName
+                                </td>
+                            </tr>
+}
+                    </tbody>
+                </table>
+            </div> }
+
+        if (ViewBag.LocationHistory != null)
+        {
+            <h4 class="CustomHeader">Box History</h4>
+            <div class="widgetcontent bordered shadowed">
+                <table class="table table-bordered table-invoice">
+
+                    <tbody>
+                        <tr>
+
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Location
+                            </th>
+
+                        </tr>
+
+                        @foreach (var item in ViewBag.LocationHistory)
+                        {
+                            <tr>
+
+                                <td class="width30">
+                                    @String.Format("{0:dddd, MMMM d, yyyy}", @item.AssignDate)
+                                </td>
+                                <td>
+                                    @item.Location
+                                </td>
+
+                            </tr>
+}
+                    </tbody>
+                </table>
+            </div>}*@
+
+    }
+
+
+</div>
+

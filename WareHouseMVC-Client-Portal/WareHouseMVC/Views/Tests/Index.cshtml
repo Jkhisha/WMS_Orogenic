@@ -1,0 +1,61 @@
+@model IEnumerable<WareHouseMVC.Models.Test>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="pagetitle">
+    <h1>
+      Index List</h1>
+    <span>List of Indexs....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            TestName
+        </th>
+        <th>
+            Amount
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            IsRemoved
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.TestID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.TestID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.TestID })
+        </td>
+        <td>
+			@item.TestName
+        </td>
+        <td>
+			@String.Format("{0:F}", item.Amount)
+        </td>
+        <td>
+			@item.Status
+        </td>
+        <td>
+			@item.IsRemoved
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

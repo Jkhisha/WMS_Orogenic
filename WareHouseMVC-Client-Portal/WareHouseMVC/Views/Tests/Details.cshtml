@@ -1,0 +1,52 @@
+@model WareHouseMVC.Models.Test
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+      Details </h1>
+    <span>Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">TestName</td>
+        <td>
+       @Model.TestName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Amount</td>
+        <td>
+       @String.Format("{0:F}", Model.Amount)
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Status</td>
+        <td>
+       @Model.Status
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">IsRemoved</td>
+        <td>
+       @Model.IsRemoved
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.TestID }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

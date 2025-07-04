@@ -1,0 +1,73 @@
+﻿@model WareHouseMVC.Models.InventoryModel
+@{
+    ViewBag.Title = "Inventory Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>
+       Inventory Report
+    </h1>
+    <span>Inventory Report Based on Warehouse & Client</span>
+</div>
+
+
+
+@{
+    if (ViewBag.Flag == "1")
+    {
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        <strong>Warning !</strong> You did not select any Client or WareHouse !
+    </div>
+    }
+    }
+
+@using (Html.BeginForm("InventoryReport", "AssignBoxes", FormMethod.Post, ""))
+{
+    @Html.ValidationSummary(true)
+
+    
+    
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">
+                    Client
+                </td>
+                <td class="width70">
+                    <h3>@ViewBag.ClientName</h3>
+                    <input type="hidden" id="ClientID" name="ClientID" value="@ViewBag.ClientId" />
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Select WareHouse
+                </td>
+                <td class="width70">
+                  <span class="formwrapper" id="cznDept">
+
+
+                    @Html.DropDownListFor(model => model.WarhouseID, ((IEnumerable<WareHouseMVC.Models.Warehouse>)ViewBag.WareHouseList).Select(option => new SelectListItem
+               {
+                   Text = Html.DisplayTextFor(_ => option.WarehouseName).ToString(),
+                   Value = option.WarehouseID.ToString(),
+                   Selected = (Model != null) && (option.WarehouseID == Model.WarhouseID)
+               }), "Choose...", new { @data_placeholder = "Choose a Country...", @style = "width: 221px", @class = "chzn-select", @tabindex = "2" })
+           </span>
+                    @Html.ValidationMessageFor(model => model.WarhouseID)
+                </td>
+            </tr>
+           
+
+            <tr>
+                <td class="width30">
+                </td>
+                <td class="width70">
+                    <input type="submit"   formtarget="_blank" value="Report" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}

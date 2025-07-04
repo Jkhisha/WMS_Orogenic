@@ -1,0 +1,436 @@
+@model WareHouseMVC.Models.Item
+@{
+    ViewBag.Title = "Add Boxes";
+
+    if (HttpContext.Current.User.IsInRole("Client"))
+    {
+
+        ViewBag.Title = "View Boxes";
+
+    }
+    else
+    {
+        ViewBag.Title = "Add Boxes";
+    }
+}
+<div class="pagetitle">
+    @if (HttpContext.Current.User.IsInRole("Client"))
+    {
+        <h1>
+            View Boxes
+        </h1>
+    }
+    else
+    {
+        <h1>
+            Add Boxes
+        </h1>
+    }
+</div>
+@{
+
+    if (ViewBag.Flag == 0)
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning!</strong> Box No must contain 10 characters.
+        </div>
+    }
+    if (ViewBag.Flag == 1)
+    {
+    }
+
+    if (ViewBag.Flag == 3)
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning !</strong> This box Already located at your warehouse.
+        </div>
+    }
+
+    if (ViewBag.Flag == 4)
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning !</strong> This box Already Added in This Transmittal IN.
+        </div>
+    }
+
+    if (ViewBag.ItemZero == 1)
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning !</strong> Item Number not found in our system.
+        </div>
+    }
+
+
+    if (ViewBag.Flag == 2)
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning !</strong> This box has been used before.If You think this is Re-archieving
+            ,then please check "Re-Archieve" Button.
+        </div>
+    }
+
+
+}
+<div class="contentinner">
+    <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Transmittal No :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.TransmittalNo</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Refference No :
+                        </td>
+                        <td>
+                            @ViewBag.TransmittalRefNo
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Transmittal Type :
+                    </td>
+                    <td>
+                        @ViewBag.TransmittalType
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="span6">
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">
+                    Client :
+                </td>
+                <td class="width70">
+                    <strong>@ViewBag.ClientName</strong>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Department :
+                </td>
+                <td>
+                    @ViewBag.Department
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Transmittal Date :
+            </td>
+            <td>
+                @ViewBag.TransmittalDate
+        </td>
+    </tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="clearfix">
+    <br>
+</div>
+@using (Html.BeginForm("Create", "Items"))
+{
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => model.TransmittalINs[0].TransmittalNo, new { @Value = ViewBag.TransmittalNo })
+    @Html.HiddenFor(model => model.TransmittalINs[0].ClientRequestreference, new { @Value = ViewBag.TransmittalRefNo })
+    @Html.HiddenFor(model => model.TransmittalINs[0].TransmittalINId, new { @Value = ViewBag.TransmittalId })
+    @Html.HiddenFor(model => model.TransmittalINs[0].TransmittalDate, new { @Value = ViewBag.TransmittalDate })
+    @Html.HiddenFor(model => model.TransmittalINs[0].TotalArchieveItem, new { @Value = ViewBag.TotalArchieveItem })
+
+    if (!HttpContext.Current.User.IsInRole("Client"))
+    {
+        if (ViewBag.File == "1")
+        {
+            @Html.Partial("CreateOrEditFile", Model)
+        }
+        if (ViewBag.File == "0")
+        {
+            @Html.Partial("_CreateOrEdit", Model)
+        }
+
+
+        <table class="table table-bordered table-invoice">
+            <tbody>
+                <tr>
+                    <td class="width30"></td>
+                    <td class="width70">
+                        @{
+
+                            int flag = Convert.ToInt32(ViewBag.status);
+
+                            if (flag == 1)
+                            { 
+                                <input type="submit" value="Add Box/File" class="btn btn-primary" disabled="disabled" />
+                            }
+                            else if (flag == 0)
+                            {
+                                <input type="submit" id="btnformSubmit" value="Add Box/File" class="btn btn-primary" />
+                            }
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+}
+<br />
+@if (!HttpContext.Current.User.IsInRole("Client"))
+{
+    <table>
+        <tr>
+            <td class="width70">
+                @{
+                    long id = Convert.ToInt64(ViewBag.TransmittalId);
+
+
+                    @Html.ActionLink("Back to TransmittalIN", "Details", "TransmittalINs", new { id = id }, new { @class = "btn" })
+                }
+            </td>
+            <td class="width10">
+                @* @{
+                        long trId = Convert.ToInt64(ViewBag.TransmittalId);
+
+
+
+
+
+                        <div class="btn-group">
+                                                <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Print <span class="caret"></span></button>
+                                                <ul class="dropdown-menu">
+                                                  <li>
+                                                   @Html.ActionLink("Print on PDF", "PrintAsPDF", "Reports", new { trID = trId }, "")
+
+                                                  </li>
+                                                  <li>
+
+                                                 @Html.ActionLink("Print on Excel", "PrintAsExcel", "Reports", new { trID = trId }, "")
+
+                                                  </li>
+                                                  <li>
+                                                   @Html.ActionLink("Print on Doc", "PrintAsDoc", "Reports", new { trID = trId },"")
+
+                                                  </li>
+                                                </ul>
+                                              </div>
+                    }*@
+            </td>
+            <td class="width40">
+                @{
+
+                    int flag2 = Convert.ToInt32(ViewBag.status);
+
+                    if (flag2 == 1)
+                    {
+
+
+
+                    }
+                    else if (flag2 == 0)
+                    {
+                        @Html.ActionLink("Assign Boxes to Warehouse", "AssignBoxes", "Items", new { trID = ViewBag.TransmittalId, flag = 0 }, new { @class = "btn btn-info btn-rounded" })
+                    }
+                }
+            </td>
+        </tr>
+    </table>
+}
+@if (ViewBag.File == "0")
+{
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+                    <th>
+                        Box Name
+                    </th>
+                    <th>
+                        BoxNo
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        DestructionPeriod
+                    </th>
+                    <th>
+                        Description
+                    </th>
+                    @*<th>
+                            IsNew
+                        </th>*@
+                    <th>
+                        TransmittalINs
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.AllItems != null)
+                {
+                    long trid = Convert.ToInt64(ViewBag.TransmittalId);
+                    foreach (var item in ViewBag.AllItems)
+                    {
+                        <tr>
+                            <td>
+                                @if (!HttpContext.Current.User.IsInRole("Client"))
+                                {
+                                    @Html.ActionLink(" ", "RemoveBox", new { id = item.ItemId, trID = trid }, new { @class = "icon-trash" })
+                                }
+                            </td>
+                            <td>
+                                @item.ItemName
+                            </td>
+                            <td>
+                                @item.BoxNo
+                            </td>
+                            <td>
+                                @item.Year
+                            </td>
+                            <td>
+                                @item.DestructionPeriod
+                            </td>
+                            <td>
+                                @item.Description
+                            </td>
+                            <td>
+                                @(item.TransmittalINs == null ? "None" : item.TransmittalINs[0].TransmittalNo.ToString())
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+}
+@if (ViewBag.File == "1")
+{
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+                    <th>
+                        Box Number
+                    </th>
+
+                    <th>
+                        File Number
+                    </th>
+                    <th>
+                        Referrence Number
+                    </th>
+                    <th>
+                        Ring Number
+                    </th>
+                    <th>
+                        Account Number
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        TransmittalINs
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.AllItems != null)
+                {
+                    long trid = Convert.ToInt64(ViewBag.TransmittalId);
+                    foreach (var item in ViewBag.AllItems)
+                    {
+                        <tr>
+                            <td>
+                                @if (!HttpContext.Current.User.IsInRole("Client"))
+                                {
+                                    @Html.ActionLink(" ", "RemoveBox", new { id = item.ItemId, trID = trid }, new { @class = "icon-trash" })
+                                }
+                            </td>
+
+                            <td>
+                                @item.BoxNo
+                            </td>
+
+
+                            <td>
+                                @item.FileNumber
+                            </td>
+
+                            <td>
+                                @item.ReferrenceNo
+                            </td>
+                            <td>
+                                @item.RingNo
+                            </td>
+
+                            <td>
+                                @item.AccountNo
+                            </td>
+                            <td>
+                                @item.Year
+                            </td>
+                            <td>
+                                @(item.TransmittalINs == null ? "None" : item.TransmittalINs[0].TransmittalNo.ToString())
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<br />
+@{
+    if (ViewBag.btnPrint == "1")
+    {
+        <div class="btn-group">
+            <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                Print <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li>
+                    @Html.ActionLink("Print on PDF", "PrintAsPDF", "Reports", new { trID = ViewBag.TransmittalId }, new { @target = "_blank" })
+                </li>
+                <li>
+                    @Html.ActionLink("Print on Excel", "PrintAsExcel", "Reports", new { trID = ViewBag.TransmittalId }, new { @target = "_blank" })
+                </li>
+                <li>
+                    @Html.ActionLink("Print on Doc", "PrintAsDoc", "Reports", new { trID = ViewBag.TransmittalId }, new { @target = "_blank" })
+                </li>
+            </ul>
+        </div>
+    }
+
+
+
+}
+
+</div>

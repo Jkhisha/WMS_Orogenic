@@ -1,0 +1,67 @@
+@model IEnumerable<WareHouseMVC.Models.ReceivedBy>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="pagetitle">
+    <h1>
+      Index List</h1>
+    <span>List of Indexs....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            Name
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            TransmittalINs
+        </th>
+        <th>
+            TrasmittalOUTs
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.ReceivedById }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.ReceivedById }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.ReceivedById }, new { @class = "icon-trash" })
+        </td>
+        <td>
+			@item.Name
+        </td>
+        <td>
+			@item.Address
+        </td>
+        <td>
+			@String.Format("{0:g}", item.Date)
+        </td>
+        <td>
+			@(item.TransmittalINs == null ? "None" : item.TransmittalINs.Count.ToString())
+        </td>
+        <td>
+			@(item.TrasmittalOUTs == null ? "None" : item.TrasmittalOUTs.Count.ToString())
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

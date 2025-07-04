@@ -1,0 +1,49 @@
+@model IEnumerable<WareHouseMVC.Models.ORBLOperator>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="pagetitle">
+    <h1>
+      Operator List</h1>
+    <span>List of Operators....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            Name
+        </th>
+        <th>
+            Address
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.ORBLOperatorId }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.ORBLOperatorId }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.ORBLOperatorId }, new { @class = "icon-trash" })
+        </td>
+        <td>
+			@item.Name
+        </td>
+        <td>
+			@item.Address
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

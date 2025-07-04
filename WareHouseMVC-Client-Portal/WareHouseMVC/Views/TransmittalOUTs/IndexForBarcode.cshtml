@@ -1,0 +1,118 @@
+﻿@model PagedList.IPagedList<WareHouseMVC.Models.TransmittalOUT>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "IndexForBarcode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('.modal2').click(function () {
+            $('<div/>').appendTo('body').dialog({
+                close: function (event, ui) {
+                    dialog.remove();
+                },
+
+                show: { effect: 'drop', direction: "up" },
+                title: 'Box Location',
+
+                resizable: false,
+                height: 500,
+                width: 600,
+                draggable: true,
+                modal: true
+            }).load(this.href, {});
+
+            return false;
+        });
+    });
+</script>
+<div class="pagetitle">
+    <h1>
+        Transmittal OUT Barcode</h1>
+   
+</div>
+
+
+<div id="dyntable_wrapper5" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+               
+                <th>
+                    Tr. No
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Ref. No
+                </th>
+                <th>
+                    Issued By
+                </th>
+                <th>
+                    Client
+                </th>
+                <th>
+                    Dept.
+                </th>
+                <th>
+                    Status
+                </th>
+                <th>
+                    Project
+                </th>
+                <th>
+                    Barcodes
+                </th>
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @item.TransmittalNo
+                    </td>
+                    <td>
+                        @String.Format("{0:g}", item.TransmittalDate.ToShortDateString())
+                    </td>
+                    <td>
+                        @item.ClientRequestreference
+                    </td>
+                    <td>
+                        @Html.DisplayTextFor(_ => item.ContactPerson.ContactPersonName).ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayTextFor(_ => item.Client.ClientName).ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayTextFor(_ => item.Department.DepartmentName).ToString()
+                    </td>
+                    <td>
+                        @Html.DisplayTextFor(_ => item.TransmittalOUTStatus.StatusName).ToString()
+                    </td>
+                    <td>
+                        @* @item.Project.ProjectName*@
+                    </td>
+                    <td>
+                     @Html.ActionLink("View Barcodes", "ViewBoxBarcodes", "TransmittalOUTs", new { transMIttalOUTId = item.TransmittalOUTId }, new { @class = "modal2" })
+                      
+                    </td>
+                    
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+
+     <br />
+    <div style="float:right">
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page}))
+</div>

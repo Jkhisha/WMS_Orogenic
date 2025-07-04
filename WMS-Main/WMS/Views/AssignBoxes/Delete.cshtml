@@ -1,0 +1,130 @@
+@model WareHouseMVC.Models.AssignBox
+
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="pagetitle">
+    <h1>
+      Delete  </h1>
+    <span>Are you sure you want to delete this?</span>
+</div>
+
+@using (Html.BeginForm()) {
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">TransmittalIN</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.TransmittalIN).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">ItemIds</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.ItemIds).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Warehouse</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Warehouse).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">WarehouseName</td>
+        <td>
+        @Model.WarehouseName
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Item</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Item).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">BoxNo</td>
+        <td>
+        @Model.BoxNo
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">DestructionPeriod</td>
+        <td>
+        @Model.DestructionPeriod
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">AssignDate</td>
+        <td>
+        @String.Format("{0:g}", Model.AssignDate)
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">IsLatest</td>
+        <td>
+        @Model.IsLatest
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">TransmittalINStatus</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.TransmittalINStatus).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">BoxLocation</td>
+        <td>
+        @(Model.BoxLocation == null ? "None" : Model.BoxLocation.Count.ToString())
+        </td>
+        </tr>
+
+    
+
+ <tr>
+         <td class="width30"></td>
+        <td>
+    <input type="submit" value="Delete" class="btn btn-danger" /> 
+        </td>
+        </tr>
+		  </tbody>
+        </table>
+    <p>
+       
+      @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+  
+    </p>
+}
+
+

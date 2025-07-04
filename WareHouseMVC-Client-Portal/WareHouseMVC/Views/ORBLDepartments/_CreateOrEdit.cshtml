@@ -1,0 +1,30 @@
+@model WareHouseMVC.Models.ORBLDepartment
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.ORBLDepartmentName)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.ORBLDepartmentName)
+    @Html.ValidationMessageFor(model => model.ORBLDepartmentName)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.ORBLDepartmentCode)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.ORBLDepartmentCode)
+    @Html.ValidationMessageFor(model => model.ORBLDepartmentCode)
+</td>
+</tr>
+
+</tbody>
+</table>
+ 

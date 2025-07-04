@@ -1,0 +1,18 @@
+﻿@model WareHouseMVC.Models.ContactPerson
+
+@{
+    Layout = null;
+
+    
+    
+    
+    <td class="width70"  id="ddlContactPersontID">
+                @Html.DropDownListFor(model => model.ContactPersontID, ((IEnumerable<WareHouseMVC.Models.ContactPerson>)ViewBag.PossibleContactPerson).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.ContactPersonName).ToString(),
+               Value = option.ContactPersontID.ToString(),
+               Selected = (Model != null) && (option.ContactPersontID == Model.ContactPersontID)
+           }), "Choose...", new { @data_placeholder = "Choose a Country...", @style = "width: 221px", @class = "chzn-select", @tabindex = "2" })
+                @Html.ValidationMessageFor(model => model.ContactPersontID)
+            </td>
+}

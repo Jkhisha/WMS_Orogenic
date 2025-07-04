@@ -1,0 +1,343 @@
+﻿@model WareHouseMVC.Models.XLUploadViewModel
+@{
+    ViewBag.Title = "XLUpload";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ClientId1").change(function (evt) {
+
+            if ($("select#ClientId1").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetDepts1")",
+                    type: 'POST',
+                    data: { ClientID: $("select#ClientId1").val() },
+                    success: function (response) {
+
+
+
+                        $("select#DeptId1").replaceWith(response)
+
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ClientId2").change(function (evt) {
+
+            if ($("select#ClientId2").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetDepts2")",
+                    type: 'POST',
+                    data: { ClientID: $("select#ClientId2").val() },
+                    success: function (response) {
+
+
+
+                        $("select#DeptId2").replaceWith(response)
+
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+</script>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ClientId3").change(function (evt) {
+
+            if ($("select#ClientId3").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetDepts3")",
+                    type: 'POST',
+                    data: { ClientID: $("select#ClientId3").val() },
+                    success: function (response) {
+
+
+
+                        $("select#DeptId3").replaceWith(response)
+
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+</script>
+
+<div class="pagetitle">
+    <h1>Upload XL</h1>
+    <span>Upload initial Data for Warehouse....</span>
+</div>
+
+<h3>Upload XL Sheet For Box</h3>
+@{
+
+    if (ViewBag.Flag == 1)
+    {
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        <strong>Well done!</strong> Your Warehouse Structure With Data Successfully Updated.Total Number of Uploaded Data is : <strong>@ViewBag.Count </strong>
+    </div>
+    }
+
+    if (ViewBag.Flag == 0)
+    {
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        <strong>Oh snap!</strong> Data Not Updated.Check The XL Sheet Format.<br />
+        <strong>@ViewBag.msg </strong>
+    </div>
+    }
+
+    if (ViewBag.flagError == 0)
+    {
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        <strong>Oh snap!</strong> Please Select Department and Client.<br />
+        <strong>@ViewBag.msg </strong>
+    </div>
+    }
+}
+@using (Html.BeginForm("XLUploadwithFile", "XLUploads", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">Client
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.ClientId1, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem
+                   {
+                       Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+                       Value = option.ClientID.ToString(),
+                       Selected = (Model != null) && (option.ClientID == Model.ClientId1)
+                   }), "Choose...")
+                    @Html.ValidationMessageFor(model => model.ClientId1)
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">Department
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.DeptId1, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+                    {
+                        Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+                        Value = option.DepartmentID.ToString(),
+                        Selected = (Model != null) && (option.DepartmentID == Model.DeptId1)
+                    }), "Choose...")
+                    @Html.ValidationMessageFor(model => model.DeptId1)
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="width30">
+                    <label>
+                        File Upload</label>
+                </td>
+                <td class="width70">
+                    <div data-provides="fileupload" class="fileupload fileupload-exists">
+                        <input type="hidden" value="" name="filename">
+                        <div class="input-append">
+                            <div class="uneditable-input span3">
+                                <i class="icon-file fileupload-exists"></i>
+                                <span class="fileupload-preview"></span>
+                            </div>
+                            <span class="btn btn-file"><span class="fileupload-new">Select file</span>
+                                <span class="fileupload-exists">Change</span>
+                                <input type="file" name="filename"></span>
+                            <a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+                        </div>
+                    </div>
+                    <span style="margin-left: 75px;"><a href="@Url.Content("~/Content/StandardXLFiles/WareHouseXLFormatBOX.xlsx")" >Download Standard CSV Format</a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="width30"></td>
+                <td class="width70">
+                    <input type="submit" value="Upload" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+}
+
+<br />
+<h3>Upload XL Sheet For File</h3>
+
+@using (Html.BeginForm("XLUploadwithFileForFile", "XLUploads", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <table class="table table-bordered table-invoice">
+        <tbody>
+
+
+            <tr>
+                <td class="width30">Client
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.ClientId2, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem
+                    {
+                        Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+                        Value = option.ClientID.ToString(),
+                        Selected = (Model != null) && (option.ClientID == Model.ClientId2)
+                    }), "Choose...")
+                    @Html.ValidationMessageFor(model => model.ClientId2)
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">Department
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.DeptId2, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+                    {
+                        Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+                        Value = option.DepartmentID.ToString(),
+                        Selected = (Model != null) && (option.DepartmentID == Model.DeptId2)
+                    }), "Choose...")
+                    @Html.ValidationMessageFor(model => model.DeptId2)
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td class="width30">
+                    <label>
+                        File Upload</label>
+                </td>
+                <td class="width70">
+                    <div data-provides="fileupload" class="fileupload fileupload-exists">
+                        <input type="hidden" value="" name="filenameFile">
+                        <div class="input-append">
+                            <div class="uneditable-input span3">
+                                <i class="icon-file fileupload-exists"></i>
+                                <span class="fileupload-preview"></span>
+                            </div>
+                            <span class="btn btn-file"><span class="fileupload-new">Select file</span>
+                                <span class="fileupload-exists">Change</span>
+                                <input type="file" name="filenameFile"></span>
+                            <a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+                        </div>
+                    </div>
+                    <span style="margin-left: 75px;"><a href="@Url.Content("~/Content/StandardXLFiles/WareHouseXLFormatFile.xlsx")" >Download Standard CSV Format</a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="width30"></td>
+                <td class="width70">
+                    <input type="submit" value="Upload" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+}
+
+
+<br />
+<h3>Upload XL Sheet For Pallet Box</h3>
+
+@using (Html.BeginForm("XLUploadwithFileForPalletBox", "XLUploads", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+
+    <table class="table table-bordered table-invoice">
+        <tbody>
+
+            <tr>
+                <td class="width30">Client
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.ClientId3, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem
+                    {
+                        Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+                        Value = option.ClientID.ToString(),
+                        Selected = (Model != null) && (option.ClientID == Model.ClientId3)
+                    }), "Choose...")
+                    @Html.ValidationMessageFor(model => model.ClientId3)
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">Department
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.DeptId3, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+               Value = option.DepartmentID.ToString(),
+               Selected = (Model != null) && (option.DepartmentID == Model.DeptId3)
+           }), "Choose...")
+                    @Html.ValidationMessageFor(model => model.DeptId3)
+                </td>
+            </tr>
+
+            <tr>
+                <td class="width30">
+                    <label>
+                        File Upload</label>
+                </td>
+                <td class="width70">
+                    <div data-provides="fileupload" class="fileupload fileupload-exists">
+                        <input type="hidden" value="" name="filenamePallet">
+                        <div class="input-append">
+                            <div class="uneditable-input span3">
+                                <i class="icon-file fileupload-exists"></i>
+                                <span class="fileupload-preview"></span>
+                            </div>
+                            <span class="btn btn-file"><span class="fileupload-new">Select file</span>
+                                <span class="fileupload-exists">Change</span>
+                                <input type="file" name="filenamePallet"></span>
+                            <a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+                        </div>
+                    </div>
+                    <span style="margin-left: 75px;"><a href="@Url.Content("~/Content/StandardXLFiles/PalletXLFormat.xlsx")" >Download Standard CSV Format</a></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="width30"></td>
+                <td class="width70">
+                    <input type="submit" value="Upload" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+}

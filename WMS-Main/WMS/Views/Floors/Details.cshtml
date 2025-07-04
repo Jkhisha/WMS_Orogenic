@@ -1,0 +1,45 @@
+@model WareHouseMVC.Models.Floor
+
+@{
+    ViewBag.Title = "Floor Details";
+}
+
+<div class="pagetitle">
+    <h1>
+       Floor Details </h1>
+    <span> Floor Details below....</span>
+</div>
+
+
+<fieldset>
+
+
+
+  <table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+        <td class="width30">Floor Name</td>
+        <td>
+        @Model.FloorName
+        </td>
+        </tr>
+        <tr>
+        <td>Floor Code</td>
+        <td>@Model.FloorCode</td>
+        
+        </tr>
+
+         <tr>
+        <td>Warehouse</td>
+        <td>@Html.DisplayTextFor(_ => Model.Warehouse.WarehouseName).ToString()</td>
+        
+        </tr>
+        </tbody>
+        </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FloorID }, new { @class = "btn btn-primary" }) |
+     @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

@@ -1,0 +1,156 @@
+@model PagedList.IPagedList<WareHouseMVC.Models.TransmittalIN>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Transmittal IN";
+    WareHouseMVC.Models.UnitOfWork repo = new WareHouseMVC.Models.UnitOfWork();
+
+    }
+<div class="pagetitle">
+    <h1>
+        Transmittal IN</h1>
+    <span>List of Transmittal IN....</span>
+</div>
+<p>
+    @if (HttpContext.Current.User.IsInRole("Management"))
+    {
+    }
+    else
+    {
+
+        @Html.ActionLink("Box Archive Request", "Create", "", new { @class = "btn btn-primary" })
+    }
+</p>
+<div id="dyntable_wrapper" class="dataTables5_wrapper" role="grid">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    Tr. No
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Type
+                </th>
+                @*<th>
+            Ref. No
+        </th>*@
+
+                @*<th>
+                    Client
+                </th>*@
+                <th>
+                    Dept.
+                </th>
+                <th>
+                    Sub dept.
+                </th>
+                <th>
+                    Issued By
+                </th>
+                @*<th>
+                    Status
+                </th>*@
+
+                <th>
+                    Boxes
+                </th>
+                <th>
+                    HandOver By
+                </th>
+                <th>
+                    Received By
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                @if (HttpContext.Current.User.IsInRole("Management"))
+                {
+                    <td>
+                        @Html.ActionLink(" ", "Details", new { id = item.TransmittalINId }, new { @class = "icon-list-alt" })
+                    </td>
+                }
+                else
+                {
+
+                    <td>
+                        @Html.ActionLink(" ", "Edit", new { id = item.TransmittalINId }, new { @class = "icon-edit" })
+                        |
+                        @Html.ActionLink(" ", "Details", new { id = item.TransmittalINId }, new { @class = "icon-list-alt" })
+                    </td>
+                }
+                <td>
+                    @item.TransmittalNo
+                </td>
+                <td>
+                    @String.Format("{0:g}", item.TransmittalDate.ToShortDateString())
+                </td>
+                <td>
+                    @item.Type
+                </td>
+                @*<td>
+            @item.ClientRequestreference
+        </td>*@
+
+                @*<td>
+                    @Html.DisplayTextFor(_ => item.Client.ClientName).ToString()
+                </td>*@
+                <td>
+                    @Html.DisplayTextFor(_ => item.Department.DepartmentName).ToString()
+                </td>
+                <td>
+                    @Html.DisplayTextFor(_ => item.SubDepartment).ToString()
+                </td>
+                <td>
+                    @Html.DisplayTextFor(_ => item.ContactPerson.ContactPersonName).ToString()
+                </td>
+                @*<td>
+                    @Html.DisplayTextFor(_ => item.TransmittalINStatus.StatusName).ToString()
+                </td>*@
+
+                <td>
+                    @if (HttpContext.Current.User.IsInRole("Management"))
+                    {
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Add/View Boxes", "CreateWitTrINId", "Items", new { trId = item.TransmittalINId }, "");
+                    }
+                </td>
+                <td>
+                    @if (HttpContext.Current.User.IsInRole("Management"))
+                    {
+                    }
+                    else
+                    {
+
+                        @Html.ActionLink("HandOver", "HandOverBy", "HandOverBies", new { trId = item.TransmittalINId }, "");
+                    }
+                </td>
+                <td>
+                    @if (HttpContext.Current.User.IsInRole("Management"))
+                    {
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Received", "ReceivedBy", "ReceivedBies", new { trId = item.TransmittalINId }, "");
+                    }
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <div style="float:right">
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page}))
+    </div>
+</div>

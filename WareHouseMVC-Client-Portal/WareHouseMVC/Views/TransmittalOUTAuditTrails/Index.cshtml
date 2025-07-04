@@ -1,0 +1,94 @@
+@model IEnumerable<WareHouseMVC.Models.TransmittalOUTAuditTrail>
+@{
+    ViewBag.Title = "Transmittal OUT Audit Trail";
+}
+<div class="pagetitle">
+    <h1>
+        Transmittal OUT Audit Trails</h1>
+    <span>List of Transmittal OUT Audit Trails....</span>
+</div>
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered" id="dyntable">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    TransmittalOUT No
+                </th>
+                <th>
+                    Create By
+                </th>
+                <th>
+                    Create Date
+                </th>
+                <th>
+                    Create Time
+                </th>
+                <th>
+                    Creator IP
+                </th>
+                <th>
+                    BoxOut By
+                </th>
+                <th>
+                    BoxOut Date
+                </th>
+                <th>
+                    BoxOut Time
+                </th>
+                <th>
+                    BoxOuter IP
+                </th>
+              
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        @item.TransmittalOUTNo
+                    </td>
+                    <td>
+                        @item.CreateBy
+                    </td>
+                    <td>
+                        @item.CreateDate.ToShortDateString()
+                    </td>
+                    <td>
+                        @item.CreateTime
+                    </td>
+                    <td>
+                        @item.CreatorIP
+                    </td>
+                    <td>
+                        @item.BoxOutBy
+                    </td>
+                    <td>
+                        @{
+                string recDate = string.Empty;
+                if (item.CreateDate == item.BoxOutDate)
+                {
+                }
+                else
+                {
+                    recDate = item.BoxOutDate.ToShortDateString();
+                }
+			
+                        }
+                        @recDate
+                    </td>
+                    <td>
+                        @item.BoxOutTime
+                    </td>
+                    <td>
+                        @item.BoxOutIP
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,200 @@
+@model WareHouseMVC.Models.ORBLOperator
+@{
+    ViewBag.Title = "ReceivedBy";
+}
+<script type="text/javascript">
+    jQuery(function ($) {
+
+        $("select#ORBLOperatorId").change(function (evt) {
+            if ($("select#ORBLOperatorId").val() != "") {
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetOperatorAddress")",
+                    type: 'POST',
+                    data: { ORBLOperatorId: $("select#ORBLOperatorId").val() },
+                    success: function (response) {
+                        $("#Address").val(response)
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+    });
+
+</script>
+<div class="pagetitle">
+    <h1>
+        Add ReceivedBy
+    </h1>
+    <span>Add ReceivedBy below....</span>
+</div>
+<div class="contentinner">
+    <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Transmittal No :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.TransmittalNo</strong>
+                        </td>
+                    </tr>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transmittal Type :
+                        </td>
+                        <td>
+                            @ViewBag.TransmittalType
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transmittal Date :
+                        </td>
+                        <td>
+                            @ViewBag.TransmittalDate
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Client :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.ClientName</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Department :
+                        </td>
+                        <td>
+                            @ViewBag.Department
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="clearfix">
+        <br />
+    </div>
+    @using (Html.BeginForm("Create", "ReceivedBies"))
+    {
+        @Html.ValidationSummary(true)
+        @Html.Raw("<input  type='hidden' name='trId' value='" + ViewBag.TransmittalId + "' id='" + ViewBag.TransmittalId + "' ></input>")
+
+        @*
+            @Html.Partial("_CreateOrEdit", Model)*@
+
+
+        <table class="table table-bordered table-invoice">
+            <tbody>
+                <tr>
+                    <td class="width30">
+                        Received By
+                        <span style="color:red;">*</span>
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.ORBLOperatorId, ((IEnumerable<WareHouseMVC.Models.ORBLOperator>)ViewBag.PossibleOperator).Select(option => new SelectListItem
+                        {
+                        Text = Html.DisplayTextFor(_ => option.Name).ToString(),
+                        Value = option.ORBLOperatorId.ToString(),
+                        Selected = (Model != null) && (option.ORBLOperatorId == Model.ORBLOperatorId)
+                        }), "Choose...", new { @required = "required" })
+                        
+                        @Html.ValidationMessageFor(model => model.ORBLOperatorId)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        Address
+                        <span style="color:red;">*</span>
+                    </td>
+                    <td class="width70">
+                        @Html.TextAreaFor(model => model.Address, 3, 5, "")
+                        @Html.ValidationMessageFor(model => model.Address)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                    </td>
+                    <td class="width70">
+                        <input id="addReceivedByButton" type="submit" value="Add ReceivedBy" class="btn btn-primary" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+
+    <br />
+
+    <table>
+        <tr>
+            <td class="width70">
+                @{
+                    long id = Convert.ToInt64(ViewBag.TransmittalId);
+
+
+                    @Html.ActionLink("Back to TransmittalIN", "Details", "TransmittalINs", new { id = id }, new { @class = "btn" })
+                }
+            </td>
+        </tr>
+    </table>
+
+    @*<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+            <table class="table table-bordered" id="dyntable">
+                <thead>
+                    <tr>
+                        <th>
+                        </th>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Address
+                        </th>
+                        <th>
+                            Date
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.AllReceivedBy != null)
+                    {
+                        long trid = Convert.ToInt64(ViewBag.TransmittalId);
+
+                        foreach (var item in @ViewBag.AllReceivedBy)
+                        {
+                        <tr>
+                            <td>
+
+                                    @Html.ActionLink(" ", "Remove", new { id = item.ORBLOperatorId, trID = trid }, new { @class = "icon-trash" })
+
+                            </td>
+                            <td>
+                                @item.Name
+                            </td>
+                            <td>
+                                @item.Address
+                            </td>
+                            <td>
+                                @String.Format("{0:g}", item.Date)
+                            </td>
+                        </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>*@
+</div>

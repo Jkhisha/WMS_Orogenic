@@ -1,0 +1,41 @@
+@model WareHouseMVC.Models.Floor
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.FloorName)
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.FloorName)
+                @Html.ValidationMessageFor(model => model.FloorName)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.FloorCode)
+            </td>
+            <td class="width30">
+                @Html.EditorFor(model => model.FloorCode)
+                @Html.ValidationMessageFor(model => model.FloorCode)
+            </td>
+        </tr>
+
+          <tr>
+            <td class="width30">
+              Warehouse
+            </td>
+            <td class="width30">
+                @Html.DropDownListFor(model => model.WarehouseID, ((IEnumerable<WareHouseMVC.Models.Warehouse>)ViewBag.PossibleWarehouses).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.WarehouseName).ToString(),
+               Value = option.WarehouseID.ToString(),
+               Selected = (Model != null) && (option.WarehouseID == Model.WarehouseID) || (Model==null) && (option.WarehouseID== ViewBag.whID)
+           }), "Choose...")
+    @Html.ValidationMessageFor(model => model.WarehouseID)
+            </td>
+        </tr>
+    </tbody>
+</table>
+

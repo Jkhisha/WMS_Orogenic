@@ -1,0 +1,57 @@
+@model List<WareHouseMVC.Models.LoginTrail>
+
+@{
+    ViewBag.Title = "Login Trail";
+}
+
+<div class="pagetitle">
+    <h1>
+      Login List</h1>
+    <span>List of Logis in The System....</span>
+</div>
+
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            Login By
+        </th>
+        <th>
+            Login Date
+        </th>
+        <th>
+            Login Time
+        </th>
+        <th>
+            Local IP
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+           
+        </td>
+        <td>
+			@item.LoginBy
+        </td>
+        <td>
+			@item.LoginDate.ToShortDateString()
+        </td>
+        <td>
+			@item.LoginTime
+        </td>
+        <td>
+			@item.LocalIP
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>
