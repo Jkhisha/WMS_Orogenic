@@ -1,0 +1,77 @@
+@model WareHouseMVC.Models.EmptyBox
+
+@{
+    ViewBag.Title = "New Recuisition ";
+}
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#btnSubmit").click(function (e) {
+            var selectedValue = $("#NoofBoxes").val();
+            var errorMessage = $("#boxWarning");
+            console.log(selectedValue);
+            if (selectedValue <= 0 || selectedValue === null || selectedValue == undefined) {
+
+                errorMessage.show();
+                e.preventDefault();
+            } else {
+                errorMessage.hide();
+            }
+        });
+    });
+
+</script>
+
+<div class="pagetitle">
+    <h1>
+       New Recuisition </h1>
+    <span>Create New Recuisition below....</span>
+</div>
+
+@{ 
+
+    if (ViewBag.Flag == 1)
+    {
+     <div class="alert alert-success">
+                              <button type="button" class="close" data-dismiss="alert">×</button>
+                              <strong>Well done!</strong> You successfully Created New Recuisition.
+                            </div>
+    }
+    if (ViewBag.Flag == 0)
+    {
+    }
+}
+
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+	
+		@Html.Partial("_CreateOrEdit", Model)
+    <table class="table table-bordered table-invoice">
+	  <tbody>
+            <tr>
+ <td  class="width30">
+                
+                </td>
+                <td class="width70" >
+                <input id= "btnSubmit" type="submit" value="Create" class="btn btn-primary" />
+
+                @if(ViewBag.Flag==1)
+                {
+                
+                    @Html.ActionLink("Print", "PrintEmptyBox", "Reports", new { empId = Model.EmptyBoxId }, new { @target = "_blank", @class="btn btn-warning" })
+                 }
+                </td>
+                
+
+		</tr>
+		</tbody>
+    </table>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</div>
+
+
+

@@ -1,0 +1,93 @@
+@model IEnumerable<WareHouseMVC.Models.AuditTrailCP>
+
+    @{
+        ViewBag.Title = " Change Logs";
+    }
+
+    <div class="pagetitle">
+        <h1>
+            Change Logs
+        </h1>
+        <span>Change Logs of Client Portal....</span>
+    </div>
+
+
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+
+                    <th>
+                        Changing Date
+                    </th>
+                    <th>
+                        Changed By
+                    </th>
+                    <th>
+                        Previous Box Name
+                    </th>
+                    <th>
+                        Previous Box No
+                    </th>
+                    <th>
+                        Previous Box Year
+                    </th>
+                    <th>
+                        Previous Comments
+                    </th>
+                    <th>
+                        New Box Name
+                    </th>
+                    <th>
+                        New Box No
+                    </th>
+                    <th>
+                        New Box Year
+                    </th>
+                    <th>
+                        New Comments
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @item.ChangingDate.ToShortDateString()
+                        </td>
+                        <td>
+                            @item.UserName
+                        </td>
+                        <td>
+                            @item.PreBoxName
+                        </td>
+                        <td>
+                            @item.PreBoxNumber
+                        </td>
+                        <td>
+                            @item.PreBoxYear
+                        </td>
+                        <td>
+                            @item.PreComments
+                        </td>
+                        <td>
+                            @item.NewBoxName
+                        </td>
+                        <td>
+                            @item.NewBoxNumber
+                        </td>
+                        <td>
+                            @item.NewBoxYear
+                        </td>
+                        <td>
+                            @item.NewComments
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>

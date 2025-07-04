@@ -1,0 +1,70 @@
+﻿@model List<WareHouseMVC.Models.TransmittalOUTBArcodeViewModel>
+@{
+
+    Layout = null;
+}
+<div>
+    <strong>Box Details :</strong>
+    <div class="row-fluid">
+        <div class="span6">
+        <div id="dyntable_wrapper5" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered">
+        <thead>
+            <tr>
+               
+                <th>
+                   Client
+                </th>
+                <th>
+                   Dept.
+                </th>
+                <th>
+                  Box Name
+                </th>
+                <th>Box No 
+
+                </th>
+                <th>
+                   Year
+                </th>
+                <th>
+                  Barcode Text
+                </th>
+               
+               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+
+                    <td>
+                        @item.ClientName
+                    </td>
+                   
+                    <td>
+                        @item.Dept
+                    </td>
+                    <td>
+                       @item.BoxName
+                    </td>
+                    <td>
+                       @item.BoxNo
+                    </td>
+                    <td>
+                       @item.Year
+                    </td>
+                    <td>
+                       @item.BoxNo
+                    </td>
+                   
+                    
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+          </div>
+</div>

@@ -1,0 +1,36 @@
+@model WareHouseMVC.Models.AuditTrailCP
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.TestName)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.TestName)
+    @Html.ValidationMessageFor(model => model.TestName)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Amount)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Amount)
+    @Html.ValidationMessageFor(model => model.Amount)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Status)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Status)
+    @Html.ValidationMessageFor(model => model.Status)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.IsRemoved)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.IsRemoved)
+    @Html.ValidationMessageFor(model => model.IsRemoved)
+</div>
+

@@ -1,0 +1,168 @@
+@model WareHouseMVC.Models.DesBoxViewModel
+                      
+    @{
+        ViewBag.Title = "Destruction Log";
+    }
+
+                      <script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ClientID").change(function (evt) {
+
+            if ($("select#ClientID").val() != "-1") {
+
+                $.ajax({
+                    url:"@Url.Content("~/zones/GetDepts")",
+                    type: 'POST',
+                    data: { ClientID: $("select#ClientID").val() },
+                    success: function (response) {
+                        $("#cznDept").replaceWith(response)
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+                      </script>
+
+
+    <div class="pagetitle">
+        <h1>
+          Upcoming Destruction 
+        </h1>
+        <span>List of Upcoming Destructions....</span>
+    </div>
+    
+
+
+                      @using (Html.BeginForm("UpcomingList", "BoxDestructions", FormMethod.Get, ""))
+                      {
+                          @Html.ValidationSummary(true)
+
+
+                          <table class="table table-bordered table-invoice">
+                              <tbody>
+                                  <tr>
+                                      <td class="width30">
+                                          Select Client
+                                      </td>
+                                      <td class="width70">
+                                          <span class="formwrapper">
+                                              @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem
+               {
+                   Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+                   Value = option.ClientID.ToString(),
+                   Selected = (Model != null) && (option.ClientID == Model.ClientID)
+               }), "Choose...", new { @data_placeholder = "Choose a Country...", @style = "width: 221px", @class = "chzn-select", @tabindex = "2" })
+                                          </span>
+                                          @Html.ValidationMessageFor(model => model.ClientID)
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td class="width30">
+                                          Select Department
+                                      </td>
+                                      <td class="width70">
+                                          <span class="formwrapper" id="cznDept">
+                                              @Html.DropDownListFor(model => model.DepartmentID, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+               {
+                   Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+                   Value = option.DepartmentID.ToString(),
+                   Selected = (Model != null) && (option.DepartmentID == Model.DepartmentID)
+               }), "Choose...", new { @data_placeholder = "Choose a Country...", @style = "width: 221px", @class = "chzn-select", @tabindex = "2" })
+                                          </span>
+                                          @Html.ValidationMessageFor(model => model.DepartmentID)
+                                      </td>
+                                  </tr>
+                                  
+                                  
+                                  
+                                  
+                                  <tr>
+                                      <td class="width30"></td>
+                                      <td class="width70">
+                                          <input type="submit" value="Search" class="btn btn-primary" />
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+
+
+                      }
+
+
+
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        Client Name
+                    </th>
+                    <th>
+                        Department Name
+                    </th>
+                    <th>
+                        Box Name
+                    </th>
+
+                    <th>
+                        Box Number
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        Destruction Period
+                    </th>
+                    <th>
+                       Destroy
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.SearchResults)
+                {
+                    <tr>
+                        <td>
+
+                           
+                        </td>
+                        <td>
+                            @item.Client.ClientName
+                        </td>
+                        <td>
+                            @item.Department.DepartmentName
+                        </td>
+                        <td>
+                            @item.ItemName
+                        </td>
+                        <td>
+                            @item.BoxNo
+                        </td>
+                        <td>
+                           
+
+                            @item.Year
+
+                        </td>
+                        <td>
+                           
+
+                            @item.DestructionPeriod
+                        </td>
+                        <td>
+                          
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>

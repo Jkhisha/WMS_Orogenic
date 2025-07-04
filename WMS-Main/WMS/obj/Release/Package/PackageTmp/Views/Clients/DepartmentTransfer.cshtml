@@ -1,0 +1,263 @@
+﻿@model WareHouseMVC.Models.ChangeDepartmentViewModel
+@{
+    ViewBag.Title = "Department Transfer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ClientId").change(function (evt) {
+
+            if ($("select#ClientId").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetDeptsOld")",
+                    type: 'POST',
+                    data: { ClientID: $("select#ClientId").val() },
+                    success: function (response) {
+                        $("select#OldDeptId").replaceWith(response)
+
+
+
+
+
+
+                          $("select#OldDeptId").change(function (evt) {
+
+                            if ($("select#OldDeptId").val() != "-1") {
+
+                                $.ajax({
+                                    url: "@Url.Content("~/zones/GetItemsByDeptId")",
+                                    type: 'POST',
+                                    data: { OldDeptId: $("select#OldDeptId").val() },
+                                    success: function (response) {
+
+                                        $("#dyntable_wrapper").replaceWith(response)
+
+
+                                    },
+                                    error: function (xhr) {
+                                        alert("Something went wrong, please try again");
+                                    }
+                                });
+                            }
+                        });
+
+
+
+
+
+
+
+
+
+
+                          $.ajax({
+                    url: "@Url.Content("~/zones/GetDeptsNew")",
+                    type: 'POST',
+                    data: { ClientID: $("select#ClientId").val() },
+                    success: function (response) {
+                        $("select#NewDeptId").replaceWith(response)
+                        
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+
+
+
+
+
+
+
+
+
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+</script>
+
+
+    @if (ViewBag.Flag == "1")
+    {
+   <div class="alert alert-success">
+                              <button type="button" class="close" data-dismiss="alert">×</button>
+                              <strong>Well done!</strong> Department Transfered Successfully.
+                            </div>
+    }
+    
+     @if (ViewBag.Flag == "0")
+    {
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        <strong>Warning !</strong> You have not selected Any Box or There has been some error occured!.
+    </div>
+    }
+
+
+<div class="pagetitle">
+    <h1>
+        Department Transfer
+    </h1>
+    <span>Transfer Departments below....</span>
+</div>
+@using (Html.BeginForm("DepartmentTransfer", "Clients", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+	
+    
+    
+    
+    
+    
+    
+    
+		
+    <table class="table table-bordered table-invoice">
+ <tbody>
+
+<tr>
+<td class="width30">
+   Client
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.ClientId, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem
+{
+    Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+    Value = option.ClientID.ToString(),
+    Selected = (Model != null) && (option.ClientID == Model.ClientId) || (Model == null) && (option.ClientID == ViewBag.clID)
+}), "Choose...")
+    @Html.ValidationMessageFor(model => model.ClientId)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    Previous Department
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.OldDeptId, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.possibleDepts).Select(option => new SelectListItem
+{
+    Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+    Value = option.DepartmentID.ToString(),
+    Selected = (Model != null) && (option.DepartmentID == Model.OldDeptId) || (Model == null) && (option.DepartmentID == ViewBag.clID)
+}), "Choose...")
+    @Html.ValidationMessageFor(model => model.OldDeptId)
+</td>
+</tr>
+
+
+</tbody>
+</table>
+    
+    
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th class="centeralign">
+                        <div class="checker" id="uniform-undefined">
+                            <span class="">
+                                <input type="checkbox" class="checkall" style="opacity: 0;">
+                            </span>
+                        </div>
+                    </th>
+                    @* <th class="centeralign"><div class="checker" id="uniform-undefined"><input type="checkbox" class="checkall" style="opacity: 0;"></div></th>*@
+                     <th>
+                        Box Name
+                    </th>
+                    <th>
+                        BoxNo
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        DestructionPeriod
+                    </th>
+
+                    
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.itemList.Count > 0)
+            {
+                foreach (var item in Model.itemList)
+                {
+                    <tr>
+                        @* <td class="centeralign"><div class="checker" id="uniform-undefined"><span class=""><input type="checkbox" style="opacity: 0;"></span></div></td>*@
+                        <td class="centeralign">
+                            <div class="checker1" id="uniform-undefined">
+                                @*  <input type="checkbox" >*@
+                                @Html.Raw("<input  type='checkbox' name='ItemIds' value='" + item.ItemId + "' id='" + item.ItemId + "' ></input>")
+                            </div>
+                        </td>
+                           <td>
+                            @item.ItemName
+                        </td>
+                        <td>
+                            @item.BoxNo
+                        </td>
+                         <td>
+                            @item.Year
+                        </td>
+                       <td>
+                        @if (item.DestructionPeriod.HasValue)
+                        {
+                           
+                            @item.DestructionPeriod.Value.ToShortDateString()
+                             
+                        }
+                       </td>
+                       
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    
+        <table class="table table-bordered table-invoice">
+ <tbody>
+
+ <tr>
+<td class="width30">
+  New Department
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.NewDeptId, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.possibleDepts).Select(option => new SelectListItem
+{
+    Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+    Value = option.DepartmentID.ToString(),
+    Selected = (Model != null) && (option.DepartmentID == Model.NewDeptId) || (Model == null) && (option.DepartmentID == ViewBag.clID)
+}), "Choose...")
+    @Html.ValidationMessageFor(model => model.NewDeptId)
+</td>
+</tr>
+
+
+ <tr>
+ <td  class="width30">
+                
+                </td>
+                <td  class="width70">
+                <input type="submit" value="Transfer" class="btn btn-primary" />
+                </td>
+
+		</tr>
+ </tbody>
+ </table>
+    
+    
+}

@@ -1,0 +1,101 @@
+﻿@model WareHouseMVC.Models.EditProfileModel
+@{
+    ViewBag.Title = "EditProfile";
+   
+}
+<div class="pagetitle">
+    <h1>
+        Edit Your Profile</h1>
+    <span>Use the form below to update your profile....</span>
+</div>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@if (ViewBag.successMessage != null)
+{
+    <div class="alert alert-info" id="msg" runat="server">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        @ViewBag.successMessage
+    </div>
+}
+<div class="widgetcontent">
+    @using (Html.BeginForm("EditProfile", "Users", FormMethod.Post, new { @class = "stdform" }))
+    {
+    
+        <table class="table table-bordered table-invoice">
+            <tbody>
+                <tr>
+                    <td class="width30">
+                        @Html.LabelFor(m => m.FirstName)
+                    </td>
+                    <td class="width70">
+                        @Html.TextBoxFor(m => m.FirstName, new { @Value = ViewBag.FirstName })
+                        @Html.ValidationMessageFor(m => m.FirstName)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        @Html.LabelFor(m => m.LastName)
+                    </td>
+                    <td class="width70">
+                        @Html.TextBoxFor(m => m.LastName, new { @Value = ViewBag.LastName })
+                        @Html.ValidationMessageFor(m => m.LastName)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.Email)
+                    </td>
+                    <td>
+                        @Html.TextBoxFor(m => m.Email, new { @Value = ViewBag.Email })
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="width30">
+                        @Html.LabelFor(m => m.MobileNumber)
+                    </td>
+                    <td class="width70">
+                        @Html.TextBoxFor(m => m.MobileNumber, new { @Value = ViewBag.Mobile })
+                        @Html.ValidationMessageFor(m => m.MobileNumber)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.OldPassword)
+                    </td>
+                    <td>
+                        @Html.PasswordFor(m => m.OldPassword)
+                        @Html.ValidationMessageFor(m => m.OldPassword)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        @Html.LabelFor(m => m.NewPassword)
+                    </td>
+                    <td class="width70">
+                        @Html.PasswordFor(m => m.NewPassword)
+                        @Html.ValidationMessageFor(m => m.NewPassword)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        @Html.LabelFor(m => m.ConfirmPassword)
+                    </td>
+                    <td>
+                        @Html.PasswordFor(m => m.ConfirmPassword)
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <input type="submit" class="btn btn-primary" value="Update" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>  }
+</div>

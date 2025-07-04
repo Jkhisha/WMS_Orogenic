@@ -1,0 +1,90 @@
+@model WareHouseMVC.Models.ContactPerson
+
+@{
+    ViewBag.Title = "Delete Contact Person";
+}
+<div class="pagetitle">
+    <h1>
+      Delete Contact Person </h1>
+    <span>Are you sure you want to delete this?</span>
+</div>
+
+@using (Html.BeginForm()) {
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">ContactPersonName</td>
+        <td>
+        @Model.ContactPersonName
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">PhoneNumber</td>
+        <td>
+        @Model.PhoneNumber
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Email</td>
+        <td>
+        @Model.Email
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Address</td>
+        <td>
+        @Model.Address
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Client</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Client.ClientName).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Department</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Department.DepartmentName).ToString()
+        </td>
+        </tr>
+        <tr>
+        <td class="width30">Position</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Position).ToString()
+        </td>
+        </tr>
+    
+
+ <tr>
+         <td class="width30"></td>
+        <td>
+    <input type="submit" value="Delete" class="btn btn-danger" /> 
+        </td>
+        </tr>
+		  </tbody>
+        </table>
+    <p>
+       
+      @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+  
+    </p>
+}
+
+

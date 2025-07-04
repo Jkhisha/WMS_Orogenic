@@ -1,0 +1,99 @@
+@model WareHouseMVC.Models.Client
+
+@{
+    ViewBag.Title = "Delete Client";
+}
+<div class="pagetitle">
+    <h1>
+      Delete Client </h1>
+    <span>Are you sure you want to delete this?</span>
+</div>
+
+@using (Html.BeginForm()) {
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">ClientName</td>
+        <td>
+        @Model.ClientName
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">ClientAddress</td>
+        <td>
+        @Model.ClientAddress
+        </td>
+        </tr>
+
+          <tr>
+        <td class="width30">Att</td>
+        <td>
+       @Model.Att
+        </td>
+        </tr> 
+          <tr>
+        <td class="width30">Position</td>
+        <td>
+       @Model.Position
+        </td>
+        </tr> 
+        <tr>
+        <td class="width30">Department</td>
+        <td>
+       @Model.Department
+        </td>
+        </tr> 
+          <tr>
+        <td class="width30">Cell</td>
+        <td>
+       @Model.Cell
+        </td>
+        </tr> 
+          <tr>
+        <td class="width30">Tell</td>
+        <td>
+       @Model.Tell
+        </td>
+        </tr> 
+          <tr>
+        <td class="width30">FAX</td>
+        <td>
+       @Model.Fax
+        </td>
+        </tr> 
+          <tr>
+        <td class="width30">Email</td>
+        <td>
+       @Model.Email
+        </td>
+        </tr> 
+
+         <tr>
+        <td class="width30">Supervisor</td>
+        <td>
+        @Model.SupportStuff.SupportStuffName
+        </td>
+        </tr>
+
+    
+
+ <tr>
+         <td class="width30"></td>
+        <td>
+    <input type="submit" value="Delete" class="btn btn-danger" /> 
+        </td>
+        </tr>
+		  </tbody>
+        </table>
+    <p>
+       
+      @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+  
+    </p>
+}
+
+

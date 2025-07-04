@@ -1,0 +1,54 @@
+@model WareHouseMVC.Models.Train
+
+@{
+    ViewBag.Title = "Train Detail";
+}
+
+<div class="pagetitle">
+    <h1>
+       Train Details </h1>
+    <span> Train details below....</span>
+</div>
+
+<fieldset>
+
+        <table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+        <td class="width30">Train Name</td>
+        <td>
+        @Model.TrainName
+        </td>
+        </tr>
+        <tr>
+        <td>Train Code</td>
+        <td>@Model.TrainCode</td>
+        
+        </tr>
+         <tr>
+        <td>Zone</td>
+        <td>@Html.DisplayTextFor(_ => Model.Zone.ZoneName).ToString()</td>
+        
+        </tr>
+         <tr>
+        <td>Floor</td>
+        <td>@Html.DisplayTextFor(_ => Model.Floor.FloorName).ToString()</td>
+        
+        </tr>
+         <tr>
+        <td>Warehouse</td>
+        <td>@Html.DisplayTextFor(_ => Model.Warehouse.WarehouseName).ToString()</td>
+        
+        </tr>
+        </tbody>
+        </table>
+
+
+
+</fieldset>
+<p>
+   @Html.ActionLink("Edit", "Edit", new { id = Model.TrainID }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

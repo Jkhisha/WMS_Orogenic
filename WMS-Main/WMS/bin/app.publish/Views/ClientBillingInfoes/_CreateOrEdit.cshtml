@@ -1,0 +1,112 @@
+@model WareHouseMVC.Models.ClientBillingInfo
+@* This partial view defines form fields that will appear when creating and editing entities *@
+<table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+            <td class="width30">
+                Client
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+               Value = option.ClientID.ToString(),
+               Selected = (Model != null) && (option.ClientID == Model.ClientID)
+           }), "Choose...")
+                @Html.ValidationMessageFor(model => model.ClientID)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Client Att
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.ClientAtt)
+                @Html.ValidationMessageFor(model => model.ClientAtt)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Client Att Position
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.ClientAttPosition)
+                @Html.ValidationMessageFor(model => model.ClientAttPosition)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                VAT Registration No
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.VATRegNo)
+                @Html.ValidationMessageFor(model => model.VATRegNo)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                TAX Registration No
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.TAXRegNo)
+                @Html.ValidationMessageFor(model => model.TAXRegNo)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Bank Name
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.BankName)
+                @Html.ValidationMessageFor(model => model.BankName)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Bank Address
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.BankAddress)
+                @Html.ValidationMessageFor(model => model.BankAddress)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Bank Telephone
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.BankTel)
+                @Html.ValidationMessageFor(model => model.BankTel)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Bank Account No
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.BankACC)
+                @Html.ValidationMessageFor(model => model.BankACC)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Branch Name
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.BranchName)
+                @Html.ValidationMessageFor(model => model.BranchName)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Swift Code
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.BankSwiftCode)
+                @Html.ValidationMessageFor(model => model.BankSwiftCode)
+            </td>
+        </tr>
+    </tbody>
+</table>

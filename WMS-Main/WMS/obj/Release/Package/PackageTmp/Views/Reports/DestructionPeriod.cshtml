@@ -1,0 +1,68 @@
+﻿@model WareHouseMVC.Models.UpcomingDestructionViewModel
+@{
+    ViewBag.Title = "DestructionPeriod";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pagetitle">
+    <h1>
+        Upcoming Destruction Period
+    </h1>
+    <span>Upcoming Destruction Period Report</span>
+</div>
+@using (Html.BeginForm("DestructionPeriod", "Reports", FormMethod.Post, ""))
+{
+    @Html.ValidationSummary(true)
+    <table class="table table-bordered table-invoice">
+        <tbody>
+
+                                  <tr>
+                                      <td class="width30">
+                                          Select Client
+                                      </td>
+                                      <td class="width70">
+                                          <span class="formwrapper">
+                                              @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem
+               {
+                   Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+                   Value = option.ClientID.ToString(),
+                   Selected = (Model != null) && (option.ClientID == Model.ClientID)
+               }), "Choose...", new { @data_placeholder = "Choose a Country...", @style = "width: 221px", @class = "chzn-select", @tabindex = "2" })
+                                          </span>
+                                          @Html.ValidationMessageFor(model => model.ClientID)
+                                      </td>
+                                  </tr>
+
+            <tr>
+                <td class="width30">
+                    Select Month Period
+                </td>
+                <td>
+                    <select id="MonthCount" name="MonthCount">
+                        <option value="1" selected="selected">Upcoming 1 Month</option>
+                        <option value="3" >Upcoming 3 Month</option>
+                        <option value="6">Upcoming 6 Month</option>
+                        <option value="12" >Upcoming 12 Month</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Report Format
+                </td>
+                <td>
+                    <select id="ReportType" name="ReportType">
+                        <option value="1" selected="selected">PDF</option>
+                        <option value="2">XL</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                </td>
+                <td class="width70">
+                    <input type="submit" value="Print" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}

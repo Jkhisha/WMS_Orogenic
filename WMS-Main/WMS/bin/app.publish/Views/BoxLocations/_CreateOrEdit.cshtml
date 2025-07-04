@@ -1,0 +1,138 @@
+@model WareHouseMVC.Models.BoxLocation
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.IsLeatest)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.IsLeatest)
+    @Html.ValidationMessageFor(model => model.IsLeatest)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.AssignBoxId)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.AssignBoxId)
+    @Html.ValidationMessageFor(model => model.AssignBoxId)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    WareHouse
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.WareHouseID, ((IEnumerable<WareHouseMVC.Models.Warehouse>)ViewBag.PossibleWareHouses).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.WarehouseID.ToString(),
+        Selected = (Model != null) && (option.WarehouseID == Model.WareHouseID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.WareHouseID)
+</td></tr>
+<tr>
+<td class="width30">
+    Floor
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.FloorID, ((IEnumerable<WareHouseMVC.Models.Floor>)ViewBag.PossibleFloors).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.FloorID.ToString(),
+        Selected = (Model != null) && (option.FloorID == Model.FloorID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.FloorID)
+</td></tr>
+<tr>
+<td class="width30">
+    Zone
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.ZoneID, ((IEnumerable<WareHouseMVC.Models.Zone>)ViewBag.PossibleZones).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.ZoneID.ToString(),
+        Selected = (Model != null) && (option.ZoneID == Model.ZoneID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.ZoneID)
+</td></tr>
+<tr>
+<td class="width30">
+    Train
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.TrainID, ((IEnumerable<WareHouseMVC.Models.Train>)ViewBag.PossibleTrains).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.TrainID.ToString(),
+        Selected = (Model != null) && (option.TrainID == Model.TrainID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.TrainID)
+</td></tr>
+<tr>
+<td class="width30">
+    Rack
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.RackID, ((IEnumerable<WareHouseMVC.Models.Rack>)ViewBag.PossibleRacks).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.RackID.ToString(),
+        Selected = (Model != null) && (option.RackID == Model.RackID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.RackID)
+</td></tr>
+<tr>
+<td class="width30">
+    Level
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.LevelID, ((IEnumerable<WareHouseMVC.Models.Level>)ViewBag.PossibleLevels).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.LevelID.ToString(),
+        Selected = (Model != null) && (option.LevelID == Model.LevelID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.LevelID)
+</td></tr>
+<tr>
+<td class="width30">
+    Height
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.HeightID, ((IEnumerable<WareHouseMVC.Models.Height>)ViewBag.PossibleHeights).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.HeightID.ToString(),
+        Selected = (Model != null) && (option.HeightID == Model.HeightID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.HeightID)
+</td></tr>
+<tr>
+<td class="width30">
+    Column
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.ColumnID, ((IEnumerable<WareHouseMVC.Models.Column>)ViewBag.PossibleColumns).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.ColumnID.ToString(),
+        Selected = (Model != null) && (option.ColumnID == Model.ColumnID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.ColumnID)
+</td></tr>
+<tr>
+<td class="width30">
+    Row
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.RowID, ((IEnumerable<WareHouseMVC.Models.Row>)ViewBag.PossibleRows).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.RowID.ToString(),
+        Selected = (Model != null) && (option.RowID == Model.RowID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.RowID)
+</td></tr>
+</tbody>
+</table>
+ 

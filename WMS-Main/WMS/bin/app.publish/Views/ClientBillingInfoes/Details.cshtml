@@ -1,0 +1,99 @@
+@model WareHouseMVC.Models.ClientBillingInfo
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+     Billing Info Details </h1>
+    <span>Billing Info Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">VAT Registration No</td>
+        <td>
+       @Model.VATRegNo
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">TAX Registration No</td>
+        <td>
+       @Model.TAXRegNo
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Bank Name</td>
+        <td>
+       @Model.BankName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Bank Address</td>
+        <td>
+       @Model.BankAddress
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Bank Telephone</td>
+        <td>
+       @Model.BankTel
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Bank Account</td>
+        <td>
+       @Model.BankACC
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Branch Name</td>
+        <td>
+       @Model.BranchName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Bank Swift Code</td>
+        <td>
+       @Model.BankSwiftCode
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Client</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Client.ClientName).ToString()
+        </td>
+        </tr> 
+        <tr>
+        <td class="width30">Client Att</td>
+        <td>
+       @Model.ClientAtt
+        </td>
+        </tr>
+        <tr>
+        <td class="width30">Client Att Position</td>
+        <td>
+       @Model.ClientAttPosition
+        </td>
+        </tr>
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ClientBillingInfoId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

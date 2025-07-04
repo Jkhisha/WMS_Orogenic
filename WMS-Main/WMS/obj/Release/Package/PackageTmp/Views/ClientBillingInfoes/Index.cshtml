@@ -1,0 +1,103 @@
+@model List<WareHouseMVC.Models.ClientBillingInfo>
+
+@{
+    ViewBag.Title = "Billing Info";
+}
+
+<div class="pagetitle">
+    <h1>
+      Billing Info List</h1>
+    <span>List of Billing Info....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            VAT Reg No
+        </th>
+        <th>
+            TAX Reg No
+        </th>
+        <th>
+            Bank Name
+        </th>
+        <th>
+            Bank Address
+        </th>
+        <th>
+            Bank Telephone
+        </th>
+        <th>
+            Bank Account No
+        </th>
+        <th>
+            Branch Name
+        </th>
+        <th>
+            Bank Swift Code
+        </th>
+        <th>
+            Client
+        </th>
+         <th>
+            Client Att
+        </th>
+         <th>
+            Client Att Position
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.ClientBillingInfoId }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.ClientBillingInfoId }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.ClientBillingInfoId }, new { @class = "icon-trash" })
+        </td>
+        <td>
+			@item.VATRegNo
+        </td>
+        <td>
+			@item.TAXRegNo
+        </td>
+        <td>
+			@item.BankName
+        </td>
+        <td>
+			@item.BankAddress
+        </td>
+        <td>
+			@item.BankTel
+        </td>
+        <td>
+			@item.BankACC
+        </td>
+        <td>
+			@item.BranchName
+        </td>
+        <td>
+			@item.BankSwiftCode
+        </td>
+        <td>
+			@Html.DisplayTextFor(_ => item.Client.ClientName).ToString()
+        </td>
+        <td>
+			@item.ClientAtt
+        </td>
+        <td>
+		@item.ClientAttPosition
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

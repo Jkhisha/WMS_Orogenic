@@ -1,0 +1,40 @@
+@model WareHouseMVC.Models.Item
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="pagetitle">
+    <h1>
+       Edit </h1>
+    <span>Edit below....</span>
+</div>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+      
+
+
+        @Html.HiddenFor(model => model.ItemId)
+		@Html.Partial("_CreateOrEdit", Model)
+
+         <table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+        <td class="width30"></td>
+        <td>
+         <input type="submit" value="Save" class="btn btn-primary" />
+        </td>
+        </tr>
+        </tbody>
+        </table>
+    </fieldset>
+}
+
+<div> 
+@{
+    long id=Convert.ToInt64(ViewBag.id);
+@Html.ActionLink("Back to Add/View Items", "CreateWitTrINId", "Items", new { trId = id },"")
+    }
+</div>

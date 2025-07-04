@@ -1,0 +1,54 @@
+﻿@model WareHouseMVC.Models.InvoiceViewModel
+@{
+    ViewBag.Title = "Invoice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pagetitle">
+    <h1>
+        Invoice</h1>
+    <span>Invoice Statement below....</span>
+</div>
+@using (Html.BeginForm("Invoice", "Bills", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+    
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">
+                    Select Month
+                </td>
+                <td class="width70">
+                    <input type="text" id="default_widget" class="mtz-monthpicker-widgetcontainer" name="Month" />
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Select Client
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.ClientList).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+               Value = option.ClientID.ToString(),
+               Selected = (Model != null) && (option.ClientID == Model.ClientID)
+           }), "Choose...")
+                    @Html.ValidationMessageFor(model => model.ClientID)
+                </td>
+            </tr>
+
+
+            
+            <tr>
+                <td class="width30">
+                </td>
+                <td class="width70">
+                    <input type="submit" value="Generate Invoice" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    
+}

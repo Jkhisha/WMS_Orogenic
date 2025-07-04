@@ -1,0 +1,93 @@
+@model WareHouseMVC.Models.Client
+
+@{
+    ViewBag.Title = "Client Details";
+}
+
+<div class="pagetitle">
+    <h1>
+     Client Details </h1>
+    <span>Client Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">ClientName</td>
+        <td>
+       @Model.ClientName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">ClientAddress</td>
+        <td>
+       @Model.ClientAddress
+        </td>
+        </tr> 
+
+          <tr>
+        <td class="width30">Att</td>
+        <td>
+       @Model.Att
+        </td>
+        </tr> 
+          <tr>
+        <td class="width30">Position</td>
+        <td>
+       @Model.Position
+        </td>
+        </tr> 
+
+
+         <tr>
+        <td class="width30">Department</td>
+        <td>
+       @Model.Department
+        </td>
+        </tr> 
+
+
+          <tr>
+        <td class="width30">Cell</td>
+        <td>
+       @Model.Cell
+        </td>
+        </tr> 
+          <tr>
+        <td class="width30">Tell</td>
+        <td>
+       @Model.Tell
+        </td>
+        </tr> 
+          <tr>
+        <td class="width30">FAX</td>
+        <td>
+       @Model.Fax
+        </td>
+        </tr> 
+          <tr>
+        <td class="width30">Email</td>
+        <td>
+       @Model.Email
+        </td>
+        </tr> 
+
+         <tr>
+        <td class="width30">Supervisor</td>
+        <td>
+        @Model.SupportStuff.SupportStuffName
+        </td>
+        </tr>
+
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ClientID }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

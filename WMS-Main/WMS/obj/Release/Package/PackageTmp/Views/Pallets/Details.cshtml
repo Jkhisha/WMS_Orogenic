@@ -1,0 +1,52 @@
+@model WareHouseMVC.Models.Pallet
+
+@{
+    ViewBag.Title = " Pallets Details";
+}
+
+<div class="pagetitle">
+    <h1>
+     Pallet Details </h1>
+    <span>Pallet Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">PalletName</td>
+        <td>
+       @Model.PalletName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Zone</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Zone.ZoneName).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Floor</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Floor.FloorName).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Warehouse</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Warehouse.WarehouseName).ToString()
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.PalletId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

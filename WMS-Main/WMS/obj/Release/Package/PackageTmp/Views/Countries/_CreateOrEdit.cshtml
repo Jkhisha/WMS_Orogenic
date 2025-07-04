@@ -1,0 +1,28 @@
+@model WareHouseMVC.Models.Country
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.CountryName)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.CountryName)
+    @Html.ValidationMessageFor(model => model.CountryName)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.Status)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.Status)
+    @Html.ValidationMessageFor(model => model.Status)
+</div>
+
+<div class="editor-label">
+    @Html.LabelFor(model => model.IsRemoved)
+</div>
+<div class="editor-field">
+    @Html.EditorFor(model => model.IsRemoved)
+    @Html.ValidationMessageFor(model => model.IsRemoved)
+</div>
+

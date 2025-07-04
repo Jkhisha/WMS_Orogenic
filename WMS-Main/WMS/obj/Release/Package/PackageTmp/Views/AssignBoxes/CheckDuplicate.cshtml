@@ -1,0 +1,302 @@
+﻿@model WareHouseMVC.Models.CheckDuplicateViewModel
+@{
+    ViewBag.Title = "CheckDuplicate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ClientID").change(function (evt) {
+
+            if ($("select#ClientID").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetDepts")",
+                    type: 'POST',
+                    data: { ClientID: $("select#ClientID").val() },
+                    success: function (response) {
+                        $("select#DepartmentID").replaceWith(response)
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+</script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('.modal2').click(function () {
+            $('<div/>').appendTo('body').dialog({
+                close: function (event, ui) {
+                    dialog.remove();
+                },
+
+                show: { effect: 'drop', direction: "up" },
+                title: 'Box Location',
+
+                resizable: false,
+                height: 500,
+                width: 600,
+                draggable: true,
+                modal: true
+            }).load(this.href, {});
+
+            return false;
+        });
+    });
+</script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('.modal3').click(function () {
+            $('<div/>').appendTo('body').dialog({
+                close: function (event, ui) {
+                    dialog.remove();
+                },
+
+                show: { effect: 'drop', direction: "up" },
+                title: 'Box History',
+
+                resizable: false,
+                height: 500,
+                width: 600,
+                draggable: true,
+                modal: true
+            }).load(this.href, {});
+
+            return false;
+        });
+    });
+</script>
+@if (ViewBag.message == "1")
+{
+    <div class="alert alert-success">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        <strong>Well done!</strong>Box Deleted SUccessfully !.
+    </div>
+}
+<div class="pagetitle">
+    <h1>
+        Check Duplicate Box</h1>
+    <span>Find Duplicate Boxes....</span>
+</div>
+@using (Html.BeginForm("CheckDuplicate", "AssignBoxes", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">
+                    Client
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem
+               {
+                   Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+                   Value = option.ClientID.ToString(),
+                   Selected = (Model != null) && (option.ClientID == Model.ClientID)
+               }), "Choose...")
+                    @Html.ValidationMessageFor(model => model.ClientID)
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Department
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.DepartmentID, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+               {
+                   Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+                   Value = option.DepartmentID.ToString(),
+                   Selected = (Model != null) && (option.DepartmentID == Model.DepartmentID)
+               }), "Choose...")
+                    @Html.ValidationMessageFor(model => model.DepartmentID)
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                </td>
+                <td class="width70">
+                    <input type="submit" value="Search" name="btnSearch" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable5">
+            <thead>
+                <tr>
+                    <th>
+                        Select
+                    </th>
+                    <th>
+                        Box Name/File Name
+                    </th>
+                    <th>
+                        Box Number
+                    </th>
+                    <th>
+                    File Number
+                    </th>
+                    <th>
+                        Year
+                    </th>
+
+
+                     <th>
+                        Referrence No
+                    </th>
+                     <th>
+                        Ring No
+                    </th>
+                     <th>
+                        Account No
+                    </th>
+                     <th>
+                        Unit
+                    </th>
+
+
+
+                    <th>
+                        View Location
+                    </th>
+                    <th>
+                        View History
+                    </th>
+                    <th>
+                        Item Id
+                    </th>
+                    <th>
+                        AssignBox Id
+                    </th>
+                    <th>
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    if (Model.boxList != null)
+                    {
+                        foreach (var item in Model.boxList)
+                        {
+                    <tr>
+                        <td class="centeralign">
+                            <div class="checker1" id="uniform-undefined">
+                                @*  <input type="checkbox" >*@
+                                @Html.Raw("<input  type='checkbox' name='AssignBoxIds' value='" + item.AssignBoxId + "' id='" + item.AssignBoxId + "' ></input>")
+                            </div>
+                        </td>
+                        <td>
+                        @if (item.Unit == "File")
+                        {
+                            try
+                            {
+                               <span>@item.FileBoxName.ToString()</span> 
+                            }
+                            catch
+                            {
+                            }
+                        }
+                        else
+                        {
+                            try
+                            {
+                               <span>@item.BoxName.ToString()</span> 
+                            }
+                            catch
+                            {
+                            }
+                        }
+
+                           
+                        </td>
+                        <td>@item.BoxNo.ToString()</td>
+                        <td>
+
+                         @if (item.Unit == "File")
+                         {
+                            <span>@item.FileNumber.ToString()</span> 
+                         }
+                         else
+                         {
+                            
+                         }
+
+
+                           
+                        </td>
+                         <td>
+                            @item.Year
+                        </td>
+                        <td>
+                            @item.ReferrenceNo
+                        </td>
+
+                         <td>
+                            @item.RingNo
+                        </td>
+                         <td>
+                            @item.AccountNo
+                        </td>
+                        
+                         <td>
+                            @item.Unit
+                        </td>
+
+
+
+                        <td>
+                            @if (item.TransmittalINStatusId >= 5)
+                            {
+                                @Html.ActionLink("View Location", "ViewLocationModal", "BoxLocations", new { id = item.AssignBoxId }, new { @class = "modal2" })
+                            }
+                            else
+                            {
+                                <b>Location not assigned</b>
+                            }
+                        </td>
+                        <td>
+                            @Html.ActionLink("View History", "ViewBoxHistory", "BoxLocations", new { id = item.AssignBoxId }, new { @class = "modal3" })
+                        </td>
+                        <td>
+                            @item.ItemId.ToString()
+                        </td>
+                        <td>
+                            @item.AssignBoxId.ToString()
+                        </td>
+                        <td>
+                            @Html.ActionLink(" ", "DeleteBox", "AssignBoxes", new { id = item.AssignBoxId }, new { @class = "icon-trash" })
+                        </td>
+                    </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    
+                if (Model != null)
+                {
+                    if (Model.boxList != null)
+                    {
+    <table>
+     <tr>
+                <td class="width30">
+                </td>
+                <td class="width70">
+                    <input type="submit" value="Delete All" name="btnDelete"  class="btn btn-primary" />
+                </td>
+            </tr>
+    </table>
+                    }
+                }
+}

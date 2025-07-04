@@ -1,0 +1,179 @@
+@model WareHouseMVC.Models.TransmittalIN
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ClientID").change(function (evt) {
+
+            if ($("select#ClientID").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetDepts")",
+                    type: 'POST',
+                    data: { ClientID: $("select#ClientID").val() },
+                    success: function (response) {
+
+
+
+                        $("select#DepartmentID").replaceWith(response)
+                        $("select#DepartmentID").change(function (evt) {
+
+                            if ($("select#DepartmentID").val() != "-1") {
+
+                                $.ajax({
+                                    url: "@Url.Content("~/zones/GetPersons")",
+                                    type: 'POST',
+                                    data: { DepartmentID: $("select#DepartmentID").val() },
+                                    success: function (response) {
+                                        $("select#ContactPersontID").replaceWith(response)
+                                    },
+                                    error: function (xhr) {
+                                        alert("Something went wrong, please try again");
+                                    }
+                                });
+                            }
+                        });
+
+
+                        $("select#DepartmentID").change(function (evt) {
+
+                            if ($("select#DepartmentID").val() != "-1") {
+
+                                $.ajax({
+                                    url: "@Url.Content("~/zones/GetProjects")",
+                                    type: 'POST',
+                                    data: { DepartmentID: $("select#DepartmentID").val() },
+                                    success: function (response) {
+                                        $("select#ProjectId").replaceWith(response)
+                                    },
+                                    error: function (xhr) {
+                                        alert("Something went wrong, please try again");
+                                    }
+                                });
+                            }
+                        });
+
+
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+</script>
+@* This partial view defines form fields that will appear when creating and editing entities *@
+<table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+            <td class="width30">
+                File Level
+            </td>
+            <td class="width70">
+                @Html.CheckBoxFor(model => model.IsFile)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.TransmittalNo)
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.TransmittalNo, new { @Value = @ViewBag.TransmittalNo })
+                @Html.ValidationMessageFor(model => model.TransmittalNo)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.TransmittalDate)
+            </td>
+            <td class="width70">
+                @*  @Html.EditorFor(model => model.TransmittalDate)*@
+                <input id="datepicker" type="text" name="TransmittalDate" />
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.ClientRequestreference)
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.ClientRequestreference)
+                @Html.ValidationMessageFor(model => model.ClientRequestreference)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Client
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+               Value = option.ClientID.ToString(),
+               Selected = (Model != null) && (option.ClientID == Model.ClientID)
+           }), "Choose...")
+                @Html.ValidationMessageFor(model => model.ClientID)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Department
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.DepartmentID, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+               Value = option.DepartmentID.ToString(),
+               Selected = (Model != null) && (option.DepartmentID == Model.DepartmentID)
+           }), "Choose...")
+                @Html.ValidationMessageFor(model => model.DepartmentID)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.ContactPersontID)
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.ContactPersontID, ((IEnumerable<WareHouseMVC.Models.ContactPerson>)ViewBag.PossibleContactPerson).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.ContactPersonName).ToString(),
+               Value = option.ContactPersontID.ToString(),
+               Selected = (Model != null) && (option.ContactPersontID == Model.ContactPersontID)
+           }), "Choose...")
+                @Html.ValidationMessageFor(model => model.ContactPersontID)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.ProjectId)
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.ProjectId, ((IEnumerable<WareHouseMVC.Models.Project>)ViewBag.PossibleProjects).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.ProjectName).ToString(),
+               Value = option.ProjectId.ToString(),
+               Selected = (Model != null) && (option.ProjectId == Model.ProjectId)
+           }), "Choose...")
+                @Html.ValidationMessageFor(model => model.ProjectId)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Upload Scanned Document
+            </td>
+            <td class="width70">
+                <input type="file" name="FileUrl" />
+            </td>
+        </tr>
+        @* <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.Status)
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.Status, (List<SelectListItem>)ViewBag.Status, "choose...")
+                @Html.ValidationMessageFor(model => model.Status)
+            </td>
+        </tr>*@
+    </tbody>
+</table>

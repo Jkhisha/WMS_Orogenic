@@ -1,0 +1,110 @@
+@model WareHouseMVC.Models.Client
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.ClientName)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.ClientName)
+    @Html.ValidationMessageFor(model => model.ClientName)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.ClientAddress)
+</td>
+<td class="width70">
+    @Html.TextAreaFor(model => model.ClientAddress, 3, 5, "")
+    @Html.ValidationMessageFor(model => model.ClientAddress)
+</td>
+</tr>
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.Att)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.Att)
+    @Html.ValidationMessageFor(model => model.Att)
+</td>
+</tr>
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.Position)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.Position)
+    @Html.ValidationMessageFor(model => model.Position)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.Department)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.Department)
+    @Html.ValidationMessageFor(model => model.Department)
+</td>
+</tr>
+
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.Cell)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.Cell)
+    @Html.ValidationMessageFor(model => model.Cell)
+</td>
+</tr>
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.Tell)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.Tell)
+    @Html.ValidationMessageFor(model => model.Tell)
+</td>
+</tr>
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.Fax)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.Fax)
+    @Html.ValidationMessageFor(model => model.Fax)
+</td>
+</tr>
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.Email)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.Email)
+    @Html.ValidationMessageFor(model => model.Email)
+</td>
+</tr>
+
+ <tr>
+<td class="width30">
+    Supervisor
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.SupportStuffID, ((IEnumerable<WareHouseMVC.Models.SupportStuff>)ViewBag.PossibleStuff).Select(option => new SelectListItem
+{
+        Text = Html.DisplayTextFor(_ => option.SupportStuffName).ToString(), 
+        Value = option.SupportStuffID.ToString(),
+        Selected = (Model != null) && (option.SupportStuffID == Model.SupportStuffID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.SupportStuffID)
+</td></tr>
+
+</tbody>
+</table>
+ 

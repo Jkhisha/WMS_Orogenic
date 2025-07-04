@@ -1,0 +1,228 @@
+﻿@model PagedList.IPagedList<WareHouseMVC.Models.AssignBox>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "ClientBoxes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('.modal2').click(function () {
+            $('<div/>').appendTo('body').dialog({
+                close: function (event, ui) {
+                    dialog.remove();
+                },
+
+                show: { effect: 'drop', direction: "up" },
+                title: 'Box Location',
+
+                resizable: false,
+                height: 500,
+                width: 600,
+                draggable: true,
+                modal: true
+            }).load(this.href, {});
+
+            return false;
+        });
+    });
+</script>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('.modal3').click(function () {
+            $('<div/>').appendTo('body').dialog({
+                close: function (event, ui) {
+                    dialog.remove();
+                },
+
+                show: { effect: 'drop', direction: "up" },
+                title: 'Box History',
+
+                resizable: false,
+                height: 500,
+                width: 600,
+                draggable: true,
+                modal: true
+            }).load(this.href, {});
+
+            return false;
+        });
+    });
+</script>
+
+
+
+<div class="pagetitle">
+    <h1>
+      All Boxes
+    </h1>
+    <span>Search Boxes </span>
+</div>
+
+
+
+@using (Html.BeginForm("ClientBoxes", "Clients", FormMethod.Get, ""))
+{
+    @Html.ValidationSummary(true)
+
+    
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">
+                    Box No
+                </td>
+                <td>
+                  <input id="txtBoxNo" type="text" name="txtBoxNo",value = @ViewBag.txtBoxNo  />
+                </td>
+                
+            </tr>
+            <tr>
+                <td class="width30">
+                    Box Name
+                </td>
+                 <td>
+                  <input id="txtBoxNname" type="text" name="txtBoxNname",value = @ViewBag.txtBoxNname  />
+                </td>
+            </tr>
+            
+            
+            <tr>
+                <td class="width30">
+                </td>
+                <td class="width70">
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    
+}
+
+
+
+<div  class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered"+>
+ <thead>
+    <tr>
+       <th></th>
+       
+         <th>
+           Box Name
+        </th>
+         <th>
+           Box No
+        </th>
+        <th>
+          Year
+        </th>
+          <th>
+          Department
+        </th>
+        <th>
+         Destruction Period
+        </th>
+        <th>
+          Assign Date
+        </th>
+        <th>
+       Transmittal Status
+        </th>
+       
+        <th>
+        History
+        </th>
+         <th>
+        Box Status
+        </th>
+        <th>
+        Last Tr.Out Date
+        </th>
+       
+     
+    </tr>
+	 </thead>
+
+     <tbody>
+
+        
+
+         @if (ViewBag.AllBoxes!=null)
+         {
+             int i = 0;
+         foreach (var item in ViewBag.AllBoxes)
+         {
+    <tr>
+       
+        <td>
+           
+        </td>
+
+       
+         <td>
+			@item.BoxName
+        </td>
+         <td>
+			@item.BoxNo
+        </td>
+       
+        <td>
+			@item.Year
+        </td>
+        <td>
+			@item.Item.Department.DepartmentName
+        </td>
+        <td>
+        @if(item.DestructionPeriod!=null)
+        {
+            @item.DestructionPeriod.ToShortDateString()
+        }
+       
+        </td>
+      <td>
+     	@String.Format("{0:g}", item.AssignDate.ToShortDateString())
+      </td>
+      
+       <td>
+     	@item.TransmittalINStatus.StatusName
+      </td>
+    
+
+      <td>
+       @Html.ActionLink("View History", "ViewBoxHistory", "BoxLocations", new { id = item.AssignBoxId }, new { @class = "modal3" })
+      
+      </td>
+
+      <td>
+      @if (item.BoxLocation.Count > 0)
+      {
+          
+       @item.BoxLocation[i].CurrentStatus
+      }
+      
+      </td>
+      <td>
+      
+      
+      
+      </td>
+     
+
+    </tr>
+        
+}
+}
+
+ </tbody>
+
+ </table>
+
+ <div style="float:right">
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("ClientBoxes",
+                new { page, txtBoxNo = ViewBag.txtBoxNo, txtBoxNmae = ViewBag.txtBoxNmae }))
+    </div>
+</div>

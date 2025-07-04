@@ -1,0 +1,101 @@
+@model WareHouseMVC.Models.TransmittalIN
+
+@{
+    ViewBag.Title = "Delete Tansmittal IN";
+}
+<div class="pagetitle">
+    <h1>
+      Delete Tansmittal IN </h1>
+    <span>Are you sure you want to delete this?</span>
+</div>
+
+@using (Html.BeginForm()) {
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">TransmittalNo</td>
+        <td>
+        @Model.TransmittalNo
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">TransmittalDate</td>
+        <td>
+        @String.Format("{0:g}", Model.TransmittalDate)
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">ClientRequestreference</td>
+        <td>
+        @Model.ClientRequestreference
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Client</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Client.ClientName).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Department</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.Department.DepartmentName).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Issued By</td>
+        <td>
+        @Html.DisplayTextFor(_ => Model.ContactPerson.ContactPersonName).ToString()
+        </td>
+        </tr>
+
+  <tr>
+        <td class="width30">Status</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.TransmittalINStatus.StatusName).ToString()
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Items</td>
+        <td>
+        @(Model.Items == null ? "None" : Model.Items.Count.ToString())
+        </td>
+        </tr>
+
+    
+
+ <tr>
+         <td class="width30"></td>
+        <td>
+    <input type="submit" value="Delete" class="btn btn-danger" /> 
+        </td>
+        </tr>
+		  </tbody>
+        </table>
+    <p>
+       
+      @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+  
+    </p>
+}
+
+

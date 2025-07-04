@@ -1,0 +1,45 @@
+@model WareHouseMVC.Models.Department
+
+@{
+    ViewBag.Title = "Departments Details";
+}
+
+<div class="pagetitle">
+    <h1>
+     Departments Details </h1>
+    <span>Departments Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">DepartmentName</td>
+        <td>
+       @Model.DepartmentName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">DepartmentCode</td>
+        <td>
+       @Model.DepartmentCode
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Client</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Client.ClientName).ToString()
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.DepartmentID }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

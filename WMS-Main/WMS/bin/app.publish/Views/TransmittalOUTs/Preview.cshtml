@@ -1,0 +1,250 @@
+﻿@{
+    ViewBag.Title = "Preview";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="pagetitle">
+    <h1>
+       Transmittal OUT </h1>
+    
+</div>
+
+<div class="contentinner">
+
+
+ <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Transmittal No :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.TransmittalNo</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Refference No :
+                        </td>
+                        <td>@ViewBag.TransmittalRefNo
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transmittal Type :
+                        </td>
+                        <td>@ViewBag.TransmittalType
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span6">
+           <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                           Client :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.ClientName</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Department :
+                        </td>
+                        <td>@ViewBag.Department
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transmittal Date :
+                        </td>
+                        <td>@ViewBag.TransmittalDate
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+ <div class="clearfix">
+        <br/>
+    </div>
+
+
+    @if (ViewBag.File == "0")
+    {
+
+     <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+              
+                    <th>
+                        BoxNo
+                    </th>
+                    <th>
+                        DestructionPeriod
+                    </th>
+                 
+                    <th>
+                        TrasmittalOUTs
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @{
+        if (ViewBag.AllItems != null)
+        {
+            foreach (var item in ViewBag.AllItems)
+            {
+                    <tr>
+                        <td>
+                        </td>
+                  
+                        <td>
+                            @item.BoxNo
+                        </td>
+                        <td>
+                            @item.DestructionPeriod
+                        </td>
+                      
+                        <td>
+                            @(item.TrasmittalOUTs == null ? "None" : item.TrasmittalOUTs[0].TransmittalNo.ToString())
+                        </td>
+                    </tr>
+            }
+        }
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+     @if (ViewBag.File == "1")
+     {
+         <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+              
+                    <th>
+                        BoxNo
+                    </th>
+                    <th>
+                        BookNumber
+                    </th>
+                    <th>
+                        FileNumber
+                    </th>
+                    <th>
+                        ReferrenceNo
+
+                    </th>
+                    <th>
+                        RingNo
+                    </th>
+                    <th>
+                        AccountNo
+                    </th>
+                    <th>
+                        DestructionPeriod
+                    </th>
+                 
+                    <th>
+                        TrasmittalOUTs
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            @{
+         if (ViewBag.AllItems != null)
+         {
+             foreach (var item in ViewBag.AllItems)
+             {
+                    <tr>
+                        <td>
+                        </td>
+                  
+                        <td>
+                            @item.BoxNo
+                        </td>
+
+                         <td>
+                            @item.BookNumber
+                        </td>
+                         <td>
+                            @item.FileNumber
+                        </td>
+                         <td>
+                            @item.ReferrenceNo
+                        </td>
+                         <td>
+                            @item.RingNo
+                        </td>
+                         <td>
+                            @item.AccountNo
+                        </td>
+
+
+                        <td>
+                            @item.DestructionPeriod
+                        </td>
+                      
+                        <td>
+                            @(item.TrasmittalOUTs == null ? "None" : item.TrasmittalOUTs[0].TransmittalNo.ToString())
+                        </td>
+                    </tr>
+             }
+         }
+                }
+            </tbody>
+        </table>
+    </div>
+     }
+
+    <table>
+    <tr>
+    
+    <td>@Html.ActionLink("Back to Transmittals", "Index", "TransmittalOUTs", "", new { @Class = "btn btn-primary btn-rounded" })</td>
+    <td class="width30">
+
+    @{
+        long trId = ViewBag.TransmittalId;
+    <div class="btn-group">
+                                            <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">Print <span class="caret"></span></button>
+                                            <ul class="dropdown-menu">
+                                              <li>
+                                               @Html.ActionLink("Print on PDF", "PrintAsPDFTrOUT", "Reports", new { trID = trId }, new { @target = "_blank" })
+                                              
+                                              </li>
+                                              <li>
+                                              
+                                             @Html.ActionLink("Print on Excel", "PrintAsExcelTrOUT", "Reports", new { trID = trId }, "")
+                                              
+                                              </li>
+                                              <li>
+                                               @Html.ActionLink("Print on Doc", "PrintAsDocTrOUT", "Reports", new { trID = trId }, "")
+                                              
+                                              </li>
+                                            </ul>
+                                          </div>
+        }
+    
+    
+    </td>
+    </tr>
+    
+    </table>
+
+     
+
+
+</div>

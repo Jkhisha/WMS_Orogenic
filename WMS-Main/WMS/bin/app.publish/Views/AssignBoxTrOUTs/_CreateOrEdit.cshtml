@@ -1,0 +1,98 @@
+@model WareHouseMVC.Models.AssignBoxTrOUT
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.WarehouseName)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.WarehouseName)
+    @Html.ValidationMessageFor(model => model.WarehouseName)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.BoxNo)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.BoxNo)
+    @Html.ValidationMessageFor(model => model.BoxNo)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.DestructionPeriod)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.DestructionPeriod)
+    @Html.ValidationMessageFor(model => model.DestructionPeriod)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.AssignDate)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.AssignDate)
+    @Html.ValidationMessageFor(model => model.AssignDate)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    TransmittalOUT
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.TransmittalOUTId, ((IEnumerable<WareHouseMVC.Models.TransmittalOUT>)ViewBag.PossibleTransmittalOUTs).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.TransmittalOUTId.ToString(),
+        Selected = (Model != null) && (option.TransmittalOUTId == Model.TransmittalOUTId)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.TransmittalOUTId)
+</td></tr>
+<tr>
+<td class="width30">
+    TransmittalOUTStatus
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.TransmittalOUTStatusId, ((IEnumerable<WareHouseMVC.Models.TransmittalOUTStatus>)ViewBag.PossibleTransmittalOUTStatus).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.TransmittalOUTStatusId.ToString(),
+        Selected = (Model != null) && (option.TransmittalOUTStatusId == Model.TransmittalOUTStatusId)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.TransmittalOUTStatusId)
+</td></tr>
+<tr>
+<td class="width30">
+    Warehouse
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.WarehouseID, ((IEnumerable<WareHouseMVC.Models.Warehouse>)ViewBag.PossibleWarehouses).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.WarehouseID.ToString(),
+        Selected = (Model != null) && (option.WarehouseID == Model.WarehouseID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.WarehouseID)
+</td></tr>
+<tr>
+<td class="width30">
+    Item
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.ItemId, ((IEnumerable<WareHouseMVC.Models.Item>)ViewBag.PossibleItems).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option).ToString(), 
+        Value = option.ItemId.ToString(),
+        Selected = (Model != null) && (option.ItemId == Model.ItemId)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.ItemId)
+</td></tr>
+</tbody>
+</table>
+ 

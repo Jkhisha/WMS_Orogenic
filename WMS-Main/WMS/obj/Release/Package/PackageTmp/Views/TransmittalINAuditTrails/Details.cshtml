@@ -1,0 +1,87 @@
+@model WareHouseMVC.Models.TransmittalINAuditTrail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+      Details </h1>
+    <span>Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">TransmittalINNo</td>
+        <td>
+       @Model.TransmittalINNo
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">CreateBy</td>
+        <td>
+       @Model.CreateBy
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">CreateDate</td>
+        <td>
+       @String.Format("{0:g}", Model.CreateDate)
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">CreateTime</td>
+        <td>
+       @Model.CreateTime
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">CreateByIP</td>
+        <td>
+       @Model.CreateByIP
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">BoxReceivedBy</td>
+        <td>
+       @Model.BoxReceivedBy
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">BoxReceivedByDate</td>
+        <td>
+       @String.Format("{0:g}", Model.BoxReceivedByDate)
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">BoxReceivedByTime</td>
+        <td>
+       @Model.BoxReceivedByTime
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">BoxReceivedByIP</td>
+        <td>
+       @Model.BoxReceivedByIP
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.TransmittalINAuditTrailId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

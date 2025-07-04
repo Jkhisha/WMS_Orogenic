@@ -1,0 +1,100 @@
+@model IEnumerable<WareHouseMVC.Models.EmptyBox>
+@{
+    ViewBag.Title = "Empty Box Recuisition";
+}
+<div class="pagetitle">
+    <h1>
+        Empty Box Recuisition List</h1>
+    <span>List of Empty Box Recuisition....</span>
+</div>
+<p>
+    @if (HttpContext.Current.User.IsInRole("Management"))
+    {
+    }
+    else
+    {
+
+        @Html.ActionLink("New Recuisition", "Create", "", new { @class = "btn btn-primary" })
+    }
+</p>
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered" id="dyntable">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    RecuisitionID
+                </th>
+                <th>
+                    No of Boxes
+                </th>
+                <th>
+                    Recuisition Date
+                </th>
+                <th>
+                    Client
+                </th>
+                <th>
+                    Department
+                </th>
+                <th>
+                    Sub dept.
+                </th>
+                <th>
+                    Rceive By
+                </th>
+                <th>
+                    Handover By
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                @if (HttpContext.Current.User.IsInRole("Management"))
+                {
+                    <td>
+                    </td>
+                }
+                else
+                {
+
+                    <td>
+                        @Html.ActionLink(" ", "Edit", new { id = item.EmptyBoxId }, new { @class = "icon-edit" })
+                        |
+                        @Html.ActionLink(" ", "Details", new { id = item.EmptyBoxId }, new { @class = "icon-list-alt" })
+                        |
+                        @Html.ActionLink(" ", "Delete", new { id = item.EmptyBoxId }, new { @class = "icon-trash" })
+                    </td>
+                }
+                <td>
+                    @item.EmptyBoxNo
+                </td>
+                <td>
+                    @item.NoofBoxes
+                </td>
+                <td>
+                    @item.RecuisitionDate.ToString("dd/MM/yyyy")
+                </td>
+                <td>
+                    @Html.DisplayTextFor(_ => item.Client.ClientName).ToString()
+                </td>
+                <td>
+                    @Html.DisplayTextFor(_ => item.Department.DepartmentName).ToString()
+                </td>
+                <td>
+                    @Html.DisplayTextFor(_ => item.SubDepartment).ToString()
+                </td>
+                <td>
+                    @item.DeliverTo
+                </td>
+                <td>
+                    @item.ORBLOperator.Name
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>

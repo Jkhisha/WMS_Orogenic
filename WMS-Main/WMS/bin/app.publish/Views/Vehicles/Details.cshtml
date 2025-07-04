@@ -1,0 +1,45 @@
+@model WareHouseMVC.Models.Vehicle
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+     Vehicle Details </h1>
+    <span>Vehicle Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">Type</td>
+        <td>
+       @Model.Type
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">RegistrationNumber</td>
+        <td>
+       @Model.RegistrationNumber
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">TransportVendor</td>
+        <td>
+       @(Model.TransportVendor == null ? "None" : Model.TransportVendor.Name)
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.VehicleId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

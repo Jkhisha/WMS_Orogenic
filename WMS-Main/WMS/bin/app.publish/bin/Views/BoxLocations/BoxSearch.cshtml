@@ -1,0 +1,365 @@
+﻿@model WareHouseMVC.Models.BoxSearchViewModel
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "BoxSearch";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ClientID").change(function (evt) {
+
+            if ($("select#ClientID").val() != "-1") {
+
+                $.ajax({
+                    url:"@Url.Content("~/zones/GetDepts")",
+                    type: 'POST',
+                    data: { ClientID: $("select#ClientID").val() },
+                    success: function (response) {
+                        $("#DepartmentID").replaceWith(response)
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+</script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('.modal2').click(function () {
+            $('<div/>').appendTo('body').dialog({
+                close: function (event, ui) {
+                    dialog.remove();
+                },
+
+                show: { effect: 'drop', direction: "up" },
+                title: 'Box Location',
+
+                resizable: false,
+                height: 500,
+                width: 600,
+                draggable: true,
+                modal: true
+            }).load(this.href, {});
+
+            return false;
+        });
+    });
+</script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('.modal3').click(function () {
+            $('<div/>').appendTo('body').dialog({
+                close: function (event, ui) {
+                    dialog.remove();
+                },
+
+                show: { effect: 'drop', direction: "up" },
+                title: 'Box History',
+
+                resizable: false,
+                height: 500,
+                width: 600,
+                draggable: true,
+                modal: true
+            }).load(this.href, {});
+
+            return false;
+        });
+    });
+</script>
+<div class="pagetitle">
+    <h1>
+        Box Search
+    </h1>
+    <span>Search Boxes and Update Destruction Period if needed</span>
+</div>
+@using (Html.BeginForm("BoxSearch", "BoxLocations", FormMethod.Get, ""))
+{
+    @Html.ValidationSummary(true)
+
+    
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">
+                    Select Client
+                </td>
+                <td class="width70">
+                    <span class="formwrapper">
+                        @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.ClientList).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+               Value = option.ClientID.ToString(),
+               Selected = (Model != null) && (option.ClientID == Model.ClientID)
+           }), "Choose...", new { @data_placeholder = "Choose a Country...", @style = "width: 221px", @class = "chzn-select", @tabindex = "2" })
+                    </span>
+                    @Html.ValidationMessageFor(model => model.ClientID)
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Select Department
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.DepartmentID, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+               Value = option.DepartmentID.ToString(),
+               Selected = (Model != null) && (option.DepartmentID == Model.DepartmentID)
+           }), "Choose...")
+                    @Html.ValidationMessageFor(model => model.DepartmentID)
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    From
+                </td>
+                <td class="width70">
+                    <input id="datepicker" type="text" name="StartDate" />
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    To
+                </td>
+                <td class="width70">
+                    <input id="datepicker2" type="text" name="EndDate" />
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Box No
+                </td>
+                <td>
+                    <input id="BoxNo" type="text" name="BoxNo",value = @ViewBag.BoxNo  />
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Box Name
+                </td>
+                <td>
+                    <input id="BoxName" type="text" name="BoxName",value = @ViewBag.BoxName  />
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                </td>
+                <td class="width70">
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    
+}
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    Box Name
+                </th>
+                <th>
+                    Box No
+                </th>
+                <th>
+                    Year
+                </th>
+                <th>
+                    Item No
+                </th>
+                <th>
+                    Destruction Period
+                </th>
+                <th>
+                    Update Destruction Period
+                </th>
+                <th>
+                    Assign Date
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Transmittal Status
+                </th>
+                <th>
+                    Location
+                </th>
+                <th>
+                    History
+                </th>
+                <th>
+                    Box Status
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.SearchResults != null)
+            {
+                int i = 0;
+                foreach (var item in Model.SearchResults)
+                {
+            <tr>
+                <td>
+                </td>
+                <td>
+                    @item.BoxName
+                </td>
+                <td>
+                    @item.BoxNo
+                </td>
+                <td>
+                    @item.Year
+                </td>
+                <td>
+                    @item.ItemId
+                </td>
+                <td>
+                    @if (item.DestructionPeriod != null)
+                    {
+                        @item.DestructionPeriod.Value.ToShortDateString()
+                    }
+                    else
+                    {
+                    }
+                </td>
+                <td>
+                    @{
+                        long _clientID = 0;
+                        long _deptID = 0;
+
+                        if (Model.ClientID != null)
+                        {
+                            _clientID = Model.ClientID;
+                        }
+                        if (Model.DepartmentID.HasValue)
+                        {
+                            _deptID = Model.DepartmentID.Value;
+                        }
+
+                        @Html.ActionLink("Update Period", "UpdatePeriod", "BoxLocations", new { ItemId = item.ItemId, clientID = _clientID, deptID = _deptID }, new { @Class = "btn btn-warning btn-rounded" })
+                    }
+                </td>
+                <td>
+                    @String.Format("{0:g}", item.AssignDate.ToShortDateString())
+                </td>
+                <td>
+                    @item.Item.Description
+                </td>
+                <td>
+                    @item.TransmittalINStatus.StatusName
+                </td>
+                <td>
+                    @if (item.TransmittalINStatusId >= 5)
+                    {
+                        if (item.BoxLocation.Count > 0)
+                        {
+                            if (item.BoxLocation[i].CurrentStatus == "Box Out")
+                            {
+                            }
+                            else
+                            {
+                                @Html.ActionLink("View Location", "ViewLocationModal", "BoxLocations", new { id = item.AssignBoxId }, new { @class = "modal2" })
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <b>Location not assigned</b>
+                    }
+                </td>
+                <td>
+                    @if (item.BoxLocation.Count > 0)
+                    {
+                        if (item.BoxLocation[i].CurrentStatus == "Box Out")
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink("View History", "ViewBoxHistory", "BoxLocations", new { id = item.AssignBoxId }, new { @class = "modal3" })
+                        }
+                    }
+                </td>
+                <td>
+                    @if (item.BoxLocation.Count > 0)
+                    {
+
+                        @item.BoxLocation[i].CurrentStatus
+                    }
+                </td>
+            </tr>
+        
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<div style="float: right">
+    @Html.PagedListPager(Model.SearchResults,
+                 page => Url.Action("BoxSearch", new RouteValueDictionary() {
+               { "Page", page },
+                { "ClientID", Model.ClientID },
+               { "DepartmentID", Model.DepartmentID },
+               { "StartDate", Model.StartDate },
+               { "EndDate", Model.EndDate },
+               {"BoxName",Model.BoxName},
+               {"BoxNo",Model.BoxNo}
+               
+            }),
+            PagedListRenderOptions.ClassicPlusFirstAndLast)
+</div>
+<br />
+@{
+    if (Model.DepartmentID != null && Model.DepartmentID != -1 && Model.DepartmentID != 0 && Model.ClientID != 0 && Model.ClientID != null && Model.ClientID != -1)
+    {
+       
+    <div class="btn-group">
+        <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+            Print <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                @Html.ActionLink("Print on PDF", "PrintBoxList", "BoxLocations", new { clientID = Model.ClientID, deptID = Model.DepartmentID, startDate = Model.StartDate, endDate = Model.EndDate, reportType = 1 }, new { @target = "_blank" })
+            </li>
+            <li>
+                @Html.ActionLink("Print on Excel", "PrintBoxList", "BoxLocations", new { clientID = Model.ClientID, deptID = Model.DepartmentID, startDate = Model.StartDate, endDate = Model.EndDate, reportType = 2 }, new { @target = "_blank" })
+            </li>
+        </ul>
+    </div>
+    
+    
+    }
+
+
+    else if (Model.ClientID != 0 && Model.ClientID != null && Model.ClientID != -1)
+    {
+       
+    <div class="btn-group">
+        <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+            Print <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li>
+                @Html.ActionLink("Print on PDF", "PrintBoxListWithOutDept", "BoxLocations", new { clientID = Model.ClientID, startDate = Model.StartDate, endDate = Model.EndDate, reportType = 1 }, new { @target = "_blank" })
+            </li>
+            <li>
+                @Html.ActionLink("Print on Excel", "PrintBoxListWithOutDept", "BoxLocations", new { clientID = Model.ClientID, startDate = Model.StartDate, endDate = Model.EndDate, reportType = 2 }, new { @target = "_blank" })
+            </li>
+        </ul>
+    </div>
+    
+    
+    }
+    
+    
+}

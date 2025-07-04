@@ -1,0 +1,113 @@
+﻿@model IEnumerable<WareHouseMVC.Models.User>
+@{
+    ViewBag.Title = "User List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pagetitle">
+    <h1>
+        User List</h1>
+    <span>List of User....</span>
+</div>
+
+@{
+
+    if (ViewBag.Check == false)
+    {
+        <div class="alert alert-info" id="msg" runat="server">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+           User successfully updated !
+        </div>
+    }
+    if (ViewBag.Check == true)
+    {
+    }
+
+}
+
+<p>
+    @if (HttpContext.Current.User.IsInRole("Management"))
+    {
+    }
+    else
+    {
+                    
+        @Html.ActionLink("Create New", "Register", "", new { @class = "btn btn-primary" })
+    }
+</p>
+<br />
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered" id="dyntable">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Mobile No
+                </th>
+                <th>
+                    User Name
+                </th>
+                <th>
+                    Roles
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (HttpContext.Current.User.IsInRole("Management"))
+                    {
+                        <td>
+                        </td>
+                    }
+
+                   
+                    else 
+                    {
+                        <td>
+                            @Html.ActionLink(" ", "Delete", new { userName = item.Username }, new { @class = "icon-trash" })
+                        ||
+                            @Html.ActionLink("Edit", "EditUser", "Account", new { userName = item.Username }, "")
+
+                            ||
+
+                            @Html.ActionLink("Change Password", "UpdatePassword","Users", new { userName = item.Username },"")
+
+                            ||
+                            @Html.ActionLink("Reset Password", "ResetPassword", "Users", new { userName = item.Username }, "")
+                        </td>
+                    }
+                    <td>
+                        @item.FirstName @item.LastName
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @item.MobileNumber
+                    </td>
+                    <td>
+                        @item.Username
+                    </td>
+                    <td>
+                        @foreach (var role in item.Roles)
+                        {
+                            <strong>@role.RoleName.ToString()</strong>
+                                                 
+                            <br />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,317 @@
+﻿@using WareHouseMVC.Models;
+@model IEnumerable<WareHouseMVC.Models.AssignBox>
+@{
+    ViewBag.Title = "Assign Boxes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pagetitle">
+    <h1>
+        Assign Boxes to WareHouse
+    </h1>
+    <span>Assign Boxes below....</span>
+</div>
+@{ 
+
+    if (ViewBag.Check == false)
+    {
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        <strong>Warning !</strong> You have not selected Any Box or Any WareHouse for Challan.
+    </div>
+    }
+    if (ViewBag.Check == true)
+    {
+    }
+   
+}
+@using (Html.BeginForm())
+{
+@*
+    <input type="hidden" id="hdnTrIN" value="@ViewBag.TransmittalNo" />*@
+    //@Html.HiddenFor(model => model.TransmittalINs[0].TransmittalNo, new { @Value = ViewBag.TransmittalNo })
+
+    if (ViewBag.File == "0")
+    {
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th class="centeralign">
+                        <div class="checker" id="uniform-undefined">
+                            <span class="">
+                                <input type="checkbox" class="checkall" style="opacity: 0;">
+                            </span>
+                        </div>
+                    </th>
+                    @* <th class="centeralign"><div class="checker" id="uniform-undefined"><input type="checkbox" class="checkall" style="opacity: 0;"></div></th>*@
+                     <th>
+                        Box Name
+                    </th>
+                    <th>
+                        BoxNo
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        DestructionPeriod
+                    </th>
+
+                    <th>
+                        Assigned WareHouse
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @* <td class="centeralign"><div class="checker" id="uniform-undefined"><span class=""><input type="checkbox" style="opacity: 0;"></span></div></td>*@
+                        <td class="centeralign">
+                            <div class="checker1" id="uniform-undefined">
+                                @*  <input type="checkbox" >*@
+                                @Html.Raw("<input  type='checkbox' name='ItemIds' value='" + item.ItemId + "' id='" + item.ItemId + "' ></input>")
+                            </div>
+                        </td>
+                           <td>
+                            @item.BoxName
+                        </td>
+                        <td>
+                            @item.BoxNo
+                        </td>
+                         <td>
+                            @item.Year
+                        </td>
+                       <td>
+                        @if (item.DestructionPeriod.HasValue)
+                        {
+                           
+                            @item.DestructionPeriod.Value.ToShortDateString()
+                             
+                        }
+                       </td>
+                        <td>
+                            @{
+                        if (item.TransmittalINStatusId == 1)
+                        {
+                                @Html.Raw("Not Assigned");
+                        }
+
+                        else
+                        {
+                                @item.WarehouseName
+                        }
+                    
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+    if (ViewBag.File == "1")
+    {
+        <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th class="centeralign">
+                        <div class="checker" id="uniform-undefined">
+                            <span class="">
+                                <input type="checkbox" class="checkall" style="opacity: 0;">
+                            </span>
+                        </div>
+                    </th>
+                    @* <th class="centeralign"><div class="checker" id="uniform-undefined"><input type="checkbox" class="checkall" style="opacity: 0;"></div></th>*@
+                   
+                    <th>
+                        Box Number
+                    </th>
+                     <th>
+                       Box Name
+                    </th>
+                     <th>
+                        File Number
+                    </th>
+                     <th>
+                        Referrence Number
+                    </th>
+                     <th>
+                        Ring Number
+                    </th>
+                     <th>
+                        Account Number
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        DestructionPeriod
+                    </th>
+
+                    <th>
+                        Assigned WareHouse
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @* <td class="centeralign"><div class="checker" id="uniform-undefined"><span class=""><input type="checkbox" style="opacity: 0;"></span></div></td>*@
+                        <td class="centeralign">
+                            <div class="checker1" id="uniform-undefined">
+                                @*  <input type="checkbox" >*@
+                                @Html.Raw("<input  type='checkbox' name='ItemIds' value='" + item.ItemId + "' id='" + item.ItemId + "' ></input>")
+                            </div>
+                        </td>
+                        
+                        <td>
+                            @item.BoxNo
+                        </td>
+                          <td>
+                            @item.BoxNameFile
+                        </td>
+                          <td>
+                            @item.FileNumber
+                        </td>
+                          <td>
+                            @item.ReferrenceNo
+                        </td>
+                          <td>
+                            @item.RingNo
+                        </td>
+                          <td>
+                            @item.AccountNo
+                        </td>
+
+                         <td>
+                            @item.Year
+                        </td>
+                       <td>
+                        @if (item.DestructionPeriod.HasValue)
+                        {
+                           
+                            @item.DestructionPeriod.Value.ToShortDateString()
+                             
+                        }
+                       </td>
+                        <td>
+                            @{
+                        if (item.TransmittalINStatusId == 1)
+                        {
+                                @Html.Raw("Not Assigned");
+                        }
+
+                        else
+                        {
+                                @item.WarehouseName
+                        }
+                    
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+
+    <div>
+        <table>
+            <tr>
+                <td class="width70">
+                    @{
+    if (ViewBag.TransmittalId != null)
+    {
+        long id = Convert.ToInt64(ViewBag.TransmittalId);
+
+        if (ViewBag.hidden == 0 || ViewBag.hidden == null)
+        {
+                
+
+                        @Html.ActionLink("Back to Add/View Boxes", "CreateWitTrINId", "Items", new { trId = id }, new { @class = "btn btn-primary" })
+        }
+        else
+        {
+        }
+    }
+                    }
+                </td>
+                <td class="width15">
+                    <strong>Select WareHouse</strong>
+                </td>
+                <td>
+                    @Html.Partial("_WareHouse", (IEnumerable<WareHouseMVC.Models.Warehouse>)ViewBag.PossibleWarehouses)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    &nbsp;
+                </td>
+                <td>
+                </td>
+            </tr>
+            <tr>
+                <td class="width70">
+                    @{
+    if (ViewBag.DoneState == 0)
+    {
+        long id = Convert.ToInt64(ViewBag.TransmittalId);
+                        @Html.ActionLink("Done TransmittalIN", "DoneTransmittal", "Items", new { trId = id }, new { @class = "btn btn-danger btn-rounded" })
+    }
+    else
+    {
+    }
+        
+                    }
+                </td>
+                <td class="width10">
+                    @{
+    long trId = Convert.ToInt64(ViewBag.TransmittalId);
+
+    if (ViewBag.print == 1)
+    {
+                    
+                    
+                    
+                        <div class="btn-group">
+                            <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                                Print <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Html.ActionLink("Print on PDF", "PrintAsPDF", "Reports", new { trID = trId }, new { @target = "_blank" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Print on Excel", "PrintAsExcel", "Reports", new { trID = trId }, new { @target = "_blank" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Print on Doc", "PrintAsDoc", "Reports", new { trID = trId }, new { @target = "_blank" })
+                                </li>
+                            </ul>
+                        </div>
+    }
+    else
+    {
+    }
+                    }
+                </td>
+                <td>
+                    @{
+    if (ViewBag.hidden == 0 || ViewBag.hidden == null)
+    {
+
+                        <input type="submit" value="Assign" class="btn btn-primary btn-rounded" />
+    }
+    else
+    {
+    }
+                    }
+                </td>
+            </tr>
+        </table>
+    </div>
+}

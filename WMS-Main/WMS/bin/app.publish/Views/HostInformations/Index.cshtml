@@ -1,0 +1,85 @@
+@model IEnumerable<WareHouseMVC.Models.HostInformation>
+
+@{
+    ViewBag.Title = " ORBL Setup";
+}
+
+<div class="pagetitle">
+    <h1>
+      ORBL Setup</h1>
+    <span>Setup ORBL Information Here</span>
+</div>
+<p>
+   @* @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })*@
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            Name
+        </th>
+        <th>
+            Address
+        </th>
+         <th>
+            Att
+        </th>
+         <th>
+            Position
+        </th>
+         <th>
+            Cell
+        </th>
+        <th>
+            Telephone
+        </th>
+        <th>
+            Fax
+        </th>
+        <th>
+            Email
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.HostInformationId }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.HostInformationId }, new { @class = "icon-list-alt" }) 
+            @*@Html.ActionLink(" ", "Delete", new { id=item.HostInformationId }, new { @class = "icon-trash" })*@
+        </td>
+        <td>
+			@item.Name
+        </td>
+        <td>
+			@item.Address
+        </td>
+         <td>
+			@item.Att
+        </td>
+         <td>
+			@item.Position
+        </td>
+         <td>
+			@item.Cell
+        </td>
+        <td>
+			@item.Teliphone
+        </td>
+        <td>
+			@item.Fax
+        </td>
+        <td>
+			@item.Email
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

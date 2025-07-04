@@ -1,0 +1,412 @@
+﻿@model WareHouseMVC.Models.BoxLocation
+@{
+    ViewBag.Title = "ChangeLocation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#WareHouseID").change(function (evt) {
+
+            if ($("select#WareHouseID").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetFloors")",
+                    type: 'POST',
+                    data: { WarehouseID: $("select#WareHouseID").val() },
+                    success: function (response) {
+                        $("select#FloorID").replaceWith(response)
+
+
+                        $("select#FloorID").change(function (evt) {
+
+                            if ($("select#FloorID").val() != "-1") {
+
+                                $.ajax({
+                                    url: "@Url.Content("~/zones/GetZones")",
+                                    type: 'POST',
+                                    data: { FloorID: $("select#FloorID").val() },
+                                    success: function (response) {
+                                        $("select#ZoneID").replaceWith(response)
+
+
+                                        $("select#ZoneID").change(function (evt) {
+
+                                            if ($("select#ZoneID").val() != "-1") {
+
+                                                $.ajax({
+                                                    url: "@Url.Content("~/zones/GetTrains")",
+                                                    type: 'POST',
+                                                    data: { ZoneID: $("select#ZoneID").val() },
+                                                    success: function (response) {
+                                                        $("select#TrainID").replaceWith(response)
+
+
+
+
+                                                        $("select#TrainID").change(function (evt) {
+
+                                                            if ($("select#TrainID").val() != "-1") {
+
+                                                                $.ajax({
+                                                                    url: "@Url.Content("~/zones/GetRacks")",
+                                                                    type: 'POST',
+                                                                    data: { TrainID: $("select#TrainID").val() },
+                                                                    success: function (response) {
+                                                                        $("select#RackID").replaceWith(response)
+
+
+                                                                        $("select#RackID").change(function (evt) {
+
+                                                                            if ($("select#RackID").val() != "-1") {
+
+                                                                                $.ajax({
+                                                                                    url: "@Url.Content("~/zones/GetLevels")",
+                                                                                    type: 'POST',
+                                                                                    data: { RackID: $("select#RackID").val() },
+                                                                                    success: function (response) {
+                                                                                        $("select#LevelID").replaceWith(response)
+
+
+
+                                                                                        $("select#LevelID").change(function (evt) {
+
+                                                                                            if ($("select#LevelID").val() != "-1") {
+
+                                                                                                $.ajax({
+                                                                                                    url: "@Url.Content("~/zones/GetHeights")",
+                                                                                                    type: 'POST',
+                                                                                                    data: { LevelID: $("select#LevelID").val() },
+                                                                                                    success: function (response) {
+                                                                                                        $("select#HeightID").replaceWith(response)
+
+
+
+
+
+
+                                                                                                        $("select#HeightID").change(function (evt) {
+
+                                                                                                            if ($("select#HeightID").val() != "-1") {
+
+                                                                                                                $.ajax({
+                                                                                                                    url: "@Url.Content("~/zones/GetColumns")",
+                                                                                                                    type: 'POST',
+                                                                                                                    data: { HeightID: $("select#HeightID").val() },
+                                                                                                                    success: function (response) {
+                                                                                                                        $("select#ColumnID").replaceWith(response)
+
+
+
+                                                                                                                        $("select#ColumnID").change(function (evt) {
+
+                                                                                                                            if ($("select#ColumnID").val() != "-1") {
+
+                                                                                                                                $.ajax({
+                                                                                                                                    url:"@Url.Content("~/zones/GetRows")",
+                                                                                                                                    type: 'POST',
+                                                                                                                                    data: { ColumnID: $("select#ColumnID").val() },
+                                                                                                                                    success: function (response) {
+                                                                                                                                        $("select#RowID").replaceWith(response)
+                                                                                                                                    },
+                                                                                                                                    error: function (xhr) {
+                                                                                                                                        alert("Something went wrong, please try again");
+                                                                                                                                    }
+                                                                                                                                });
+
+                                                                                                                            }
+                                                                                                                        });
+
+
+
+                                                                                                                    },
+                                                                                                                    error: function (xhr) {
+                                                                                                                        alert("Something went wrong, please try again");
+                                                                                                                    }
+                                                                                                                });
+                                                                                                            }
+                                                                                                        });
+
+
+
+
+
+
+
+                                                                                                    },
+                                                                                                    error: function (xhr) {
+                                                                                                        alert("Something went wrong, please try again");
+                                                                                                    }
+                                                                                                });
+                                                                                            }
+                                                                                        });
+
+
+
+                                                                                    },
+                                                                                    error: function (xhr) {
+                                                                                        alert("Something went wrong, please try again");
+                                                                                    }
+                                                                                });
+                                                                            }
+                                                                        });
+
+
+
+                                                                    },
+                                                                    error: function (xhr) {
+                                                                        alert("Something went wrong, please try again");
+                                                                    }
+                                                                });
+                                                            }
+                                                        });
+
+
+
+
+
+                                                    },
+                                                    error: function (xhr) {
+                                                        alert("Something went wrong, please try again");
+                                                    }
+                                                });
+                                            }
+                                        });
+
+
+                                    },
+                                    error: function (xhr) {
+                                        alert("Something went wrong, please try again");
+                                    }
+                                });
+                            }
+                        });
+
+
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+
+    });
+
+
+
+</script>
+<div class="pagetitle">
+    <h1>
+        Change Box Location</h1>
+    <span></span>
+</div>
+
+
+@{
+    if (ViewBag.Flag == "3")
+    {
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        <strong>Warning !</strong> You have Missed some Filtering before selecting The Row
+    </div>
+    }
+    
+     if (ViewBag.Flag == "4")
+    {
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        <strong>Warning !</strong> You have Missed some Filtering before selecting The Pallet
+    </div>
+    }
+    
+     if (ViewBag.Flag == "5")
+    {
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        <strong>Warning !</strong> You did not select any Row or Pallet
+    </div>
+    }
+    
+     if (ViewBag.Flag == "6")
+    {
+    <div class="alert alert-error">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        <strong>Warning !</strong> No Pallet Allocated for this Warehouse
+    </div>
+    }
+}
+
+
+<div>
+    @using (Html.BeginForm("ChangeLocationModal", "BoxLocations", FormMethod.Post))
+    {
+        
+         @Html.Raw("<input  type='hidden' name='AssignBoxID' value='" + ViewBag.AssignBoxID + "' id='" + ViewBag.AssignBoxID + "' ></input>")
+         @Html.Raw("<input  type='hidden' name='BoxLocationId' value='" + ViewBag.BoxLocationId + "' id='" + ViewBag.BoxLocationId + "' ></input>")
+         @Html.Raw("<input  type='hidden' name='preRowID' value='" + ViewBag.preRowID + "' id='" + ViewBag.preRowID + "' ></input>")
+         @Html.Raw("<input  type='hidden' name='Filter' value='" + ViewBag.Filter + "' id='" + ViewBag.Filter + "' ></input>")
+         
+        
+        
+        @Html.ValidationSummary(true)
+
+
+        <table class="table table-bordered table-invoice">
+            <tbody>
+
+
+             <tr>
+<td class="width30">
+Pallet
+</td>
+<td class="width70">
+@Html.CheckBoxFor(model => model.IsPallet)
+</td>
+ 
+</tr>
+
+
+                <tr>
+                    <td class="width30">
+                        Warehouse
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.WareHouseID, ((IEnumerable<WareHouseMVC.Models.Warehouse>)ViewBag.PossibleWarehouses).Select(option => new SelectListItem
+                   {
+                       Text = Html.DisplayTextFor(_ => option.WarehouseName).ToString(),
+                       Value = option.WarehouseID.ToString(),
+                       Selected = (Model != null) && (option.WarehouseID == Model.WareHouseID) || (Model == null) && (option.WarehouseID == ViewBag.WareHouseID)
+                   }), "Choose...")
+                        @Html.ValidationMessageFor(model => model.WareHouseID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        Floor
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.FloorID, ((List<WareHouseMVC.Models.Floor>)ViewBag.PossibleFloors).Select(option => new SelectListItem
+                   {
+                       Text = Html.DisplayTextFor(_ => option.FloorName).ToString(),
+                       Value = option.FloorID.ToString(),
+                       Selected = (Model != null) && (option.FloorID == Model.FloorID) || (Model == null) && (option.FloorID == ViewBag.FloorID)
+                   }), "Choose...")
+                        @Html.ValidationMessageFor(model => model.FloorID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        Zone
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.ZoneID, ((List<WareHouseMVC.Models.Zone>)ViewBag.PossibleZones).Select(option => new SelectListItem
+                   {
+                       Text = Html.DisplayTextFor(_ => option.ZoneName).ToString(),
+                       Value = option.ZoneID.ToString(),
+                       Selected = (Model != null) && (option.ZoneID == Model.ZoneID) || (Model == null) && (option.ZoneID == ViewBag.ZoneID)
+                   }), "Choose...")
+                        @Html.ValidationMessageFor(model => model.ZoneID)
+                    </td>
+                </tr>
+               
+                <tr>
+                    <td class="width30">
+                        Train
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.TrainID, ((List<WareHouseMVC.Models.Train>)ViewBag.PossibleTrains).Select(option => new SelectListItem
+                   {
+                       Text = Html.DisplayTextFor(_ => option.TrainName).ToString(),
+                       Value = option.TrainID.ToString(),
+                       Selected = (Model != null) && (option.TrainID == Model.TrainID) || (Model == null) && (option.TrainID == ViewBag.TrainID)
+                   }), "Choose...")
+                        @Html.ValidationMessageFor(model => model.TrainID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        Rack
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.RackID, ((List<WareHouseMVC.Models.Rack>)ViewBag.PossibleRacks).Select(option => new SelectListItem
+                   {
+                       Text = Html.DisplayTextFor(_ => option.RackName).ToString(),
+                       Value = option.RackID.ToString(),
+                       Selected = (Model != null) && (option.RackID == Model.RackID) || (Model == null) && (option.RackID == ViewBag.RackID)
+                   }), "Choose...")
+                        @Html.ValidationMessageFor(model => model.RackID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        Level
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.LevelID, ((List<WareHouseMVC.Models.Level>)ViewBag.PossibleLevels).Select(option => new SelectListItem
+                   {
+                       Text = Html.DisplayTextFor(_ => option.LevelName).ToString(),
+                       Value = option.LevelID.ToString(),
+                       Selected = (Model != null) && (option.LevelID == Model.LevelID) || (Model == null) && (option.LevelID == ViewBag.LevelID)
+                   }), "Choose...")
+                        @Html.ValidationMessageFor(model => model.LevelID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        Height
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.HeightID, ((List<WareHouseMVC.Models.Height>)ViewBag.PossibleHeights).Select(option => new SelectListItem
+                   {
+                       Text = Html.DisplayTextFor(_ => option.HeightName).ToString(),
+                       Value = option.HeightID.ToString(),
+                       Selected = (Model != null) && (option.HeightID == Model.HeightID) || (Model == null) && (option.HeightID == ViewBag.HeightID)
+                   }), "Choose...")
+                        @Html.ValidationMessageFor(model => model.HeightID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        Column
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.ColumnID, ((List<WareHouseMVC.Models.Column>)ViewBag.PossibleColumns).Select(option => new SelectListItem
+                   {
+                       Text = Html.DisplayTextFor(_ => option.ColumnName).ToString(),
+                       Value = option.ColumnID.ToString(),
+                       Selected = (Model != null) && (option.ColumnID == Model.ColumnID) || (Model == null) && (option.ColumnID == ViewBag.ColumnID)
+                   }), "Choose...")
+                        @Html.ValidationMessageFor(model => model.ColumnID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        Row
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.RowID, ((List<WareHouseMVC.Models.Row>)ViewBag.PossibleRows).Select(option => new SelectListItem
+                   {
+                       Text = Html.DisplayTextFor(_ => option.RowName).ToString(),
+                       Value = option.RowID.ToString(),
+                       Selected = (Model != null) && (option.RowID == Model.RowID) || (Model == null) && (option.RowID == ViewBag.RowID)
+                   }), "Choose...")
+                        @Html.ValidationMessageFor(model => model.RowID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                    </td>
+                    <td class="width70">
+                        <input type="submit" value="Change" class="btn btn-primary" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    }
+</div>

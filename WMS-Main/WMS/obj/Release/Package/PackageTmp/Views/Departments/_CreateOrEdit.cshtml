@@ -1,0 +1,56 @@
+@model WareHouseMVC.Models.Department
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+
+        <tr>
+            <td class="width30">
+                Client
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem
+                {
+                    Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+                    Value = option.ClientID.ToString(),
+                    Selected = (Model != null) && (option.ClientID == Model.ClientID) || (Model == null) && (option.ClientID == ViewBag.clID)
+                }), "Choose...")
+                @Html.ValidationMessageFor(model => model.ClientID)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.DepartmentName, "Department Name")
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.DepartmentName)
+                @Html.ValidationMessageFor(model => model.DepartmentName)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.DepartmentCode, "Department Code")
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.DepartmentCode)
+                @Html.ValidationMessageFor(model => model.DepartmentCode)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.DepartmentAddress, "Address")
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.DepartmentAddress)
+                @Html.ValidationMessageFor(model => model.DepartmentAddress)
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+

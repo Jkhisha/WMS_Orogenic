@@ -1,0 +1,180 @@
+@model WareHouseMVC.Models.HandOverBy
+@{
+    ViewBag.Title = "HandOverBy";
+}
+<div class="pagetitle">
+    <h1>
+        Add HandOverBy
+    </h1>
+    <span>Add HandOverBy below....</span>
+</div>
+<div class="contentinner">
+    <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Transmittal No :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.TransmittalNo</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Refference No :
+                        </td>
+                        <td>@ViewBag.TransmittalRefNo
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transmittal Type :
+                        </td>
+                        <td>@ViewBag.TransmittalType
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Client :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.ClientName</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Department :
+                        </td>
+                        <td>@ViewBag.Department
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transmittal Date :
+                        </td>
+                        <td>@ViewBag.TransmittalDate
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="clearfix">
+        <br>
+    </div>
+    @using (Html.BeginForm("Create", "HandOverBies"))
+    {
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(model => model.TransmittalINs[0].TransmittalNo, new { @Value = ViewBag.TransmittalNo })
+        @Html.HiddenFor(model => model.TransmittalINs[0].ClientRequestreference, new { @Value = ViewBag.TransmittalRefNo })
+        @Html.HiddenFor(model => model.TransmittalINs[0].TransmittalINId, new { @Value = ViewBag.TransmittalId })
+        @Html.HiddenFor(model => model.TransmittalINs[0].TransmittalDate, new { @Value = ViewBag.TransmittalDate })
+   if (!HttpContext.Current.User.IsInRole("Client"))
+   {
+      
+        @Html.Partial("_CreateOrEdit", Model)
+        <table class="table table-bordered table-invoice">
+            <tbody>
+                <tr>
+                    <td class="width30">
+                    </td>
+                    <td class="width70">
+                        @{
+    
+   int flag = Convert.ToInt32(ViewBag.Flag);
+
+   if (flag == 1)
+   {
+                            <input type="submit" value="Add HandOverBy" class="btn btn-primary" disabled="disabled" />
+   }
+   if (flag == 0)
+   {
+                            <input type="submit" value="Add HandOverBy" class="btn btn-primary" />
+   }
+                        }
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+   }
+    }
+    <br />
+    @if (!HttpContext.Current.User.IsInRole("Client"))
+    {
+        <table>
+            <tr>
+                <td class="width70">
+                    @{
+        long id = Convert.ToInt64(ViewBag.TransmittalId);
+    
+    
+                        @Html.ActionLink("Back to TransmittalIN", "Details", "TransmittalINs", new { id = id }, new { @class = "btn" })
+                    }
+                </td>
+                <td>
+                    @{
+                   long id2 = Convert.ToInt64(ViewBag.TransmittalId);
+                 
+                        @Html.ActionLink("Add ReceivedBy", "ReceivedBy", "ReceivedBies", new { trId = id2 }, new { @class = "btn btn-warning" })   
+                    }
+                </td>
+            </tr>
+        </table>
+    }
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Address
+                    </th>
+                    <th>
+                        Date
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (ViewBag.AllHandOverBy != null)
+                {
+
+                    long trid = Convert.ToInt64(ViewBag.TransmittalId);
+
+                    foreach (var item in @ViewBag.AllHandOverBy)
+                    {
+                    <tr>
+                        <td>
+                            @if (!HttpContext.Current.User.IsInRole("Client"))
+                            {
+                                @Html.ActionLink(" ", "Remove", new { id = item.HandOverById, trID = trid }, new { @class = "icon-trash" })
+                            }
+                        </td>
+                        <td>
+                            @item.Name
+                        </td>
+                        <td>
+                            @item.Address
+                        </td>
+                        <td>
+                            @String.Format("{0:g}", item.Date)
+                        </td>
+                    </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

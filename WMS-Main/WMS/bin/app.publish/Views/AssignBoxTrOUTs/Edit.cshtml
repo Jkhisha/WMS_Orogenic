@@ -1,0 +1,37 @@
+@model WareHouseMVC.Models.AssignBoxTrOUT
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="pagetitle">
+    <h1>
+       Edit </h1>
+    <span>Edit below....</span>
+</div>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+      
+
+
+        @Html.HiddenFor(model => model.AssignBoxTrOUTId)
+		@Html.Partial("_CreateOrEdit", Model)
+
+         <table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+        <td class="width30"></td>
+        <td>
+         <input type="submit" value="Save" class="btn btn-primary" />
+        </td>
+        </tr>
+        </tbody>
+        </table>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</div>

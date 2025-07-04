@@ -1,0 +1,41 @@
+﻿@model PagedList.IPagedList<WareHouseMVC.Models.AssignBoxTrOUT>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+<table>
+
+    @using (Html.BeginForm("CheckStatus", "AssignBoxTrOUTs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+	
+        <input type="hidden" name="trID" id="trID" value=@ViewBag.trID />
+        <td class="width30">
+            <label>
+                File Upload</label>
+        </td>
+        <td class="width70">
+            <div data-provides="fileupload" class="fileupload fileupload-exists">
+                <input type="hidden" value="" name="filename">
+                <div class="input-append">
+                    <div class="uneditable-input span3">
+                        <i class="icon-file fileupload-exists"></i>
+                        <span class="fileupload-preview"></span>
+                    </div>
+                    <span class="btn btn-file"><span class="fileupload-new">Select file</span>
+                        <span class="fileupload-exists">Change</span>
+                        <input type="file" name="filename"></span>
+                    <a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+                </div>
+            </div>
+            <span style="margin-left: 75px;"><a href="@Url.Content("~/Content/StandardXLFiles/BarcodeTest.xlsx")" >Download Standard CSV Format</a></span>
+        </td>
+        <td class="width30">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </td>
+          
+    
+
+    }
+
+</table>

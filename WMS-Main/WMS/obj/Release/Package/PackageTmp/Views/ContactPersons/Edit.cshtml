@@ -1,0 +1,37 @@
+@model WareHouseMVC.Models.ContactPerson
+
+@{
+    ViewBag.Title = "Edit Contact Person";
+}
+
+<div class="pagetitle">
+    <h1>
+       Edit Contact Person</h1>
+    <span>Edit Contact Person below....</span>
+</div>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+      
+
+
+        @Html.HiddenFor(model => model.ContactPersontID)
+		@Html.Partial("_CreateOrEdit", Model)
+
+         <table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+        <td class="width30"></td>
+        <td>
+         <input type="submit" value="Save" class="btn btn-primary" />
+        </td>
+        </tr>
+        </tbody>
+        </table>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</div>

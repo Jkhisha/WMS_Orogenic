@@ -1,0 +1,65 @@
+@model WareHouseMVC.Models.TransmittalIN
+
+@{
+    ViewBag.Title = "Edit Tansmittal IN";
+}
+
+<div class="pagetitle">
+    <h1>
+       Edit Tansmittal IN</h1>
+    <span>Edit Tansmittal IN below....</span>
+</div>
+
+@using (Html.BeginForm())
+{
+      @Html.HiddenFor(model => model.CreateDate, new { @Value = ViewBag.CreateDate })
+       @Html.HiddenFor(model => model.TransmittalINStatusId, new { @Value = ViewBag.TransmittalINStatusId })
+    @Html.ValidationSummary(true)
+    <fieldset>
+      
+
+
+        @Html.HiddenFor(model => model.TransmittalINId)
+		@Html.Partial("_CreateOrEdit", Model)
+
+         <table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+        <td class="width30"></td>
+        <td class="width5">
+         <input type="submit" value="Save" class="btn btn-primary" />
+        </td>
+        
+
+
+
+         <td>
+        @{
+    if (ViewBag.id == null)
+    {
+        long id = Convert.ToInt64(ViewBag.id);
+
+          @Html.ActionLink("Add HandOverBy", "HandOverBy", "HandOverBies", new { trId = id }, new { disabled = "disabled", @class = "btn btn-warning" })
+          
+    }
+
+    else
+    {
+        long id = Convert.ToInt64(ViewBag.id);
+
+            @Html.ActionLink("Add HandOverBy", "HandOverBy", "HandOverBies", new { trId = id }, new { @class = "btn btn-warning" })
+    }
+}
+         
+         </td>
+
+
+        </tr>
+        </tbody>
+        </table>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</div>

@@ -1,0 +1,318 @@
+﻿@model WareHouseMVC.Models.RegisterModelForClient
+@{
+    ViewBag.Title = "CreateClientUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.6/jquery.minicolors.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.3.6/jquery.minicolors.min.js"></script>
+
+<style type="text/css">
+    .skins {
+        position: relative !important;
+        right: 0px !important;
+    }
+
+    #colorSelector {
+        width: 100%; /* Adjust width as needed */
+    }
+
+    .minicolors-input {
+        border: 1px solid #ccc; /* Adjust border styles */
+        padding: 5px; /* Add padding for better appearance */
+        width: 100%; /* Full width */
+    }
+
+    .minicolors-swatch {
+        border: 1px solid #ccc; /* Ensure the swatch has a border */
+        cursor: pointer; /* Pointer cursor for swatch */
+    }
+</style>
+
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+        jQuery('#colorPicker').minicolors({
+            control: 'hue', 
+            defaultValue: '#666666',
+            format: 'hex', 
+            theme: 'bootstrap', 
+            allowInput: true, 
+            change: function (value, opacity) {
+                if (!value) return;
+                $('#themeName').val(value);
+            }
+        });
+
+        var defaultColor = $('#colorPicker').minicolors('value');
+        $('#themeName').val(defaultColor);
+
+        jQuery('#colorPicker').on('blur', function () {
+            var hexColor = $(this).val();
+            var isValidHex = /^#([0-9A-F]{3}|[0-9A-F]{6})$/i.test(hexColor);
+            if (!isValidHex) {
+                alert('Please enter a valid hex color code.');
+            }
+        });
+
+        $('#departmentDropdown').change(function () {
+            var selectedText = $("#departmentDropdown option:selected").text().toLowerCase();
+            if (selectedText === 'superadmin') {
+                $('#AdminCheckbox').prop('checked', false);
+                $('#AdminUserTR').hide();
+                $('#SubDeptTextBox').val('');
+                $('#SubDeptTextBox').removeAttr('required');
+                $('#SubDeptTR').hide();
+            } else {
+                $('#AdminUserTR').show();
+                $('#SubDeptTextBox').attr('required', 'required');
+                $('#SubDeptTR').show();
+            }
+        });
+
+        $('#AdminCheckbox').change(function () {
+            if ($(this).is(':checked')) {
+                $('#SubDeptTextBox').val('');
+                $('#SubDeptTextBox').removeAttr('required');
+                $('#SubDeptTR').hide();
+            } else {
+                $('#SubDeptTextBox').attr('required', 'required');
+                $('#SubDeptTR').show();
+            }
+        });
+
+        // Trim all input fields on form submit
+        $('form').on('submit', function () {
+            $('input[type="text"], input[type="email"], textarea').each(function () {
+                $(this).val($.trim($(this).val()));
+            });
+        });
+
+    });
+
+    function onClientChange() {
+        var clientId = jQuery('#clientDropdown').val();
+        var departmentDropdown = jQuery('#departmentDropdown');
+        if (clientId) {
+            jQuery.ajax({
+                url: '@Url.Action("GetDepartmentsByClientId", "Clients")',
+                type: 'GET',
+                dataType: 'json',
+                data: { clientId: clientId },
+                success: function (data) {
+                    departmentDropdown.empty().append(jQuery('<option>').text("Choose...").attr('value', ''));
+
+                    jQuery.each(data, function (index, option) {
+                        departmentDropdown.append(jQuery('<option>').text(option.DepartmentName).attr('value', option.DepartmentID));
+                    });
+
+                    departmentDropdown.trigger("chosen:updated");
+                },
+                error: function () {
+                    alert('Error retrieving departments.');
+                }
+            });
+        } else {
+            departmentDropdown.empty().append(jQuery('<option>').text("Choose...").attr('value', '')).trigger("chosen:updated");
+        }
+    }
+</script>
+
+<div class="pagetitle">
+    <h1>
+        Create a New User
+    </h1>
+    <span>Use the form below to create a new user....</span>
+</div>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@if (ViewBag.successMessage != null || TempData["successMessage"] != null)
+{
+<div class="alert alert-info" id="msg" runat="server">
+    <button type="button" class="close" data-dismiss="alert">
+        ×
+    </button>
+    @ViewBag.successMessage <strong>@ViewBag.Pass  </strong>
+    @TempData["successMessage"] <strong>@TempData["NewPassword"] </strong>
+</div>
+}
+<div class="widgetcontent">
+    @using (Html.BeginForm("CreateClientUser", "Clients", FormMethod.Post, new { @class = "stdform", enctype = "multipart/form-data" }))
+    {
+
+        @Html.HiddenFor(model => model.RoleNames[0], new { @Value = ViewBag.role })
+        <table class="table table-bordered table-invoice">
+            <tbody>
+                <tr>
+                    <td class="width30">
+                        <label>
+                            Select Client
+                        </label>
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.ClientID,
+                            ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.allClient).Select(option => new SelectListItem
+                            {
+                                Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+                                Value = option.ClientID.ToString()
+                            }),
+                            "Choose...",
+                            new
+                                 {
+                                @id = "clientDropdown",
+                                @data_placeholder = "Choose a Client...",
+                                @style = "width: 221px",
+                                @class = "chzn-select",
+                                @tabindex = "2",
+                                @required = "required",
+                                @onchange = "onClientChange()"
+                            }
+                        )
+                        @Html.ValidationMessageFor(model => model.ClientID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        @Html.LabelFor(m => m.UserName)
+                    </td>
+                    <td class="width70">
+                        @Html.TextBoxFor(m => m.UserName, new { id = "userNameTextBox", required = "required" })
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        @Html.Label("Department")
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.DepartmentID, new SelectList(Enumerable.Empty<SelectListItem>()), "Choose...", new { @id = "departmentDropdown", @style = "width: 221px", @class = "chzn-select", @tabindex = "3", @required = "required" })
+                        @Html.ValidationMessageFor(model => model.DepartmentID)
+                    </td>
+                </tr>
+                <tr id="AdminUserTR">
+                    <td class="width30">
+                        @Html.Label("Admin user")
+                    </td>
+                    <td class="width70">
+                        <input type="checkbox" id="AdminCheckbox" />
+                    </td>
+                </tr>
+                <tr id="SubDeptTR">
+                    <td class="width30">
+                        @Html.Label("Sub-department")
+                    </td>
+                    <td class="width70">
+                        @Html.TextBoxFor(m => m.SubDepartment, new { id = "SubDeptTextBox", @required = "required" })                       
+                        @Html.ValidationMessageFor(m => m.SubDepartment)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        @Html.Label("Email")
+                    </td>
+                    <td class="width70">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @type = "email", @required = "required" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        <label>
+                            Banner Text
+                        </label>
+                    </td>
+                    <td class="width70">
+                        @Html.TextBoxFor(m => m.BannerText)
+                        @Html.ValidationMessageFor(m => m.BannerText)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="width30">
+                        <label>
+                            Upload Logo
+                        </label>
+                    </td>
+                    <td class="width70">
+
+                        <input type="file" name="LogoUrl" /><br />
+
+                        <span> <strong>Image width :<font color="red">240px </font>  & Height :<font color="red"> 92px </font> will be the best fit</strong></span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="width30">
+                        <label>
+                            Select Theme
+                        </label>
+                    </td>
+                    <td class="width70">
+                        <input type="text" id="colorPicker" name="Color" style="width: auto" />
+                        <input type="hidden" id="themeName" name="themeName" />
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="width30"></td>
+                    <td class="width70">
+                        <input type="submit" value="Add User" class="btn btn-primary" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    }
+    <div>
+        @Html.ActionLink("Back to User List", "UserList", "", new { @class = "btn" })
+    </div>
+</div>
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered" id="dyntable">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    Client
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    Reset Password
+                </th>
+                <th>
+                    User Name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.allUserClient != null)
+            {
+
+                foreach (var item in ViewBag.allUserClient)
+                {
+            <tr>
+                <td>
+                    @Html.ActionLink(" ", "DeleteClientUser", "Clients", new { id = item.ClientId, userName = item.UserName }, new { @class = "icon-trash" })
+                </td>
+                <td>
+                    @item.ClientName
+                </td>
+                <td>
+                    @item.Email
+                </td>
+                <td>
+                    @Html.ActionLink("Reset Password", "ForgotPassword", "Users", new { userName = item.UserName }, new { @class = "btn btn-primary" })
+                </td>
+                <td>
+                    @item.UserName
+                </td>
+            </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

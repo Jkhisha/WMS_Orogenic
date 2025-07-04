@@ -1,0 +1,177 @@
+﻿
+@{
+    ViewBag.Title = "Client to Orogenic Barcode Mapping";
+
+}
+
+<div class="container">
+    <h2>Client Barcode Mapper</h2>
+    <table class="table" id="barcodeTable">
+        <thead>
+            <tr>
+                <th>Client Barcode </th>
+                <th>Orogenic Barcode </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < 15; i++)
+            {
+                <tr>
+                    <td><input type="text" class="form-control client-barcode" /></td>
+                    <td class="orogenic-barcode text-muted">Not mapped</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button id="mapBarcodeBtn" class="btn btn-primary">Map Barcodes</button>
+    <button id="printOrogenicBarcodes" class="btn btn-warning">Print Orogenic Barcodes</button>
+</div>
+<canvas id="barcodeCanvas" style="display: none;"></canvas>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.5/JsBarcode.all.min.js"></script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $(document).ready(function () {
+            $("#mapBarcodeBtn").click(function () {
+                // Disable button during processing
+                $(this).prop("disabled", true).text("Mapping...");
+
+                let inputs = $(".client-barcode");
+                let promises = [];
+
+                // Process all inputs in parallel
+                inputs.each(function (index) {
+                    let clientBarcode = $(this).val().trim();
+                    if (!clientBarcode) return; // Skip empty inputs
+
+                    let $outputCell = $(this).closest("tr").find(".orogenic-barcode");
+
+                    promises.push(
+                        $.ajax({
+                            url: '@Url.Action("GetOrogenicBarcode", "BarcodeMappings")',
+                            type: 'POST',
+                            data: { clientBarcode: clientBarcode },
+                            success: function (response) {
+                                if (response.success && response.orogenicBarcode) {
+                                    $outputCell.removeClass("text-muted").text(response.orogenicBarcode);
+                                }
+                            }
+                        })
+                    );
+                });
+
+                // Re-enable button when all requests complete
+                $.when.apply($, promises).always(function () {
+                    $("#mapBarcodeBtn").prop("disabled", false).text("Map Barcodes");
+                });
+            });
+        });
+    })
+
+</script>
+<script type="text/javascript">
+    jQuery(function ($) {  // This ensures $ works even with noConflict
+        $(document).ready(function () {
+
+            $("#printOrogenicBarcodes").click(function () {
+                // Collect all client barcodes from the table
+                var clientBarcodes = [];
+                $("#barcodeTable tbody tr").each(function () {
+                    var clientBarcode = $(this).find(".orogenic-barcode").text().trim();
+                    if (clientBarcode !== "Not mapped" && clientBarcode !== "") {
+                        clientBarcodes.push(clientBarcode);
+                    }
+                });
+
+                if (clientBarcodes.length === 0) {
+                    alert("No valid client barcodes found!");
+                    return;
+                }
+
+                // Generate PDF with barcodes
+                generateBarcodePDF(clientBarcodes);
+            });
+
+            function generateBarcodePDF(barcodes) {
+                // Create new jsPDF instance
+                // 4x2 inches = 288x144 points (72 points per inch)
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'pt',
+                    format: [288, 144] // 4x2 inches in points
+                });
+
+                const canvas = document.getElementById('barcodeCanvas');
+                const pageWidth = 288;
+                const pageHeight = 144;
+
+                barcodes.forEach((barcode, index) => {
+                    if (index > 0) {
+                        pdf.addPage([288, 144], 'landscape');
+                    }
+
+                    try {
+                        // Set canvas size for better quality
+                        canvas.width = 500;
+                        canvas.height = 150;
+
+                        // Generate barcode on canvas
+                        JsBarcode(canvas, barcode, {
+                            format: "CODE128",
+                            width: 3,
+                            height: 60,
+                            displayValue: false, // We'll add text separately
+                            fontSize: 12,
+                            margin: 10,
+                            background: "#ffffff",
+                            lineColor: "#000000"
+                        });
+
+                        // Get barcode as image data
+                        const barcodeImgData = canvas.toDataURL('image/png');
+
+                        // Layout for 4x2 inch (288x144 points)
+                        // Top text: "New Client Encoded barcode"
+                        //pdf.setFontSize(10);
+                        //pdf.setFont("helvetica", "normal");
+                        //pdf.text("Updated Barcode:", pageWidth / 2, 20, { align: 'center' });
+
+                        // Add barcode image (centered, larger for better readability)
+                        const barcodeWidth = 120;
+                        const barcodeHeight = 20;
+                        const barcodeX = (pageWidth - barcodeWidth) / 2;
+                        const barcodeY = 35;
+
+                        pdf.addImage(barcodeImgData, 'PNG', barcodeX, barcodeY, barcodeWidth, barcodeHeight);
+
+                        // Add barcode value below the barcode
+                        pdf.setFontSize(12);
+                        pdf.setFont("helvetica", "bold");
+                        pdf.text(barcode, pageWidth / 2, barcodeY + barcodeHeight + 15, { align: 'center' });
+
+                        // Add company name at the bottom
+                        pdf.setFontSize(10);
+                        pdf.setFont("helvetica", "normal");
+                        pdf.text("Orogenic Resources (BD) Limited", pageWidth / 2, pageHeight - 15, { align: 'center' });
+
+                    } catch (error) {
+                        console.error('Error generating barcode for:', barcode, error);
+
+                        // Fallback: add text if barcode generation fails
+                        pdf.setFontSize(10);
+                        //pdf.text("New Client Encoded barcode", pageWidth / 2, 20, { align: 'center' });
+                        pdf.setFontSize(12);
+                        pdf.text(barcode, pageWidth / 2, pageHeight / 2, { align: 'center' });
+                        pdf.setFontSize(10);
+                        pdf.text("Orogenic Resources (BD) Limited", pageWidth / 2, pageHeight - 15, { align: 'center' });
+                    }
+                });
+
+                // Save the PDF
+                const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+                pdf.save(`client-barcodes-${timestamp}.pdf`);
+            }
+        });
+    });
+</script>

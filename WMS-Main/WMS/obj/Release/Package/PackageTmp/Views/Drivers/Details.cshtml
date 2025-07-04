@@ -1,0 +1,45 @@
+@model WareHouseMVC.Models.Driver
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+     Driver Details </h1>
+    <span>Driver Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">Name</td>
+        <td>
+       @Model.Name
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">ContactNumber</td>
+        <td>
+       @Model.ContactNumber
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">TransportVendor</td>
+        <td>
+       @(Model.TransportVendor == null ? "None" : Model.TransportVendor.Name)
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.DriverId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

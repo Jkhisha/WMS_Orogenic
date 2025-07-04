@@ -1,0 +1,89 @@
+@model WareHouseMVC.Models.Item
+@{
+    ViewBag.Title = "Details";
+}
+<div class="pagetitle">
+    <h1>
+        Details
+    </h1>
+    <span>Details below....</span>
+</div>
+<fieldset>
+    <table class="table table-bordered table-invoice">
+        <tbody>
+           @* <tr>
+                <td class="width30">
+                    ItemName
+                </td>
+                <td>
+                    @Model.ItemName
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Quantity
+                </td>
+                <td>
+                    @Model.Quantity
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Unit
+                </td>
+                <td>
+                    @Model.Unit
+                </td>
+            </tr>*@
+            <tr>
+                <td class="width30">
+                    BoxNo
+                </td>
+                <td>
+                    @Model.BoxNo
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    DestructionPeriod
+                </td>
+                <td>
+                    @Model.DestructionPeriod
+                </td>
+            </tr>
+           @* <tr>
+                <td class="width30">
+                    IsNew
+                </td>
+                <td>
+                    @Model.IsNew
+                </td>
+            </tr>*@
+            <tr>
+                <td class="width30">
+                    TransmittalINs
+                </td>
+                <td>
+                    @(Model.TransmittalINs == null ? "None" : Model.TransmittalINs.Count.ToString())
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    TrasmittalOUTs
+                </td>
+                <td>
+                    @(Model.TrasmittalOUTs == null ? "None" : Model.TrasmittalOUTs.Count.ToString())
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ItemId }, new { @class = "btn btn-primary" })
+    |
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" }) |
+    @{
+    long id=Convert.ToInt64(ViewBag.id);
+@Html.ActionLink("Back to Add/View Items", "CreateWitTrINId", "Items", new { trId = id },new { @class = "btn btn-primary" })
+    }
+</p>

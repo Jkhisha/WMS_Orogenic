@@ -1,0 +1,191 @@
+@model WareHouseMVC.Models.Item
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        var ArchahiveStatus = document.getElementById("IsArchieve").checked = false;
+
+        $('.ItemIdBoxNo').hide();
+        $('.warningText').hide();
+        var ArchiveStatuss = @ViewBag.ArchiveStatus
+        console.log(ArchiveStatuss);
+
+        //Newly Added (12 sep 2021)
+        $('#boxNo').val('@ViewBag.OldBoxNo');
+        //End
+
+        //alert(@ViewBag.OldBoxNo);
+
+        if (ArchiveStatuss == undefined) {
+            ArchiveStatuss = 0;
+        }
+
+        if (ArchiveStatuss == 1){
+            $(".someClassName").attr('checked', true);
+            $('.ItemIdBoxNo').show();
+            $('.otherItemField').hide();
+        }
+
+        $('.someClassName').click(function () {
+            if (document.getElementById("IsArchieve").checked == true){
+                $("#btnformSubmit").attr('disabled', false);
+                $('.ItemIdBoxNo').show();
+                $('.otherItemField').hide();
+                ReArchiveData();
+            } else {
+                $("#btnformSubmit").attr('disabled', true);
+                $('.ItemIdBoxNo').hide();
+                $('.otherItemField').show();
+                NormalData();
+            }
+        });
+
+        $("#boxNo").keyup(function () {
+            var boxNo = $("#boxNo").val();
+            var barCodeText = $("#BarCodeText").val();
+
+            // Check if BoxNo is less than 10 characters
+            if (!boxNo || boxNo.length < 10) {
+                $('.warningText').show();
+            } else {
+                $('.warningText').hide();
+            }
+
+            // Disable the button if either BoxNo or BarCodeText is invalid
+            if (!boxNo || boxNo.length < 10 /*|| !barCodeText || barCodeText.length < 10*/) {
+                $("#btnformSubmit").attr('disabled', true);
+            } else {
+                $("#btnformSubmit").attr('disabled', false);
+            }
+        });
+
+        //$("#BarCodeText").keyup(function () {
+        //    var boxNo = $("#boxNo").val();
+        //    var barCodeText = $("#BarCodeText").val();
+
+        //    // Check if BarCodeText is less than 10 characters
+        //    if (!barCodeText || barCodeText.length < 10) {
+        //        $('.warningText1').show();
+        //    } else {
+        //        $('.warningText1').hide();
+        //    }
+
+        //    // Disable the button if either BoxNo or BarCodeText is invalid
+        //    if (!boxNo || boxNo.length < 10 || !barCodeText || barCodeText.length < 10) {
+        //        $("#btnformSubmit").attr('disabled', true);
+        //    } else {
+        //        $("#btnformSubmit").attr('disabled', false);
+        //    }
+        });
+
+
+
+
+
+
+
+        // Form Clear Function
+        function ReArchiveData() {
+            $('#ItemId').val("");
+        }
+
+        function NormalData() {
+            var boxNo = $("#boxNo").val();
+            $('#ItemName').val("");
+            $('#boxNo').val("");
+            $('#datepicker').val("");
+            $('#yearCheck').val("");
+        }
+    });
+</script>
+
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+        <tr>
+            <td class="width30">
+                Re-Archieve
+            </td>
+            <td class="width70">
+                @Html.CheckBoxFor(model => model.IsArchieve, new { @class = "someClassName" })
+            </td>
+
+        </tr>
+
+        <tr class="ItemIdBoxNo" style="display: none">
+            <td class="width30">
+                Item No
+            </td>
+            <td class="width70">
+                @Html.TextBoxFor(model => model.ItemId, new { id = "ItemId" })
+                @Html.ValidationMessageFor(model => model.ItemId)
+            </td>
+        </tr>
+
+        <tr class="otherItemField">
+            <td class="width30">
+                Box Name
+            </td>
+            <td class="width70">
+                @Html.TextBoxFor(model => model.ItemName, new { id = "ItemName" })
+                @Html.ValidationMessageFor(model => model.ItemName)
+            </td>
+        </tr>
+        <tr class="otherItemField">
+            <td class="width30">
+                Box No 
+                <span style="color:red;"> * </span>              
+            </td>
+            <td class="width70">
+                @Html.TextBoxFor(model => model.BoxNo, new { @maxlength = "10", id = "boxNo", @required = "required" })
+                @Html.ValidationMessageFor(model => model.BoxNo)
+            </td>
+        </tr>
+
+        <tr class="otherItemField">
+            <td class="width30">
+                Barcode Text
+            </td>
+            <td class="width70">
+                @Html.TextBoxFor(model => model.BarCodeText, new { @maxlength = "10", id = "BarCodeText" })
+                @Html.ValidationMessageFor(model => model.BarCodeText)
+                <span class="warningText1" style="color:red; font-weight:normal; display:none;">BarCodeText length should not be less than 10 characters</span>
+            </td>
+        </tr>
+
+
+
+        <tr class="otherItemField">
+            <td class="width30">
+                Destruction Period
+            </td>
+            <td class="width70">
+                <input id="datepicker" type="text" name="DestructionPeriod" />
+            </td>
+        </tr>
+
+        <tr class="otherItemField">
+            <td class="width30">
+                Year
+            </td>
+
+            <td class="width70">
+                @Html.EditorFor(model => model.Year, new { id = "yearCheck" })
+                @Html.ValidationMessageFor(model => model.Year)
+            </td>
+        </tr>
+
+        <tr class="otherItemField">
+            <td class="width30">
+                Description
+            </td>
+            <td class="width70">
+                @Html.TextAreaFor(model => model.Description, 3, 5, "")
+                @Html.ValidationMessageFor(model => model.Description)
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+

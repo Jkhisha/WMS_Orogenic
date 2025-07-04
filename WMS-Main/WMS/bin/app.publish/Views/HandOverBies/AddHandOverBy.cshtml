@@ -1,0 +1,261 @@
+﻿@model WareHouseMVC.Models.ORBLOperator
+@{
+    ViewBag.Title = "HandOver By";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ORBLOperatorId").change(function (evt) {
+
+            if ($("select#ORBLOperatorId").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetOperatorAddress")",
+                    type: 'POST',
+                    data: { ORBLOperatorId: $("select#ORBLOperatorId").val() },
+                    success: function (response) {
+                        $("#Address").val(response)
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+</script>
+
+
+<div class="pagetitle">
+    @if (HttpContext.Current.User.IsInRole("Client"))
+    {
+        <h1>
+            View Handover By
+        </h1>
+    }
+    else
+    {
+        <h1>
+            Add Handover By
+        </h1>
+    }
+</div>
+
+<div class="contentinner">
+
+ <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Transmittal No :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.TransmittalNo</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Refference No :
+                        </td>
+                        <td>@ViewBag.TransmittalRefNo
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transmittal Type :
+                        </td>
+                        <td>@ViewBag.TransmittalType
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+       <div class="span6">
+          <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                           Client :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.ClientName</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Department :
+                        </td>
+                        <td>@ViewBag.Department
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transmittal Date :
+                        </td>
+                        <td>@ViewBag.TransmittalDate
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="clearfix">
+        <br>
+    </div>
+
+
+
+    
+@using (Html.BeginForm("HandOverByForTrOUT", "HandOverBies"))
+{
+      @Html.Raw("<input  type='hidden' name='trId' value='" + ViewBag.TransmittalId + "' id='" + ViewBag.TransmittalId + "' ></input>")
+        
+
+	
+		//@Html.Partial("_CreateOrEdit", Model)
+         if (!HttpContext.Current.User.IsInRole("Client"))
+         {
+    <table class="table table-bordered table-invoice">
+	  <tbody>
+
+
+<tr>
+<td class="width30">
+    Handover By
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.ORBLOperatorId, ((IEnumerable<WareHouseMVC.Models.ORBLOperator>)ViewBag.PossibleOperator).Select(option => new SelectListItem
+{
+    Text = Html.DisplayTextFor(_ => option.Name).ToString(),
+    Value = option.ORBLOperatorId.ToString(),
+    Selected = (Model != null) && (option.ORBLOperatorId == Model.ORBLOperatorId)
+}), "Choose...")
+    @Html.ValidationMessageFor(model => model.ORBLOperatorId)
+</td></tr>
+
+<tr>
+<td class="width30">
+  HandoverBy Address
+</td>
+<td class="width70">
+   @Html.TextAreaFor(model => model.Address, 3, 5, "")
+    @Html.ValidationMessageFor(model => model.Address)
+</td>
+</tr>
+
+
+
+            <tr>
+ <td  class="width30">
+                
+                </td>
+                <td  class="width70">
+
+
+                                @{
+    
+int flag = Convert.ToInt32(ViewBag.Flag);
+
+if (flag == 1)
+{
+                    <input type="submit" value="Add HandOverBy" class="btn btn-primary" disabled="disabled"/>
+}
+if (flag == 0)
+{
+         <input type="submit" value="Add HandOverBy" class="btn btn-primary"/>
+}
+}
+
+                </td>
+
+		</tr>
+		</tbody>
+    </table>
+         }
+}
+<br />
+@if (!HttpContext.Current.User.IsInRole("Client"))
+{
+<table>
+        <tr>
+            <td class="width70">
+                @{
+    long id = Convert.ToInt64(ViewBag.TransmittalId);
+    
+    
+                    @Html.ActionLink("Back to TransmittalOUT", "Details", "TransmittalOUTs", new { id = id }, new { @class = "btn" })
+                }
+            </td>
+
+            <td>
+             @{
+               long id2 = Convert.ToInt64(ViewBag.TransmittalId);
+    
+    
+                    @Html.ActionLink("Add ReceivedBy", "ReceivedByForTrOUT", "ReceivedBies", new { trId = id2 }, new { @class = "btn btn-warning" })
+                }
+            
+            </td>
+            </tr>
+            </table>
+}
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            Name
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            Date
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+
+       @if (ViewBag.AllHandOverBy != null)
+       {
+           long trid = Convert.ToInt64(ViewBag.TransmittalId);
+           foreach (var item in @ViewBag.AllHandOverBy)
+           {
+    <tr>
+        <td>
+        @if (!HttpContext.Current.User.IsInRole("Client"))
+             {
+            @Html.ActionLink(" ", "RemoveOUT", new { id = item.ORBLOperatorId, trID = trid }, new { @class = "icon-trash" })
+            }
+        </td>
+        <td>
+			@item.Name
+        </td>
+        <td>
+			@item.Address
+        </td>
+        <td>
+		@*	@String.Format("{0:g}", item.Date)*@
+        </td>
+       
+    </tr>
+           }
+       }
+ </tbody>
+
+</table>
+
+</div>
+             
+
+
+
+</div>

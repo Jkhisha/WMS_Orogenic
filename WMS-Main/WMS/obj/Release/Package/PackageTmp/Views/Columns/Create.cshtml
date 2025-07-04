@@ -1,0 +1,41 @@
+@model WareHouseMVC.Models.Column
+
+@{
+    ViewBag.Title = "Create Create";
+}
+
+
+
+<div class="pagetitle">
+    <h1>
+       Add Create </h1>
+    <span>Add Creates below....</span>
+</div>
+
+
+@using (Html.BeginForm("Create", "Columns"))
+{
+    @Html.ValidationSummary(true)
+	
+		@Html.Partial("_CreateOrEdit", Model)
+    <table class="table table-bordered table-invoice">
+	  <tbody>
+            <tr>
+ <td  class="width30">
+                
+                </td>
+                <td  class="width70">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                </td>
+
+		</tr>
+		</tbody>
+    </table>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</div>
+
+
+
