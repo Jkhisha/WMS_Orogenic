@@ -14,4 +14,8 @@ public class DataContext : DbContext
 
     public DbSet<User> Users { get; set; }
     public DbSet<Role> Roles { get; set; }
+    public DataContext() : base("name=WareHouseMVCContext")
+    {
+        Database.SetInitializer<DataContext>(null);
+    }
 }
