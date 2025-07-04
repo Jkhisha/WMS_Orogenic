@@ -1,0 +1,184 @@
+@model WareHouseMVC.Models.TransmittalOUT
+@{
+    ViewBag.Title = "Transmittal OUT Details";
+}
+<div class="pagetitle" style="margin-left: 15px;">
+    <h1>
+        Transmittal OUT Details
+    </h1>
+    <span>Transmittal OUT Details below....</span>
+</div>
+<fieldset>
+    <table class="table table-bordered table-invoice" style="margin-left: 15px; margin-bottom: 15px; ">
+        <tbody>
+            <tr>
+                <td class="width30">
+                    TransmittalNo
+                </td>
+                <td>
+                    @Model.TransmittalNo
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Date & Time
+                </td>
+                <td>
+                    @String.Format("{0:g}", Model.TransmittalDate)
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    No of Boxes
+                </td>
+                <td>
+                    @(Model.Items == null ? "None" : Model.Items.Count.ToString())
+                </td>
+            </tr>
+            @*<tr>
+            <td class="width30">
+                Client Request Reference
+            </td>
+            <td>
+                @Model.ClientRequestreference
+            </td>
+        </tr>*@
+            <tr>
+                <td class="width30">
+                    Client
+                </td>
+                <td>
+                    @Html.DisplayTextFor(_ => Model.Client.ClientName).ToString()
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Department
+                </td>
+                <td>
+                    @Html.DisplayTextFor(_ => Model.Department.DepartmentName).ToString()
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Sub department
+                </td>
+                <td>
+                    @Html.DisplayTextFor(_ => Model.SubDepartment).ToString()
+                </td>
+            </tr>
+
+            <tr>
+                <td class="width30">
+                    Tr. Out Type
+                </td>
+                <td>
+                    @if (Model.IsPermanent == false)
+                    {
+                        @Html.Raw("Temporary");
+                    }
+                    else
+                    {
+                        @Html.Raw("Permanent");
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Re-archive Date
+                </td>
+                <td>
+                    @if (Model.RearchiveDate.HasValue)
+                    {
+                        @Model.RearchiveDate.Value.ToString("MM/dd/yyyy hh:mm tt") }
+                    else
+                    {
+                        @Html.Raw("");
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Urgency
+                </td>
+                <td>
+                    @if (Model.IsUrgent == true)
+                    {
+                        @Html.Raw("Urgent");
+                    }
+                    else
+                    {
+                        @Html.Raw("");
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Status
+                </td>
+                <td>
+                    @Html.DisplayTextFor(_ => Model.TransmittalOUTStatus.StatusName).ToString()
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Issued By
+                </td>
+                <td>
+                    @Html.DisplayTextFor(_ => Model.ContactPerson.ContactPersonName).ToString()
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    HandOver By
+                </td>
+                <td>
+                    @{
+                        if (Model.HandOverBy.Count > 0)
+                        {
+                            @Model.HandOverBy[0].Name
+                        }
+                        else
+                        {
+                            @Html.Raw("None");
+                        }
+
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Received By
+                </td>
+                <td>
+                    @{
+                        if (Model.ReceivedBy.Count > 0)
+                        {
+                            @Model.ReceivedBy[0].Name
+                        }
+                        else
+                        {
+                            @Html.Raw("None");
+                        }
+
+                    }
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+@if (HttpContext.Current.User.IsInRole("Management"))
+{
+    <p>
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+    </p>
+}
+else
+{
+
+    <p style="margin-left: 15px;">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.TransmittalOUTId }, new { @class = "btn btn-primary" })
+        |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+    </p>
+}

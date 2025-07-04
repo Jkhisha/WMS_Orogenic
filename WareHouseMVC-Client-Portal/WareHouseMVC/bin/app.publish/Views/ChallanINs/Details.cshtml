@@ -1,0 +1,73 @@
+@model WareHouseMVC.Models.ChallanIN
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+      Details </h1>
+    <span>Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">ChallanBy</td>
+        <td>
+       @Model.ChallanBy
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Status</td>
+        <td>
+       @Model.Status
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">ChallanDate</td>
+        <td>
+       @String.Format("{0:g}", Model.ChallanDate)
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Driver</td>
+        <td>
+       @(Model.Driver == null ? "None" : Model.Driver.Name)
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Vehicle</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Vehicle).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">TransportVendor</td>
+        <td>
+       @(Model.TransportVendor == null ? "None" : Model.TransportVendor.Name)
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">TransmittalINs</td>
+        <td>
+       @(Model.TransmittalINs == null ? "None" : Model.TransmittalINs.Count.ToString())
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ChallanINId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

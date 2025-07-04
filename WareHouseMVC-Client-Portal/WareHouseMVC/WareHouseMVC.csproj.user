@@ -9,6 +9,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <NameOfLastUsedPublishProfile>C:\Users\joytu\Documents\ASP .net projects\WMS Repo 030725_1\WareHouseMVC-Client-Portal\WareHouseMVC\Properties\PublishProfiles\FolderProfile7.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

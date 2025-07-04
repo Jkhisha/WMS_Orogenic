@@ -1,0 +1,61 @@
+@model IEnumerable<WareHouseMVC.Models.BarcodeMapping>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="pagetitle">
+    <h1>
+      Index List</h1>
+    <span>List of Indexs....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            TransmittalNo
+        </th>
+        <th>
+            ClientName
+        </th>
+        <th>
+            DeptName
+        </th>
+        <th>
+            ImagePath
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.BarcodeMappingId }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.BarcodeMappingId }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.BarcodeMappingId }, new { @class = "icon-trash" })
+        </td>
+        <td>
+			@item.TransmittalNo
+        </td>
+        <td>
+			@item.ClientName
+        </td>
+        <td>
+			@item.DeptName
+        </td>
+        <td>
+			@item.ImagePath
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\joytu\Documents\ASP .net projects\WMS Repo 030725_1\WMS-Main\WMS\bin\app.publish\</_PublishTargetUrl>
-    <History>True|2025-07-04T14:33:49.7531247Z||;True|2025-07-04T20:10:42.9732119+06:00||;True|2025-07-04T19:35:05.1574035+06:00||;True|2025-07-04T19:17:12.6049029+06:00||;True|2025-07-04T18:26:42.7950227+06:00||;</History>
+    <History>True|2025-07-04T16:16:49.8171389Z||;True|2025-07-04T22:16:29.8528357+06:00||;True|2025-07-04T22:16:08.9274861+06:00||;True|2025-07-04T22:10:15.6772952+06:00||;True|2025-07-04T20:33:49.7531247+06:00||;True|2025-07-04T20:10:42.9732119+06:00||;True|2025-07-04T19:35:05.1574035+06:00||;True|2025-07-04T19:17:12.6049029+06:00||;True|2025-07-04T18:26:42.7950227+06:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -2777,10 +2777,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/05/2025 17:03:46</publishTime>
     </File>
     <File Include="bin/WareHouseMVC.dll">
-      <publishTime>07/04/2025 20:33:36</publishTime>
+      <publishTime>07/04/2025 22:09:54</publishTime>
     </File>
     <File Include="bin/WareHouseMVC.pdb">
-      <publishTime>07/04/2025 20:33:36</publishTime>
+      <publishTime>07/04/2025 22:09:54</publishTime>
     </File>
     <File Include="bin/zh-CHS/Microsoft.ReportViewer.Common.resources.dll">
       <publishTime>06/02/2024 02:18:50</publishTime>
@@ -6461,7 +6461,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/05/2025 17:03:46</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/04/2025 20:33:41</publishTime>
+      <publishTime>07/04/2025 22:16:04</publishTime>
     </File>
     <File Include="XMLTest.asmx">
       <publishTime>03/05/2025 17:03:46</publishTime>

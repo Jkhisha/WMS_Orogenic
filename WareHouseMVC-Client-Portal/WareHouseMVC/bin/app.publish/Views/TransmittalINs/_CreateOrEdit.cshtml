@@ -1,0 +1,198 @@
+@model WareHouseMVC.Models.TransmittalIN
+<script type="text/javascript">
+    jQuery(function ($) {
+
+        getSubDepartment();
+        getContactPerson();
+        
+        $("select#DepartmentID").change(function (evt) {
+            getSubDepartment();
+            getContactPerson();
+        });
+
+        function getContactPerson() {
+            if ($("select#DepartmentID").val() != "" ) {
+                $.ajax({
+                    url: '@Url.Action("GetContactPerson", "TransmittalINs")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { deptId : $("select#DepartmentID").val() },
+                    success: function (data) {
+                        $("input[name='ContactPersonName']").val(data.ContactPersonName);
+                        $("input[name='ContactPersontID']").val(data.ContactPersontID);
+                        if (data && data.ContactPersonName && data.ContactPersontID) {
+                            $("input[name='ContactPersonName']").val(data.ContactPersonName);
+                            $("input[name='ContactPersontID']").val(data.ContactPersontID);
+                        } else {
+                            $("input[name='ContactPersonName']").val("");
+                            $("input[name='ContactPersontID']").val("");
+                        }
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        }
+
+        function getSubDepartment() {
+            if ($("select#DepartmentID").val() != "" ) {
+                $.ajax({
+                    url: '@Url.Action("GetSubDepartment", "TransmittalINs")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { deptId : $("select#DepartmentID").val() },
+                    success: function (data) {
+                        var dropdown = $('#SubDeptDropdown');
+                        dropdown.empty();
+                        dropdown.append($('<option></option>').attr('value', '').text('Choose...')); 
+
+                        $.each(data, function (i, subDepartment) {
+                            dropdown.append($('<option></option>').attr('value', subDepartment).text(subDepartment));
+                        });
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        }
+
+    });
+
+</script>
+
+<input type="hidden" id="ClientID" name="ClientID" value="@ViewBag.ClientId" />
+
+<table class="table table-bordered table-invoice">
+    <tbody>
+        <tr style="display: none">
+                <td class="width30">
+                    Client
+                </td>
+                <td class="width70">
+
+                    <h3>@User.Identity.Name</h3>
+                    <input type="hidden" id="ClientID" name="ClientID" value="@ViewBag.ClientId" />
+                </td>
+            </tr>
+
+        <tr>
+            <td class="width30">
+                File Level
+            </td>
+            <td class="width70">
+                @Html.CheckBoxFor(model => model.IsFile)
+            </td>
+        </tr>
+        <tr style="display: none">
+            <td class="width30">
+                @Html.LabelFor(model => model.TransmittalNo)
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.TransmittalNo, new { @value = ViewBag.TransmittalNo })
+
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Transmittal In Date
+                <span style="color:red;">*</span>
+            </td>
+            <td class="width70">
+                <input type="date" id="TransmittalDate" name="TransmittalDate" class="form-control" value="@Model.TransmittalDate.ToString("yyyy-MM-dd")" />
+            </td>
+        </tr>
+        @*<tr>
+                <td class="width30">
+                    @Html.LabelFor(model => model.ClientRequestreference)
+                </td>
+                <td class="width70">
+                    @Html.EditorFor(model => model.ClientRequestreference)
+                    @Html.ValidationMessageFor(model => model.ClientRequestreference)
+                </td>
+            </tr>*@
+
+        <tr>
+            <td class="width30">
+                Department
+                <span style="color:red;">*</span>
+            </td>
+            <td class="width70">
+                @if (ViewBag.DeptName.ToLower() != "superadmin")
+                {
+                    @Html.DropDownListFor(model => model.DepartmentID,
+                        ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+                        {
+                            Text = option.DepartmentName,
+                            Value = option.DepartmentID.ToString(),
+                            Selected = (Model != null) && (option.DepartmentID == Model.DepartmentID)
+                        }), "Choose...", new { @disabled = "disabled", @class = "form-control" })
+
+                    @Html.HiddenFor(model => model.DepartmentID) 
+                    @Html.ValidationMessageFor(model => model.DepartmentID)
+
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.DepartmentID,
+                        ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+                        {
+                            Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+                            Value = option.DepartmentID.ToString()
+                        }), "Choose...", new { @required = "required" })
+
+                    @Html.ValidationMessageFor(model => model.DepartmentID)
+                }
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Sub department
+                <span style="color:red;">*</span>
+            </td>
+            
+            <td class="width70">
+                @if (ViewBag.SubDept != "")
+                {
+                    <input type="text" name="SubDepartment" value="@Model.SubDepartment" readonly="readonly" style="background-color: #f3f3f3; color: #949494; border: 1px solid #ccc; " />
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.SubDepartment, new SelectList(Enumerable.Empty<SelectListItem>()), "Choose...", new { @id = "SubDeptDropdown", @style = "width: 221px", @tabindex = "3", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.SubDepartment)
+                }
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Issued by
+                <span style="color:red;">*</span>
+            </td>
+
+            <td class="width70" id="ddlContactPersontID">
+                <input type="text" name="ContactPersonName" value="" readonly="readonly" style="background-color: #f3f3f3; color: #949494; border: 1px solid #ccc; " />
+                <input type="hidden" name="ContactPersontID" value="" />
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                Upload Scanned Document
+            </td>
+            <td class="width70">
+                <input type="file" name="FileUrl" />
+            </td>
+        </tr>
+        @* <tr>
+                <td class="width30">
+                    @Html.LabelFor(model => model.Status)
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.Status, (List<SelectListItem>)ViewBag.Status, "choose...")
+                    @Html.ValidationMessageFor(model => model.Status)
+                </td>
+            </tr>*@
+    </tbody>
+</table>

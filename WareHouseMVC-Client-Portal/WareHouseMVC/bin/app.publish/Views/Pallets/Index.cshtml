@@ -1,0 +1,61 @@
+@model IEnumerable<WareHouseMVC.Models.Pallet>
+
+@{
+    ViewBag.Title = "Pllets";
+}
+
+<div class="pagetitle">
+    <h1>
+      Pallet List</h1>
+    <span>List of Pallets....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            PalletName
+        </th>
+        <th>
+            Zone
+        </th>
+        <th>
+            Floor
+        </th>
+        <th>
+            Warehouse
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.PalletId }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.PalletId }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.PalletId }, new { @class = "icon-trash" })
+        </td>
+        <td>
+			@item.PalletName
+        </td>
+        <td>
+			@Html.DisplayTextFor(_ => item.Zone.ZoneName).ToString()
+        </td>
+        <td>
+			@Html.DisplayTextFor(_ => item.Floor.FloorName).ToString()
+        </td>
+        <td>
+			@Html.DisplayTextFor(_ => item.Warehouse.WarehouseName).ToString()
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

@@ -1,0 +1,76 @@
+@model WareHouseMVC.Models.ReceivedBy
+
+@{
+    ViewBag.Title = "Delete";
+}
+<div class="pagetitle">
+    <h1>
+      Delete  </h1>
+    <span>Are you sure you want to delete this?</span>
+</div>
+
+@using (Html.BeginForm()) {
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">Name</td>
+        <td>
+        @Model.Name
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Address</td>
+        <td>
+        @Model.Address
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">Date</td>
+        <td>
+        @String.Format("{0:g}", Model.Date)
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">TransmittalINs</td>
+        <td>
+        @(Model.TransmittalINs == null ? "None" : Model.TransmittalINs.Count.ToString())
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">TrasmittalOUTs</td>
+        <td>
+        @(Model.TrasmittalOUTs == null ? "None" : Model.TrasmittalOUTs.Count.ToString())
+        </td>
+        </tr>
+
+    
+
+ <tr>
+         <td class="width30"></td>
+        <td>
+    <input type="submit" value="Delete" class="btn btn-danger" /> 
+        </td>
+        </tr>
+		  </tbody>
+        </table>
+    <p>
+       
+      @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+  
+    </p>
+}
+
+

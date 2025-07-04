@@ -1,0 +1,82 @@
+@model PagedList.IPagedList<WareHouseMVC.Models.Department>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Departments";
+}
+<div class="pagetitle">
+    <h1>
+        Departments List</h1>
+    <span>List of Departments....</span>
+</div>
+<p> @if (HttpContext.Current.User.IsInRole("Management"))
+    {
+    }
+    else
+    {
+
+        @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" });
+    }
+</p>
+<div id="dyntable_wrapper" class="dataTables5_wrapper" role="grid">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    DepartmentName
+                </th>
+                <th>
+                    DepartmentCode
+                </th>
+                <th>
+                    Client
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    @if (HttpContext.Current.User.IsInRole("Management"))
+                    {<td>
+      </td>
+                    }
+                    else
+                    {
+
+
+                        <td>
+                            @Html.ActionLink(" ", "Edit", new { id = item.DepartmentID }, new { @class = "icon-edit" })
+                            |
+                            @Html.ActionLink(" ", "Details", new { id = item.DepartmentID }, new { @class = "icon-list-alt" })
+                            |
+                            @Html.ActionLink(" ", "Delete", new { id = item.DepartmentID }, new { @class = "icon-trash" })
+                            |
+                            @Html.ActionLink("Add Contact Person", "AddCP", "ContactPersons", new { dpid = item.DepartmentID }, "")
+                            |
+                           
+                        </td>
+                    }
+                    <td>
+                        @item.DepartmentName
+                    </td>
+                    <td>
+                        @item.DepartmentCode
+                    </td>
+                    <td>
+                        @Html.DisplayTextFor(_ => item.Client.ClientName).ToString()
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+    <div style="float:right">
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page}))
+    </div>
+</div>

@@ -1,0 +1,14 @@
+﻿@model IEnumerable<WareHouseMVC.Models.Row>
+@{
+    Layout = null;
+    <select id="RowID" name="RowID">
+    <option value="-1">Select...</option>
+        @foreach (var item in Model)
+        {
+            
+            <option value="@item.RowID">@item.RowName</option>
+        }
+    </select>
+}
+
+

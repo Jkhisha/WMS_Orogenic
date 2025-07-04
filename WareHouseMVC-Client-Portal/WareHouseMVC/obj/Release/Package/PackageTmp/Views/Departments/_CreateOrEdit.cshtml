@@ -1,0 +1,43 @@
+@model WareHouseMVC.Models.Department
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+
+ <tr>
+<td class="width30">
+    Client
+</td>
+<td class="width70">
+
+<strong>@ViewBag.ClientName</strong>
+<input type="hidden" id="ClientID" name="ClientID" value="@ViewBag.ClientId" />
+   
+</td></tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.DepartmentName)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.DepartmentName)
+    @Html.ValidationMessageFor(model => model.DepartmentName)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.DepartmentCode)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.DepartmentCode)
+    @Html.ValidationMessageFor(model => model.DepartmentCode)
+</td>
+</tr>
+
+
+</tbody>
+</table>
+ 

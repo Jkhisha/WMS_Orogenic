@@ -1,0 +1,42 @@
+@model WareHouseMVC.Models.Driver
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.Name)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.Name)
+    @Html.ValidationMessageFor(model => model.Name)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.ContactNumber)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.ContactNumber)
+    @Html.ValidationMessageFor(model => model.ContactNumber)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    TransportVendor
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.TransportVendorId, ((IEnumerable<WareHouseMVC.Models.TransportVendor>)ViewBag.PossibleTransportVendors).Select(option => new SelectListItem {
+        Text = (option == null ? "None" : option.Name), 
+        Value = option.TransportVendorId.ToString(),
+        Selected = (Model != null) && (option.TransportVendorId == Model.TransportVendorId)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.TransportVendorId)
+</td></tr>
+</tbody>
+</table>
+ 

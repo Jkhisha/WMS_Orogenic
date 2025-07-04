@@ -1,0 +1,34 @@
+@model WareHouseMVC.Models.AutoZoneSuggention
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+<tr>
+<td class="width30">
+    Client
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option.ClientName).ToString(), 
+        Value = option.ClientID.ToString(),
+        Selected = (Model != null) && (option.ClientID == Model.ClientID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.ClientID)
+</td></tr>
+<tr>
+<td class="width30">
+    Zone
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.ZoneID, ((IEnumerable<WareHouseMVC.Models.Zone>)ViewBag.PossibleZones).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option.ZoneName).ToString(), 
+        Value = option.ZoneID.ToString(),
+        Selected = (Model != null) && (option.ZoneID == Model.ZoneID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.ZoneID)
+</td></tr>
+</tbody>
+</table>
+ 

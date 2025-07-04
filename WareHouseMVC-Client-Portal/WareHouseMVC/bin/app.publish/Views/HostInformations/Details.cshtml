@@ -1,0 +1,85 @@
+@model WareHouseMVC.Models.HostInformation
+@{
+    ViewBag.Title = "ORBL Information Details";
+}
+<div class="pagetitle">
+    <h1>
+        Details Information
+    </h1>
+    <span>Details Information below....</span>
+</div>
+<fieldset>
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">
+                    Name
+                </td>
+                <td>
+                    @Model.Name
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Address
+                </td>
+                <td>
+                    @Model.Address
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Att
+                </td>
+                <td>
+                    @Model.Att
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Position
+                </td>
+                <td>
+                    @Model.Position
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Cell
+                </td>
+                <td>
+                    @Model.Cell
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Telephone
+                </td>
+                <td>
+                    @Model.Teliphone
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Fax
+                </td>
+                <td>
+                    @Model.Fax
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Email
+                </td>
+                <td>
+                    @Model.Email
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.HostInformationId }, new { @class = "btn btn-primary" })
+    |
+    @Html.ActionLink("Back to Index", "Index", "", new { @class = "btn" })
+</p>

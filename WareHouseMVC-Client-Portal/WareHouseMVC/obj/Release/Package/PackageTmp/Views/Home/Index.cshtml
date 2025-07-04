@@ -1,0 +1,501 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="pagetitle">
+    <h1>
+        WareHouse Dashboard</h1>
+    <span>This is a the dasboard for all warehouse users...</span>
+</div>
+<!--pagetitle-->
+<div class="maincontent">
+    <div class="contentinner content-dashboard">
+        
+        <!--alert-->
+        @{
+            if (HttpContext.Current.User.IsInRole("Admin"))
+            {
+            <div class="row-fluid">
+                <div class="span8">
+                   <ul class="widgeticons row-fluid">
+
+                    
+
+                        <li class="one_fifth"><a href="@Url.Content("~/TransmittalINs/Index")">
+                            <img src="@Url.Content("~/Content/themes/base/img/gemicon/location.png")" alt="" /><span>Transmittal
+                                IN</span></a></li>
+                        <li class="one_fifth"><a href="@Url.Content("~/TransmittalOUTs/Index")">
+                            <img src= "@Url.Content("~/Content/themes/base/img/gemicon/edit.png")" alt="" /><span>Transmittal
+                                OUT</span></a></li>
+                        <li class="one_fifth"><a href="@Url.Content("~/EmptyBoxes/Index")">
+                            <img src="@Url.Content("~/Content/themes/base/img/gemicon/calendar.png")" alt="" /><span>Empty Box</span></a></li>
+                        <li class="one_fifth"><a href="@Url.Content("~/BoxLocations/BoxLocations")">
+                            <img src="@Url.Content("~/Content/themes/base/img/gemicon/archive.png")" alt="" /><span>Box Location</span></a></li>
+                        <li class="one_fifth last"><a href= "@Url.Content("~/BoxLocations/BoxSearch")">
+                            <img src="@Url.Content("~/Content/themes/base/img/gemicon/notify.png")" alt="" /><span>Box Search</span></a></li>
+                        <li class="one_fifth"><a href="@Url.Content("~/Clients/Index")">
+                            <img src="@Url.Content("~/Content/themes/base/img/gemicon/image.png")" alt="" /><span>Clients</span></a></li>
+                        <li class="one_fifth"><a href="@Url.Content("~/AutoZoneSuggentions/Index")">
+                            <img src="@Url.Content("~/Content/themes/base/img/gemicon/image.png")" alt="" /><span>Auto Zone</span></a></li>
+                        <li class="one_fifth"><a href="@Url.Content("~/Hostinformations/Index")">
+                            <img src="@Url.Content("~/Content/themes/base/img/gemicon/reports.png")" alt="" /><span>ORBL Setup</span></a></li>
+                        <li class="one_fifth"><a href="@Url.Content("~/Account/UserList")">
+                            <img src="@Url.Content("~/Content/themes/base/img/gemicon/users.png")" alt="" /><span>Manage Users</span></a></li>
+                        <li class="one_fifth"><a href="@Url.Content("~/Users/EditProfile")">
+                            <img src="@Url.Content("~/Content/themes/base/img/gemicon/settings.png")" alt="" /><span>Settings</span></a></li>
+                    </ul>
+                    <br />
+                    <h4 class="widgettitle">
+                        WareHouse Summary</h4>
+                        <table>
+                        <tr>
+                        <td><strong>Upcoming D.P :</strong></td><td> Upcoming Destruction Period &nbsp;&nbsp;&nbsp;&nbsp;</td>
+                        <td><strong>N.D Boxes :</strong></td><td> Destruction Period Not defined</td>
+                        </tr>
+                        <tr>
+                        <td><strong>N.A Location :</strong> </td><td>Not Assigned Location</td>
+                        <td><strong>D. P=> Box :</strong> </td><td>Delivery Pending Boxes</td>
+                        </tr>
+                        <tr>
+                        <td></td><td></td>
+                        <td><strong>D. P=> File :</strong> </td><td>Delivery Pending Files</td>
+                        </tr>
+                        
+                        </table>
+                    <div class="widgetcontent">
+                        <div id="tabs">
+                                <ul>
+                                    <li><a href="#tabs-1"><span class="icon-forward"></span>Upcoming D.P</a></li>
+                                    <li><a href="#tabs-2"><span class="icon-eye-open"></span> N.D Boxes</a></li>
+                                    <li><a href="#tabs-3"><span class="iconsweets-flag"></span> N.A Location</a></li>
+                                    <li><a href="#tabs-4"><span class="iconsweets-fitscreen"></span> D. P=> Box</a></li>
+                                    <li><a href="#tabs-5"><span class="iconsweets-refresh"></span> D. P=> File</a></li>
+                                </ul>
+                                <div id="tabs-1">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                @*<th>Description</th>*@
+                                                <th>Quantity</th>
+                                                <th>Year</th>
+                                                <th>Unit</th>
+                                                <th>Box No</th>
+                                                <th>Destruction Period</th>
+                                                <th class="center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach (var item in ViewBag.DestructionPeriod)
+                                        {
+                                            long _clientID = 0;
+                                            long _deptID = 0;
+
+                                            if (item.ClientID != null)
+                                            {
+                                                _clientID = item.ClientID;
+                                            }
+                                            if (item.DepartmentID != null)
+                                            {
+                                                _deptID = item.DepartmentID;
+                                            }
+                                            <tr>
+                                                <td>@item.ItemName</td>
+                                                @*<td>@item.Description</td>*@
+                                                <td>@item.Quantity</td>
+                                                <td>@item.Year</td>
+                                                <td>@item.Unit</td>
+                                                <td>@item.BoxNo</td>
+                                                <td>@item.DestructionPeriod.ToShortDateString()</td>
+                                                <td>@Html.ActionLink("Edit", "UpdatePeriod", "BoxLocations", new { ItemId = item.ItemId, clientID = _clientID, deptID = _deptID }, new { @Class = "btn btn-warning btn-rounded",@target="_blank" })</td>
+                                                @*<td class="center"><a href="" class="btn"><span class="icon-edit"></span> Update</a></td>*@
+                                            </tr>
+                                        }
+                                            
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="tabs-2">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Description</th>
+                                                <th>Quantity</th>
+                                                <th>Year</th>
+                                                <th>Unit</th>
+                                                <th>Box No</th>
+                                                <th class="center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach (var item in ViewBag.DestructionPeriodNULL)
+                                        {
+                                            long _clientID = 0;
+                                            long _deptID = 0;
+
+                                            if (item.ClientID != null)
+                                            {
+                                                _clientID = item.ClientID;
+                                            }
+                                            if (item.DepartmentID != null)
+                                            {
+                                                _deptID = item.DepartmentID;
+                                            }
+                                            <tr>
+                                                <td>@item.ItemName</td>
+                                                <td>@item.Description</td>
+                                                <td>@item.Quantity</td>
+                                                <td>@item.Year</td>
+                                                <td>@item.Unit</td>
+                                                <td>@item.BoxNo</td>
+                                                <td>@Html.ActionLink("Edit", "UpdatePeriod", "BoxLocations", new { ItemId = item.ItemId, clientID = _clientID, deptID = _deptID }, new { @Class = "btn btn-warning btn-rounded", @target = "_blank" })</td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                 <div id="tabs-3">
+                                 <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>TransmittalNo</th>
+                                                <th>TransmittalDate</th>
+                                                <th>Client</th>
+                                                <th>Department</th>
+                                                <th>Current Status</th>
+                                                <th class="center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach (var item in ViewBag.allTransmittalInList)
+                                        {
+                                           
+                                            <tr>
+                                                <td>@item.TransmittalNo</td>
+                                                <td>@String.Format("{0:g}", item.TransmittalDate.ToShortDateString())</td>
+                                                <td>@item.Client.ClientName.ToString()</td>
+                                                <td>@item.Department.DepartmentName.ToString()</td>
+                                                <td>@item.TransmittalINStatus.StatusName.ToString()</td>
+                                                
+                                                <td>@Html.ActionLink("Details", "Details", "TransmittalINs", new { id = item.TransmittalINId}, new { @Class = "btn btn-warning btn-rounded", @target = "_blank" })</td>
+                                                
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+
+                                 </div>
+                                  <div id="tabs-4">
+
+                                  <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>TransmittalNo</th>
+                                                <th>TransmittalDate</th>
+                                                <th>Client</th>
+                                                <th>Department</th>
+                                                <th>Box Name</th>
+                                                <th>Box No</th>
+                                                <th>Year</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach (var item in ViewBag.allDeliveryPendingList)
+                                        {
+                                           
+                                            <tr>
+                                                <td>@item.TransmittalOutNo</td>
+                                                <td>@String.Format("{0:g}", item.TransmittalOutDate.ToShortDateString())</td>
+                                                <td>@item.ClientName.ToString()</td>
+                                                <td>@item.Department.ToString()</td>
+                                                <td>@item.BoxName.ToString()</td>
+                                                <td>@item.BoxNo.ToString()</td>
+                                                
+                                                @{
+                                            if (item.Year != null)
+                                            {
+                                                 <td>
+                                                 @item.Year.ToString()
+                                                 </td>
+                                                    }       
+                                            else
+                                            {
+                                                <td>None</td>
+                                            }
+                                                    
+                                                    }
+                                              
+                                                
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+
+                                  </div>
+                                  <div id="tabs-5">
+
+                                  <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Tr.No</th>
+                                                <th>Tr.Date</th>
+                                                <th>Client</th>
+                                                <th>Dept.</th>
+                                                
+                                                <th>Box No</th>
+                                                <th>Book No</th>
+                                                <th>File No</th>
+                                                <th>Ref No</th>
+                                                <th>Ring No</th>
+                                                <th>Acc No</th>
+                                                <th>Year</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach (var item in ViewBag.allDeliveryPendingListFile)
+                                        {
+                                           
+                                            <tr>
+                                                <td>@item.TransmittalOutNo</td>
+                                                <td>@String.Format("{0:g}", item.TransmittalOutDate.ToShortDateString())</td>
+                                                <td>@item.ClientName.ToString()</td>
+                                                <td>@item.Department.ToString()</td>
+
+                                                <td>@item.BoxNo.ToString()</td>
+                                                <td>@item.BookNumber.ToString()</td>
+                                                <td>@item.FileNumber.ToString()</td>
+                                                <td>@item.ReferrenceNo.ToString()</td>
+                                                <td>@item.RingNo.ToString()</td>
+                                                <td>@item.AccountNo.ToString()</td>
+                                                
+                                                @{
+                                            if (item.Year != null)
+                                            {
+                                                 <td>
+                                                 @item.Year.ToString()
+                                                 </td>
+                                                    }       
+                                            else
+                                            {
+                                                <td>None</td>
+                                            }
+                                                    
+                                                    }
+                                              
+                                                
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+
+                                  </div>
+
+                                
+                            </div><!--#tabs-->
+                        <div id="piechart" style="height: 300px;">
+                        </div>
+                        <div>
+                            <table>
+                                @{
+                                        for (int i = 0; i < ViewBag.wName.Length; i++)
+                                        {
+                                    <tr>
+                                        <td>
+                                            <strong>WareHouse :</strong> @ViewBag.wName[i],
+                                        </td>
+                                        <td>
+                                            <strong>Total Box :</strong> @ViewBag.boxNo[i]
+                                        </td>
+                                    </tr>
+
+                                        }
+                   
+                                }
+                            </table>
+                        </div>
+                    </div>
+                    <!--widgetcontent-->
+                    <!--widgetcontent-->
+                </div>
+                <!--span8-->
+                <div class="span4">
+                  
+                    <!--widgetcontent-->
+                    <h4 class="widgettitle nomargin">
+                        Some Simple Instructions</h4>
+                    <div class="widgetcontent bordered">
+                        Here is some sample instruction for WareHouse Users.
+                       <ul>
+                       <li>Sample Instruction </li>
+                        <li>Sample Instruction </li>
+                         <li>Sample Instruction </li>
+                          <li>Sample Instruction </li>
+                           <li>Sample Instruction </li>
+                       
+                       </ul>
+                       
+                    </div>
+                    <!--widgetcontent-->
+                    @*<h4 class="widgettitle">Site Impressions</h4>
+                        <div class="widgetcontent">
+                        	<div id="bargraph2" style="height:200px;"></div>
+                        </div><!--widgetcontent-->*@
+                    <h4 class="widgettitle">
+                       Notice Board</h4>
+                    <div class="widgetcontent bordered">
+                        Here is some sample Notice for WareHouse Users.
+                       <ul>
+                       <li>Sample Notice </li>
+                        <li>Sample Notice </li>
+                         <li>Sample Notice </li>
+                          <li>Sample Notice </li>
+                           <li>Sample Notice </li>
+                       
+                       </ul>
+                       
+                    </div>
+                    <!--widgetcontent-->
+                </div>
+                <!--span4-->
+            </div>
+
+            <div class="row-fluid">
+                <div class="span6">
+                    <h4 class="widgettitle">
+                        Transmittal In in Last 10 Days</h4>
+                    <strong>Transmittal Ins From @ViewBag.StartDate To @ViewBag.EndDate</strong>
+                    <br />
+                    <br />
+                    <div id="bargraph" style="height: 300px;">
+                    </div>
+                </div>
+                <div class="span6">
+                    <h4 class="widgettitle">
+                        Transmittal Out in Last 10 Days</h4>
+                    <strong>Transmittal Outs From @ViewBag.StartDate To @ViewBag.EndDate</strong>
+                    <br />
+                    <br />
+                    <div id="bargraph2" style="height: 300px;">
+                    </div>
+                </div>
+            </div>
+            <!--row-fluid-->
+            }}
+        <!--row-fluid-->
+    </div>
+    <!--contentinner-->
+</div>
+<!--maincontent-->
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+
+        var data = [];
+        var wNameArray = [];
+        var boxNoArray = [];
+        var clr = [];
+        var series = '@(ViewBag.TotWareHouse)';
+
+
+
+        var wName = @Html.Raw(Json.Encode(@ViewBag.wName));
+for(var j = 0; j < wName.length; j++) {
+    wNameArray[j] = wName[j];
+}
+
+
+       var boxNo = @Html.Raw(Json.Encode(@ViewBag.boxNo));
+for(var k = 0; k < boxNo.length; k++) {
+    boxNoArray[k] = boxNo[k];
+}
+
+
+
+
+        for (var i = 0; i < series; i++) {
+           data[i] = { label: "WareHouse:" +wNameArray[i].toString(), data: Math.floor(boxNoArray[i]*100) }
+//	data[i] = { label: "Series"+(i+1), data: Math.floor(Math.random()*100)+1 }
+            clr[i] = getRandomColor()
+        }
+        jQuery.plot(jQuery("#piechart"), data, {
+            colors: clr,
+            series: {
+                pie: { show: true }
+            }
+
+        });
+
+
+        function getRandomColor() {
+            var letters = '0123456789ABCDEF'.split('');
+            var color = '#';
+            for (var i = 0; i < 6; i++) {
+                color += letters[Math.round(Math.random() * 15)];
+            }
+            return color;
+        }
+
+
+
+        
+        var InCountArray = [];
+        var OutCountArray = [];
+
+
+               var InCount = @Html.Raw(Json.Encode(@ViewBag.TrInCount));
+for(var k = 0; k < InCount.length; k++) {
+    InCountArray[k] = InCount[k];
+}
+
+
+
+               var OutCount = @Html.Raw(Json.Encode(@ViewBag.TrOutCount));
+for(var m = 0; m < OutCount.length; m++) {
+    OutCountArray[m] = OutCount[m];
+}
+
+
+
+
+
+
+
+        /*****BAR GRAPH IN*****/
+		var d2 = [];
+		for (var p = 0; p <10; p += 1)
+			d2.push([p, parseInt(InCountArray[p])]);
+			
+		var stack = 0, bars = true, lines = false, steps = false;
+		jQuery.plot(jQuery("#bargraph"), [ d2 ], {
+			series: {
+				stack: stack,
+				lines: { show: lines, fill: true, steps: steps },
+				bars: { show: bars, barWidth: 0.6 }
+			},
+			grid: { hoverable: true, clickable: true, borderColor: '#ccc', borderWidth: 1, labelMargin: 10 },
+			colors: ["#008A2E"]
+		});
+
+
+        /*****BAR GRAPH OUT*****/
+		var d3 = [];
+		for (var n = 0; n < 10; n += 1)
+			d3.push([n, parseInt(OutCountArray[n])]);
+			
+		var stack3 = 0, bars = true, lines = false, steps = false;
+		jQuery.plot(jQuery("#bargraph2"), [ d3 ], {
+			series: {
+				stack: stack,
+				lines: { show: lines, fill: true, steps: steps },
+				bars: { show: bars, barWidth: 0.6 }
+			},
+			grid: { hoverable: true, clickable: true, borderColor: '#ccc', borderWidth: 1, labelMargin: 10 },
+			colors: ["#f93905"]
+		});
+
+
+
+
+
+
+    });
+</script>

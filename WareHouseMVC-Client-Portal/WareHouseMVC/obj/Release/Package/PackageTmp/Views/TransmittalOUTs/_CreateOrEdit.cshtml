@@ -1,0 +1,254 @@
+@model WareHouseMVC.Models.TransmittalOUT
+
+<script type="text/javascript">
+    jQuery(function ($) {
+
+        getSubDepartment();
+        getContactPerson();
+
+        $("select#DepartmentID").change(function (evt) {
+            getSubDepartment();
+            getContactPerson();
+        });
+
+        function getContactPerson() {
+            if ($("select#DepartmentID").val() != "" ) {
+                $.ajax({
+                    url: '@Url.Action("GetContactPerson", "TransmittalOUTs")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { deptId : $("select#DepartmentID").val() },
+                    success: function (data) {
+                        $("input[name='ContactPersonName']").val(data.ContactPersonName);
+                        $("input[name='ContactPersontID']").val(data.ContactPersontID);
+                        if (data && data.ContactPersonName && data.ContactPersontID) {
+                            $("input[name='ContactPersonName']").val(data.ContactPersonName);
+                            $("input[name='ContactPersontID']").val(data.ContactPersontID);
+                        } else {
+                            $("input[name='ContactPersonName']").val("");
+                            $("input[name='ContactPersontID']").val("");
+                        }
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        }
+
+        function getSubDepartment() {
+            if ($("select#DepartmentID").val() != "" ) {
+                $.ajax({
+                    url: '@Url.Action("GetSubDepartment", "TransmittalOUTs")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { deptId : $("select#DepartmentID").val() },
+                    success: function (data) {
+                        var dropdown = $('#SubDeptDropdown');
+                        dropdown.empty();
+                        dropdown.append($('<option></option>').attr('value', '').text('Choose...'));
+
+                        $.each(data, function (i, subDepartment) {
+                            dropdown.append($('<option></option>').attr('value', subDepartment).text(subDepartment));
+                        });
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        }
+
+        function toggleRearchiveDate() {
+            if ($("#TemporaryRadio").is(":checked")) {
+                $("#RearchiveDateRow").show();
+            } else {
+                $("#RearchiveDateRow").hide();
+            }
+        }
+
+        toggleRearchiveDate();
+
+        $("input[name='IsPermanent']").change(function () {
+            toggleRearchiveDate();
+        });
+
+    });
+
+</script>
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<input type="hidden" id="ClientID" name="ClientID" value="@ViewBag.ClientId" />
+
+<table class="table table-bordered table-invoice">
+    <tbody>
+        <tr style="display: none">
+            <td class="width30">
+                Client
+            </td>
+            <td class="width70">
+
+                <h3>@ViewBag.ClientName</h3>
+                <input type="hidden" id="ClientID" name="ClientID" value="@ViewBag.ClientId" />
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                File Level
+            </td>
+            <td class="width70">
+                @Html.CheckBoxFor(model => model.IsFile)
+            </td>
+        </tr>
+        <tr style="display: none">
+            <td class="width30">
+                @Html.LabelFor(model => model.TransmittalNo)
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.TransmittalNo, new { @Value = @ViewBag.TransmittalNo })
+                @Html.ValidationMessageFor(model => model.TransmittalNo)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Transmittal Out Date
+            </td>
+            <td class="width70">
+                <input type="date" id="TransmittalDate" name="TransmittalDate" class="form-control" value="@Model.TransmittalDate.ToString("yyyy-MM-dd")" />
+                <input type="time" id="TransmittalTime" name="TransmittalTime" class="form-control" style="width: 100px;" value="@Model.TransmittalDate.ToString("HH:mm")" />
+            </td>
+        </tr>
+
+        @*<tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.ClientRequestreference)
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.ClientRequestreference)
+                @Html.ValidationMessageFor(model => model.ClientRequestreference)
+            </td>
+        </tr>*@
+
+        <tr>
+            <td class="width30">
+                Department
+            </td>
+            <td class="width70">
+                @if (ViewBag.DeptName.ToLower() != "superadmin")
+                {
+                    @Html.DropDownListFor(model => model.DepartmentID,
+                        ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+                        {
+                            Text = option.DepartmentName,
+                            Value = option.DepartmentID.ToString(),
+                            Selected = (Model != null) && (option.DepartmentID == Model.DepartmentID)
+                        }), "Choose...", new { @disabled = "disabled", @class = "form-control" })
+
+                    @Html.HiddenFor(model => model.DepartmentID)
+                    @Html.ValidationMessageFor(model => model.DepartmentID)
+
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.DepartmentID,
+                        ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+                        {
+                            Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+                            Value = option.DepartmentID.ToString()
+                        }), "Choose...", new { @required = "required" })
+
+                    @Html.ValidationMessageFor(model => model.DepartmentID)
+                }
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Sub department
+            </td>
+            <td class="width70">
+                @if (ViewBag.SubDept != "")
+                {
+                    <input type="text" name="SubDepartment" value="@Model.SubDepartment" readonly="readonly" style="background-color: #f3f3f3; color: #949494; border: 1px solid #ccc; " />
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.SubDepartment, new SelectList(Enumerable.Empty<SelectListItem>()), "Choose...", new { @id = "SubDeptDropdown", @style = "width: 221px", @tabindex = "3", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.SubDepartment)
+                }
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Issued by
+            </td>
+
+            <td class="width70" id="ddlContactPersontID">
+                <input type="text" name="ContactPersonName" value="" readonly="readonly" style="background-color: #f3f3f3; color: #949494; border: 1px solid #ccc;" />
+                <input type="hidden" name="ContactPersontID" value="" />
+            </td>
+        </tr>
+
+        <tr style="display: none">
+            <td class="width30">
+                TransmittalOut Type
+            </td>
+
+            <td class="width70" id="ddlTrOutTypeId">
+                @Html.RadioButtonFor(model => model.IsPermanent, true, new { id = "PermanentRadio" }) Permanent &nbsp;
+                @Html.RadioButtonFor(model => model.IsPermanent, false, new { id = "TemporaryRadio" }) Temporary
+            </td>
+        </tr>
+
+        <tr id="RearchiveDateRow" style="display: none;">
+            <td class="width30">
+                Re-archive Date
+            </td>
+
+            <td class="width70" id="ddlRearchiveDateId">
+                <input type="date" id="RearchiveDate" name="RearchiveDate" class="form-control" value="@(Model.RearchiveDate.HasValue ? Model.RearchiveDate.Value.ToString("yyyy-MM-dd") : "")" />
+                <input type="time" id="RearchiveTime" name="RearchiveTime" class="form-control" style="width: 100px;" value="@(Model.RearchiveDate.HasValue ? Model.RearchiveDate.Value.ToString("HH:mm") : "")" />
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Urgent
+            </td>
+
+            <td class="width70" id="ddlUrgentId">
+                @Html.CheckBox("IsUrgent", Model.IsUrgent ?? false)
+            </td>
+        </tr>
+
+        @*<tr>
+            <td class="width30">
+                Project
+            </td>
+            <td class="width70" id="ddlProjectId">
+                @Html.DropDownListFor(model => model.ProjectId, ((IEnumerable<WareHouseMVC.Models.Project>)ViewBag.PossibleProjects).Select(option => new SelectListItem
+            {
+                Text = Html.DisplayTextFor(_ => option.ProjectName).ToString(),
+                Value = option.ProjectId.ToString(),
+                Selected = (Model != null) && (option.ProjectId == Model.ProjectId)
+            }), "Choose...", new { @data_placeholder = "Choose a Country...", @style = "width: 221px", @class = "chzn-select", @tabindex = "2" })
+                @Html.ValidationMessageFor(model => model.ProjectId)
+            </td>
+        </tr>*@
+
+        <tr>
+            <td class="width30">
+                <strong>Upload Scanned Document</strong>
+            </td>
+            <td class="width70">
+                <input type="file" name="FileUrl" />
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+

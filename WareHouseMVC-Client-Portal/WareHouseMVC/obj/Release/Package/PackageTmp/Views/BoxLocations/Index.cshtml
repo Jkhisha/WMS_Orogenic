@@ -1,0 +1,55 @@
+@model IEnumerable<WareHouseMVC.Models.BoxLocation>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="pagetitle">
+    <h1>
+      Index List</h1>
+    <span>List of Indexs....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            IsLeatest
+        </th>
+        <th>
+            AssignBox
+        </th>
+        <th>
+            AssignBoxId
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.BoxLocationId }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.BoxLocationId }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.BoxLocationId }, new { @class = "icon-trash" })
+        </td>
+        <td>
+			@item.IsLeatest
+        </td>
+        <td>
+			@(item.AssignBox == null ? "None" : item.AssignBox.Count.ToString())
+        </td>
+        <td>
+			@item.AssignBoxId
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

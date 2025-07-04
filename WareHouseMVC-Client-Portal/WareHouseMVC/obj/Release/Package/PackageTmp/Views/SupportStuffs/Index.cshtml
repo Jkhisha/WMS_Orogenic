@@ -1,0 +1,61 @@
+@model IEnumerable<WareHouseMVC.Models.SupportStuff>
+
+@{
+    ViewBag.Title = "Support Stuff";
+}
+
+<div class="pagetitle">
+    <h1>
+      Support Stuff List</h1>
+    <span>List of Support Stuffs....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            SupportStuffName
+        </th>
+        <th>
+            SupportStuffCode
+        </th>
+        <th>
+            SupportStuffMobileNo
+        </th>
+        <th>
+            ORBLDepartment
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.SupportStuffID }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.SupportStuffID }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.SupportStuffID }, new { @class = "icon-trash" })
+        </td>
+        <td>
+			@item.SupportStuffName
+        </td>
+        <td>
+			@item.SupportStuffCode
+        </td>
+        <td>
+			@item.SupportStuffMobileNo
+        </td>
+        <td>
+			@Html.DisplayTextFor(_ => item.ORBLDepartment.ORBLDepartmentName).ToString()
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

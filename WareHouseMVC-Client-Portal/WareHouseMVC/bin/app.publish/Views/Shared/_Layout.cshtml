@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <link href="@Url.Content("~/Content/themes/base/css/style.default.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/css/PagedList.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/css/jquery.ui.css")" rel="stylesheet" type="text/css" />
+    <link id="skinstyle" rel="stylesheet" href="~/Content/themes/base/css/style.dark.css"
+        type="text/css" />
+    <link id="skinstyle" rel="stylesheet" href="~/Content/themes/base/css/style.orange.css"
+        type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/css/bootstrap-datetimepicker.min.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/themes/base/prettify/prettify.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Content/themes/base/prettify/prettify.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/jquery.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/jquery.dataTables.nightly.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/jquery-migrate-1.1.1.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/jquery-ui-1.9.2.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/jquery.flot.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/jquery.flot.resize.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/bootstrap.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/jquery.cookie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/custom.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/chosen.jquery.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/jquery.flot.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/jquery.flot.pie.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/jquery.flot.resize.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap-datetimepicker.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/bootstrap-datetimepicker.pt-BR.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.mtz.monthpicker.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Content/themes/base/js/bootstrap-fileupload.min.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/themes/base/css/bootstrap-fileupload.min.css")" rel="stylesheet" type="text/css" />
+    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="@Url.Content("~/Content/themes/base/js/excanvas.min.js")" type="text/javascript"></script><![endif]-->
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery("#datepicker").datepicker();
+            jQuery('#default_widget').monthpicker();
+
+        });
+    </script>
+    <script>
+        jQuery(document).ready(function () {
+            jQuery(".chzn-select").chosen()
+            var themeName = '@Session["Theme"]';
+        var colorScheme = '@Session["ColorScheme"]';
+        if (themeName == "default") {
+
+        }
+
+        if (themeName == "orange") {
+            jQuery('head').append('<link id="skinstyle" rel="stylesheet" href="@Url.Content("~/Content/themes/base/css/style.orange.css")" type="text/css" />');
+            jQuery.cookie("skin-color", "orange", { path: '/' });
+        }
+
+        if (themeName == "dark") {
+            jQuery('head').append('<link id="skinstyle" rel="stylesheet" href="@Url.Content("~/Content/themes/base/css/style.dark.css")" type="text/css" />');
+            jQuery.cookie("skin-color", "dark", { path: '/' });
+            jQuery('head').append('<style>.headerpanel{background-color:' + colorScheme + ' !important; border: 0px !important;}.logopanel {background-color: #235688 !important;border: 0px !important;}.headerDDL {background:#333 none repeat scroll 0 0 !important; } .notification .dropdown-toggle, .userinfo .dropdown-toggle{background:#333 none repeat scroll 0 0 !important;}</style>');
+        }
+    });
+   </script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery("#datepicker2").datepicker();
+            jQuery("#datepickerRev").datepicker();
+            jQuery("#datepickerPO").datepicker();
+            jQuery("#datepickerGR").datepicker();
+            jQuery('#default_widget').monthpicker();
+        });
+    </script>
+    <script type="text/javascript">
+        jQuery.noConflict();
+        jQuery.noConflict();
+        jQuery(document).ready(function () {
+            jQuery('#dyntable').dataTable({
+                "sPaginationType": "full_numbers",
+                "processing": true,
+                "serverSide": true,
+                "aaSortingFixed": [[1, 'desc']],
+                "fnDrawCallback": function (oSettings) {
+                    //jQuery.uniform.update();
+                }
+            });
+
+            jQuery('#dyntable5').dataTable({
+                "sPaginationType": "full_numbers",
+                "aaSortingFixed": [[1, 'desc']],
+                "fnDrawCallback": function (oSettings) {
+                    //jQuery.uniform.update();
+                }
+            });
+
+            jQuery('.datables5').dataTable({
+                "sPaginationType": "full_numbers",
+                "aaSortingFixed": [[1, 'asc']],
+                "fnDrawCallback": function (oSettings) {
+                    //jQuery.uniform.update();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="mainwrapper">
+        <div class="leftpanel">
+            <div class="logopanel">
+                <h1>
+                    @if (HttpContext.Current.User.IsInRole("Client"))
+                    {
+                        if (Session["ClientLogo"] != null)
+                        {
+                            string logoUrl = "http://192.168.1.141/WareHouseMVC/" + Session["ClientLogo"].ToString();
+                        <a href="../Home/Index">
+                            <img src="@Url.Content(logoUrl)" style="width: 240px;height: 88px; border-radius: 7px 7px 0px 0px;" ></a>
+                        }
+                        else
+                        {
+                        <a href="../Home/Index">
+                            <img src="@Url.Content("~/Content/themes/base/images/logo2.PNG")" style="width: 240px;height: 88px; border-radius: 7px 7px 0px 0px;" ></a>
+                        }
+                    }
+                    else
+                    {
+                        <a href="../Home/Index">
+                            <img src="@Url.Content("~/Content/themes/base/images/logo2.PNG")" style="width: 240px;height: 88px; border-radius: 7px 7px 0px 0px;" ></a>
+                    }
+                </h1>
+            </div>
+            <!--logopanel-->
+            <div class="datewidget">
+                @DateTime.Now.ToString("f")
+            </div>
+            <div class="leftmenu">
+                <ul class="nav nav-tabs nav-stacked">
+                    <li class="active">@Html.ActionLink("Dashboard", "Index", "Home")</li>
+                    @{
+                        <li class="dropdown">
+                            <a href=""><span class="icon-th-large"></span>Change Log</a>
+                            <ul>
+                                <li>@Html.ActionLink("Change Log", "Index", "AuditTrailCPs")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown"><a href=""><span class="icon-user"></span>User Setup</a>
+                            <ul>
+                                <li>@Html.ActionLink("Update Profile", "EditProfile", "Users")</li>
+                                <li>@Html.ActionLink("Departments", "Index", "Departments")</li>
+                                <li>@Html.ActionLink("Contact Persons", "Index", "ContactPersons")</li>
+                                <li>@Html.ActionLink("Log Out", "LogOff", "Users")</li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown">
+                            <a href=""><span class="icon-ban-circle"></span>Destruction</a>
+                            <ul>
+                                <li>@Html.ActionLink("Destruction Log", "Index", "BoxDestructions")</li>
+                                <li>@Html.ActionLink("Upcoming Destruction Boxes", "UpcomingList", "BoxDestructions")</li>
+                                <li>@Html.ActionLink("Request for Destruction", "Create", "BoxDestructions")</li>
+                            </ul>
+                        </li>
+
+                        <li class="dropdown"><a href=""><span class="icon-indent-right"></span>Services</a>
+                            <ul>
+                                <li>@Html.ActionLink("Transmittal IN", "Index", "TransmittalINs")</li>
+                                <li>@Html.ActionLink("Transmittal OUT", "Index", "TransmittalOUTs")</li>
+                                @*<li>@Html.ActionLink("Box Locations", "BoxLocationsAll", "BoxLocations")</li>*@
+                                @*@<li>@Html.ActionLink("File Locations", "FileLocationsAll", "BoxLocations")</li>*@
+                                <li>@Html.ActionLink("Empty Box Requisition", "Index", "EmptyBoxes")</li>
+                                <li>@Html.ActionLink("Box Search", "BoxSearch", "Items")</li>
+                                <li>@Html.ActionLink("File Search", "FileSearch", "BoxLocations")</li>
+                                <li>@Html.ActionLink("Box XL Search", "BoxXLSearch", "BoxLocations")</li>
+                                <li>@Html.ActionLink("File XL Search", "FileXLSearch", "BoxLocations")</li>
+                                <li>@Html.ActionLink("Box Information", "BoxInfoByBarcode", "BoxLocations")</li>
+                                <li>@Html.ActionLink("Barcode Information", "IndexForBarcode", "TransmittalOUTs")</li>
+                                <li>@Html.ActionLink("Previous Barcodes", "PreviousBarcode", "AssignBoxes")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown"><a href=""><span class=" icon-print"></span>Reports</a>
+                            <ul>
+                                <li>@Html.ActionLink("Box Movement Report", "BoxMovement", "Reports")</li>
+                                <li>@Html.ActionLink("Client Request Pending Report", "BoxPending", "BoxLocations")</li>
+                                <li>@Html.ActionLink("Inventory Report", "InventoryReport", "AssignBoxes")</li>
+                                <li>@Html.ActionLink("Box In/Out Report", "BoxInOut", "BoxLocations")</li>
+                            </ul>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <!--leftmenu-->
+        </div>
+        <div class="rightpanel">
+            <div class="headerpanel" style="padding-left: 15px;">
+                <div style="padding-top: 5px;">
+                    <i style="color: white; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);">WMS Client Portal</i>
+                </div>
+                @if (Session["BannerText"] != null)
+                {
+                    string BannerTxt = Session["BannerText"].ToString();
+                    <div class="logoText">
+                        <h1 style="color: white; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);">@BannerTxt</h1>
+                    </div>
+                }
+                else
+                { 
+                    <div class="logoText">
+                        <img src="@Url.Content("~/Content/themes/base/images/logoText.PNG")" />
+                    </div>
+                }
+
+                <div style="float: right;">
+                    <div class="headerright">
+                        @if (HttpContext.Current.User.IsInRole("Admin"))
+                        {
+                            <div class="headerDDL">
+                                @Html.Action("RenderWareHouse", "Home")
+                            </div>
+                        }
+                        <!--dropdown-->
+                        <div class="dropdown userinfo">
+                            <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="/page.html">Welcome <strong>@User.Identity.Name</strong><b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="@Url.Content("~/Users/EditProfile")"><span class="icon-wrench"></span>Edit
+                                    Profile</a></li>
+                                <li><a href="@Url.Content("~/Users/LogOff")"><span class="icon-eye-open"></span>Log
+                                    Out</a></li>
+                                <li class="divider"></li>
+                            </ul>
+                        </div>
+                        <!--dropdown-->
+                    </div>
+                </div>
+
+            </div>
+            <!--headerpanel-->
+            <div class="breadcrumbwidget">
+                <ul class="skins">
+                    <li class="fixed"><a href="" class="skin-layout fixed"></a></li>
+                    <li class="wide"><a href="" class="skin-layout wide"></a></li>
+                </ul>
+            </div>
+            <!--breadcrumbwidget-->
+            <div class="maincontent">
+                <div class="maincontent">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <div class="clearfix">
+        </div>
+        <div class="clearfix">
+        </div>
+        @*<div class="footer">
+            <div class="footerleft">
+            </div>
+            <div class="footerright">
+                <a href="http://primetechbd.com">&copy; PrimeTech Solutions Ltd </a>
+            </div>
+        </div>*@
+        <!--footer-->
+    </div>
+</body>
+</html>

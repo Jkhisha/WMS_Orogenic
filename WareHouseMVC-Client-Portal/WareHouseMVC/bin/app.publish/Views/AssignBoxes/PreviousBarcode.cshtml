@@ -1,0 +1,67 @@
+﻿@{
+    ViewBag.Title = "Previous Barcode";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>
+        Upload XL</h1>
+    <span>Upload XL For Previous Barcode....</span>
+</div>
+
+@using (Html.BeginForm("PreviousBarcode", "AssignBoxes", FormMethod.Post, new { enctype = "multipart/form-data", _target = "_blank" }))
+{
+    @Html.ValidationSummary(true)
+	
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">
+                    <label>
+                        File Upload</label>
+                </td>
+                <td class="width70">
+                     <div data-provides="fileupload" class="fileupload fileupload-exists"><input type="hidden" value="" name="filename">
+				<div class="input-append">
+				<div class="uneditable-input span3">
+				    <i class="icon-file fileupload-exists"></i>
+				    <span class="fileupload-preview"></span>
+				</div>
+				<span class="btn btn-file"><span class="fileupload-new">Select file</span>
+				<span class="fileupload-exists">Choose file</span>
+				<input type="file" name="filename"></span>
+				<a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+				</div>
+			    </div>
+                 <span style="margin-left:75px;"> <a href="@Url.Content("~/Content/StandardXLFiles/PreviousBarcodeXL.xlsx")" >Download Standard CSV Format</a></span>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="width30">
+                   Print Option
+                </td>
+                 <td>
+                 <select id="ReportType" name="ReportType">
+  
+     <option value="1" selected="selected">Print Barcode</option>
+     <option value="2">Print Barcode Mapping</option>
+        
+    </select>
+                </td>
+            </tr>
+
+
+            <tr>
+                <td class="width30">
+                </td>
+                <td class="width70">
+                    <input type="submit" value="Print "  formtarget="_blank" class="btn btn-primary" />
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+
+}

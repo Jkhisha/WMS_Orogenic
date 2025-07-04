@@ -1,0 +1,705 @@
+﻿@model PagedList.IPagedList<WareHouseMVC.Models.AssignBoxTrOUT>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "ShowBoxes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>
+      Box List</h1>
+    <span>List of Boxes....</span>
+</div>
+
+@if (ViewBag.File == "0")
+{
+
+<div  class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered">
+ <thead>
+    <tr>
+       <th></th>
+        <th>
+            Transmittal No
+        </th>
+        <th>
+           Box Name
+        </th>
+        <th>
+           Box No
+        </th>
+        <th>
+           Year
+        </th>
+        <th>
+          Assign Date
+        </th>
+        <th>
+        Status
+        </th>
+       
+     
+    </tr>
+	 </thead>
+
+     <tbody>
+@foreach (var item in Model)
+{
+    <tr>
+       
+        <td>
+           @* @Html.ActionLink(" ", "Receive", new { id = item.AssignBoxId }, new { @class = "icon-folder-close", @Title = "Receive Box" }) |*@
+           
+           
+        </td>
+
+        <td>
+			@Html.DisplayTextFor(_ => item.TransmittalOUT.TransmittalNo).ToString()
+        </td>
+        
+        <td>
+			@Html.DisplayTextFor(_ => item.Item.ItemName).ToString()
+        </td>
+       
+        <td>
+			@Html.DisplayTextFor(_ => item.Item.BoxNo).ToString()
+        </td>
+        
+        <td>
+			@Html.DisplayTextFor(_ => item.Item.Year).ToString()
+        </td>
+      <td>
+     	@String.Format("{0:g}", item.AssignDate.ToShortDateString())
+      </td>
+      
+       <td>
+     	@Html.DisplayTextFor(_ => item.TransmittalOUTStatus.StatusName).ToString()
+      </td>
+
+    </tr>
+}
+ </tbody>
+
+ </table>
+</div>
+    
+}
+@if (ViewBag.File == "1")
+{
+    <div  class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" >
+ <thead>
+    <tr>
+       <th></th>
+        <th>
+            Transmittal No
+        </th>
+      
+        <th>
+           Box No
+        </th>
+         <th>
+          Box Name
+        </th>
+         <th>
+          FileNumber
+        </th>
+         <th>
+          ReferrenceNo
+        </th>
+         <th>
+         RingNo
+        </th>
+          <th>
+         AccountNo
+        </th>
+        <th>
+           Year
+        </th>
+        <th>
+          Assign Date
+        </th>
+        <th>
+        Status
+        </th>
+       
+     
+    </tr>
+	 </thead>
+
+     <tbody>
+@foreach (var item in Model)
+{
+    <tr>
+       
+        <td>
+           @* @Html.ActionLink(" ", "Receive", new { id = item.AssignBoxId }, new { @class = "icon-folder-close", @Title = "Receive Box" }) |*@
+           
+           
+        </td>
+
+        <td>
+			@Html.DisplayTextFor(_ => item.TransmittalOUT.TransmittalNo).ToString()
+        </td>
+        
+       
+       
+        <td>
+			@Html.DisplayTextFor(_ => item.Item.BoxNo).ToString()
+        </td>
+
+         <td>
+			@Html.DisplayTextFor(_ => item.Item.FileBoxName).ToString()
+        </td>
+         <td>
+			@Html.DisplayTextFor(_ => item.Item.FileNumber).ToString()
+        </td>
+         <td>
+			@Html.DisplayTextFor(_ => item.Item.ReferrenceNo).ToString()
+        </td>
+         <td>
+			@Html.DisplayTextFor(_ => item.Item.RingNo).ToString()
+        </td>
+         <td>
+			@Html.DisplayTextFor(_ => item.Item.AccountNo).ToString()
+        </td>
+        
+        <td>
+			@Html.DisplayTextFor(_ => item.Item.Year).ToString()
+        </td>
+      <td>
+     	@String.Format("{0:g}", item.AssignDate.ToShortDateString())
+      </td>
+      
+       <td>
+     	@Html.DisplayTextFor(_ => item.TransmittalOUTStatus.StatusName).ToString()
+      </td>
+
+    </tr>
+}
+ </tbody>
+
+ </table>
+</div>
+}
+@{
+    
+    if (ViewBag.Pager == "1")
+    {
+    
+<div style="float:right">
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("CheckStatus",
+                        new { page, trID = ViewBag.trID }))
+    </div>
+    }
+
+    else if (ViewBag.Pager == "2")
+    {
+        <div style="float:right">
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("ApprovedTrOUT",
+                        new { page, trID = ViewBag.trID }))
+    </div>
+    }
+
+    else if (ViewBag.Pager == "3")
+    {
+        <div style="float:right">
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("GatePass",
+                        new { page, trID = ViewBag.trID }))
+    </div>
+    }
+
+    else if (ViewBag.Pager == "4")
+    {
+        <div style="float:right">
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("BoxOut",
+                        new { page, trID = ViewBag.trID }))
+    </div>
+    }
+
+
+    else
+    {
+        <div style="float:right">
+Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("ShowBoxes",
+                        new { page, trID = ViewBag.trID }))
+    </div>
+    }
+    }
+
+    <br />
+    <br />
+   
+
+<div>
+
+<table>
+<tr>
+
+@if (ViewBag.Flag == 1 || ViewBag.Flag == 2)
+{
+
+
+
+    using (Html.BeginForm("CheckStatus", "AssignBoxTrOUTs", FormMethod.Post, new { enctype = "multipart/form-data" }))
+     {
+    @Html.ValidationSummary(true)
+	
+    <input type="hidden" name="trID" id="trID" value=@ViewBag.trID />
+                <td class="width30">
+                    <label>
+                        File Upload</label>
+                </td>
+                <td class="width70">
+                     <div data-provides="fileupload" class="fileupload fileupload-exists"><input type="hidden" value="" name="filename">
+				<div class="input-append">
+				<div class="uneditable-input span3">
+				    <i class="icon-file fileupload-exists"></i>
+				    <span class="fileupload-preview"></span>
+				</div>
+				<span class="btn btn-file"><span class="fileupload-new">Select file</span>
+				<span class="fileupload-exists">Choose file</span>
+				<input type="file" name="filename"></span>
+				<a data-dismiss="fileupload" class="btn fileupload-exists" href="#">Remove</a>
+				</div>
+			    </div>
+                 <span style="margin-left:75px;"> <a href="@Url.Content("~/Content/StandardXLFiles/BarcodeTest.xlsx")" >Download Standard CSV Format</a></span>
+                </td>
+                <td class="width30">
+                    <input type="submit" value="Check" class="btn btn-primary" />
+                </td>
+          
+    
+
+     }
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+@*<td class="width70">
+
+ @Html.ActionLink("Check Status ", "CheckStatus", "AssignBoxTrOUTs", new { trID = ViewBag.trID }, new { @Class = "btn btn-info btn-rounded" })
+
+
+</td>*@
+}
+    
+
+ @if (ViewBag.Flag == 3)
+ {
+        <td class="width30"></td>
+    <td class="width30">
+   
+        @Html.ActionLink("Generate Gatepass", "GatePass", "AssignBoxTrOUTs", new { trID = ViewBag.trID }, new { @Class = "btn btn-rounded" })
+    
+    </td>
+ }
+    
+     @if (ViewBag.Flag >= 4)
+     {
+        <td class="width30"></td>
+    <td class="width30">
+   
+      @*  @Html.ActionLink("Print Gatepass", "GatePassPrint", "AssignBoxTrOUTs", new { trID = ViewBag.trID }, new { @Class = "btn btn-info btn-rounded" })*@
+
+      <div class="btn-group">
+                            <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                                Print GAtepass <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    @Html.ActionLink("Print on PDF", "PrintAsPDFGatePass", "Reports", new { trID = ViewBag.trID }, new { @target = "_blank" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Print on Excel", "PrintAsExcelGatePass", "Reports", new { trID = ViewBag.trID }, "")
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Print on Doc", "PrintAsDocGatePass", "Reports", new { trID = ViewBag.trID }, "")
+                                </li>
+                            </ul>
+                        </div>
+     </td>
+     }
+            @if (ViewBag.Flag == 4)
+            {
+           <td class="width30"></td>
+    <td class="width30">
+   
+        @Html.ActionLink("Box Out", "BoxOut", "AssignBoxTrOUTs", new { trID = ViewBag.trID }, new { @Class = "btn btn-danger btn-rounded" })
+    
+    </td>
+            }
+
+</tr>
+</table>
+    
+
+
+
+
+
+
+</div>
+
+
+<br />
+
+
+
+
+<br />
+<div>
+
+
+
+@{
+
+    if (ViewBag.FoundItems != null)
+    {
+      
+                   <strong>Found Boxes</strong>
+           
+   
+        if (ViewBag.File == "0")
+        {
+        <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ 
+ <table class="table table-bordered" id="dyntable">
+ <thead>
+    <tr>
+       <th>Box Name</th>
+        <th>
+            Box No
+        </th>
+         <th>
+          Year
+        </th>
+        <th>
+        Destruction Period
+        </th>
+       
+    </tr>
+	 </thead>
+
+     <tbody>
+@foreach (var item in ViewBag.FoundItems)
+{
+    <tr>
+       
+        <td>
+        @item.ItemName
+        </td>
+
+        <td>
+			@item.BoxNo
+        </td>
+         <td>
+			@item.Year
+        </td>
+       
+        <td>
+			@item.DestructionPeriod
+        </td>
+      
+
+    </tr>
+}
+ </tbody>
+
+ </table>
+</div>
+        }
+
+        if (ViewBag.File == "1")
+        {
+        <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+ <thead>
+    <tr>
+       <th></th>
+       
+      
+        <th>
+           Box No
+        </th>
+         <th>
+          BookNumber
+        </th>
+         <th>
+          FileNumber
+        </th>
+         <th>
+          ReferrenceNo
+        </th>
+         <th>
+         RingNo
+        </th>
+          <th>
+         AccountNo
+        </th>
+        <th>
+           Year
+        </th>
+       
+       
+     
+    </tr>
+	 </thead>
+
+     <tbody>
+@foreach (var item in ViewBag.FoundItems)
+{
+    <tr>
+       
+        <td>
+           @* @Html.ActionLink(" ", "Receive", new { id = item.AssignBoxId }, new { @class = "icon-folder-close", @Title = "Receive Box" }) |*@
+           
+           
+        </td>
+
+       
+        
+       
+       
+        <td>
+			@item.BoxNo.ToString()
+        </td>
+
+         <td>
+			@item.BookNumber.ToString()
+        </td>
+         <td>
+			@item.FileNumber.ToString()
+        </td>
+         <td>
+			@item.ReferrenceNo.ToString()
+        </td>
+         <td>
+			@item.RingNo.ToString()
+        </td>
+         <td>
+			@item.AccountNo.ToString()
+        </td>
+        
+        <td>
+			@item.Year.ToString()
+        </td>
+     
+      
+      
+
+    </tr>
+}
+ </tbody>
+
+ </table>
+</div>
+        }
+         <table>
+    <tr>
+     @if (ViewBag.Flag == 2 && ViewBag.Flag2 == 1)
+     {
+     <td class="width30"></td>
+    <td class="width30">
+   
+        @Html.ActionLink("Approved", "ApprovedTrOUT", "AssignBoxTrOUTs", new { trID = ViewBag.trID }, new { @Class = "btn btn-warning btn-rounded" })
+    
+    </td>
+     }
+    
+   
+    </tr>
+    </table>
+         
+    <br />
+    }
+
+    if (ViewBag.NotFoundItems != null)
+    {
+        <div class="row-fluid">
+        <div class="span6">
+         <table class="table table-bordered table-invoice">
+                <tbody>
+                <tr>
+                   <td class="width30">
+                   <strong>Not Found Boxes</strong>
+                   </td>
+                </tr>
+                </tbody>
+                </table>
+        </div>
+        <div class="span6">
+        </div>
+        </div>
+    
+        if (ViewBag.File == "0")
+        {
+         <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+            <table class="table table-bordered" id="dyntable">
+ <thead>
+    <tr>
+       <th>Box Name</th>
+        <th>
+            Box No
+        </th>
+        <th>
+        Year
+        </th>
+        <th>
+        Destruction Period
+        </th>
+        
+    </tr>
+	 </thead>
+
+     <tbody>
+@foreach (var item in ViewBag.NotFoundItems)
+{
+    <tr>
+        <td>
+        @item.ItemName
+        </td>
+
+        <td>
+			@item.BoxNo
+        </td>
+         <td>
+			@item.Year
+        </td>
+        
+       
+        <td>
+			@item.DestructionPeriod
+        </td>
+    
+
+    </tr>
+}
+ </tbody>
+
+ </table>
+</div>
+        }
+
+        if (ViewBag.File == "1")
+        {
+        <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+ <thead>
+    <tr>
+       <th></th>
+      
+      
+        <th>
+           Box No
+        </th>
+         <th>
+          BookNumber
+        </th>
+         <th>
+          FileNumber
+        </th>
+         <th>
+          ReferrenceNo
+        </th>
+         <th>
+         RingNo
+        </th>
+          <th>
+         AccountNo
+        </th>
+        <th>
+           Year
+        </th>
+        
+       
+       
+     
+    </tr>
+	 </thead>
+
+     <tbody>
+@foreach (var item in ViewBag.NotFoundItems)
+{
+    <tr>
+       
+        <td>
+           @* @Html.ActionLink(" ", "Receive", new { id = item.AssignBoxId }, new { @class = "icon-folder-close", @Title = "Receive Box" }) |*@
+           
+           
+        </td>
+
+       
+        
+       
+       
+        <td>
+			@item.BoxNo.ToString()
+        </td>
+
+         <td>
+			@item.BookNumber.ToString()
+        </td>
+         <td>
+			@item.FileNumber.ToString()
+        </td>
+         <td>
+			@item.ReferrenceNo.ToString()
+        </td>
+         <td>
+			@item.RingNo.ToString()
+        </td>
+         <td>
+			@item.AccountNo.ToString()
+        </td>
+        
+        <td>
+			@item.Year.ToString()
+        </td>
+     
+      
+    
+
+    </tr>
+}
+ </tbody>
+
+ </table>
+</div>
+        }
+    
+    <table>
+    <tr>
+    <td class="width70"></td><td class="width70"></td>
+    <td class="width30">
+    @*@Html.ActionLink("Report ", "Index", "AssignBoxTrOUTes", "", new { @Class = "btn btn-danger btn-rounded" })*@
+    </td>
+    </tr>
+    </table>
+    }
+
+    }
+
+
+
+
+</div>
+
+
+

@@ -1,0 +1,41 @@
+@model IEnumerable<WareHouseMVC.Models.AutoZoneSuggention>
+
+@{
+    ViewBag.Title = "Zone suggestion";
+}
+
+<div class="pagetitle">
+    <h1>
+      Zone suggestion List</h1>
+    <span>List of Client wise Zone Suggestion....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>Client</th>
+        <th>Zone</th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.AutoZoneSuggentionId }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.AutoZoneSuggentionId }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.AutoZoneSuggentionId }, new { @class = "icon-trash" })
+        </td>
+        <td>@item.Client.ClientName</td>
+        <td>@item.Zone.ZoneName</td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

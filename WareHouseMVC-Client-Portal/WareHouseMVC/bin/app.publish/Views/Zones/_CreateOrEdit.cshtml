@@ -1,0 +1,76 @@
+@model WareHouseMVC.Models.Zone
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#WarehouseID").change(function (evt) {
+
+            if ($("select#WarehouseID").val() != "-1") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetFloors")",
+                    type: 'POST',
+                    data: { WarehouseID: $("select#WarehouseID").val() },
+                    success: function (response) {
+                        $("select#FloorID").replaceWith(response)
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+</script>
+@* This partial view defines form fields that will appear when creating and editing entities *@
+<table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.Warehouse.WarehouseName)
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.WarehouseID, ((IEnumerable<WareHouseMVC.Models.Warehouse>)ViewBag.PossibleWarehouses).Select(option => new SelectListItem
+             {
+                 Text = Html.DisplayTextFor(_ => option.WarehouseName).ToString(),
+                 Value = option.WarehouseID.ToString(),
+                 Selected = (Model != null) && (option.WarehouseID == Model.WarehouseID) || (Model == null) && (option.WarehouseID == ViewBag.wHID)
+             }), "Choose...")
+                @Html.ValidationMessageFor(model => model.WarehouseID)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.Floor.FloorName)
+            </td>
+            <td class="width30">
+                @Html.DropDownListFor(model => model.FloorID, ((IEnumerable<WareHouseMVC.Models.Floor>)ViewBag.PossibleFloors).Select(option => new SelectListItem
+          {
+              Text = Html.DisplayTextFor(_ => option.FloorName).ToString(),
+              Value = option.FloorID.ToString(),
+              Selected = (Model != null) && (option.FloorID == Model.FloorID) || (Model == null) && (option.FloorID == ViewBag.fLID)
+          }), "Choose...")
+                @Html.ValidationMessageFor(model => model.FloorID)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.ZoneName)
+            </td>
+            <td>
+                @Html.EditorFor(model => model.ZoneName)
+                @Html.ValidationMessageFor(model => model.ZoneName)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.ZoneCode)
+            </td>
+            <td>
+                @Html.EditorFor(model => model.ZoneCode)
+                @Html.ValidationMessageFor(model => model.ZoneCode)
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -34,12 +34,11 @@
               "Title": "DataContext.cs",
               "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WMS-Main\\WMS\\Context\\DataContext.cs",
               "RelativeDocumentMoniker": "WMS\\Context\\DataContext.cs",
-              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WMS-Main\\WMS\\Context\\DataContext.cs*",
-              "RelativeToolTip": "WMS\\Context\\DataContext.cs*",
+              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WMS-Main\\WMS\\Context\\DataContext.cs",
+              "RelativeToolTip": "WMS\\Context\\DataContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-04T14:04:15.086Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-04T14:04:15.086Z"
             },
             {
               "$type": "Document",
@@ -49,7 +48,7 @@
               "RelativeDocumentMoniker": "WMS\\Web.config",
               "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WMS-Main\\WMS\\Web.config",
               "RelativeToolTip": "WMS\\Web.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAB1AAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAABsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
               "WhenOpened": "2025-07-04T12:22:21.241Z",
               "EditorCaption": ""

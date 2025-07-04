@@ -1,0 +1,87 @@
+@model WareHouseMVC.Models.Column
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+      Details </h1>
+    <span>Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">ColumnName</td>
+        <td>
+       @Model.ColumnName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">ColumnCode</td>
+        <td>
+       @Model.ColumnCode
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Height</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Height.HeightName).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Level</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Level.LevelName).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Rack</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Rack.RackName).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Train</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Train.TrainName).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Zone</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Zone.ZoneName).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Floor</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Floor.FloorName).ToString()
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">Warehouse</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.Warehouse.WarehouseName).ToString()
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ColumnID }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

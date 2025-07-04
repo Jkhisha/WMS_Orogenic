@@ -1,0 +1,45 @@
+@model WareHouseMVC.Models.BoxLocation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+      Details </h1>
+    <span>Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">IsLeatest</td>
+        <td>
+       @Model.IsLeatest
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">AssignBox</td>
+        <td>
+       @(Model.AssignBox == null ? "None" : Model.AssignBox.Count.ToString())
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">AssignBoxId</td>
+        <td>
+       @Model.AssignBoxId
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.BoxLocationId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

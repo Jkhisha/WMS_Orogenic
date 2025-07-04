@@ -1,0 +1,55 @@
+@model IEnumerable<WareHouseMVC.Models.Driver>
+
+@{
+    ViewBag.Title = "Driver";
+}
+
+<div class="pagetitle">
+    <h1>
+      Driver List</h1>
+    <span>List of Drivers....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            Name
+        </th>
+        <th>
+            ContactNumber
+        </th>
+        <th>
+            TransportVendor
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.DriverId }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.DriverId }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.DriverId }, new { @class = "icon-trash" })
+        </td>
+        <td>
+			@item.Name
+        </td>
+        <td>
+			@item.ContactNumber
+        </td>
+        <td>
+			@(item.TransportVendor == null ? "None" : item.TransportVendor.Name)
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

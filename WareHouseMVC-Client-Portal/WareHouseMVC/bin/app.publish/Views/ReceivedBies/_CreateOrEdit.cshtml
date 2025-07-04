@@ -1,0 +1,38 @@
+@model WareHouseMVC.Models.ReceivedBy
+
+<table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+            <td class="width30">
+                Name
+                <span style="color:red;">*</span>
+            </td>
+            <td class="width70">
+                <input type="text" name="Name" value="@Model.Name" readonly="readonly" style="background-color: #f0f0f0; color: #6c757d; border: 1px solid #ccc;" />
+                @Html.HiddenFor(model => model.Name)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Address
+                <span style="color:red;">*</span>
+            </td>
+            <td class="width70">
+                <input type="text" name="Address" value="@Model.Address" readonly="readonly" style="background-color: #f0f0f0; color: #6c757d; border: 1px solid #ccc;" />
+                @Html.HiddenFor(model => model.Address)
+
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Date
+                <span style="color:red;">*</span>
+            </td>
+            <td class="width70">
+                <input id="ReceivedByDate" type="date" name="Date" class="form-control" value="@Model.Date.ToString("yyyy-MM-dd")" />
+            </td>
+        </tr>
+    </tbody>
+</table>

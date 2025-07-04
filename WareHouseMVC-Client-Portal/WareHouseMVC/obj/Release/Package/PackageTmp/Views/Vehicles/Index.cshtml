@@ -1,0 +1,55 @@
+@model IEnumerable<WareHouseMVC.Models.Vehicle>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="pagetitle">
+    <h1>
+      Vehicle List</h1>
+    <span>List of Vehicles....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            Type
+        </th>
+        <th>
+            RegistrationNumber
+        </th>
+        <th>
+            TransportVendor
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.VehicleId }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.VehicleId }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.VehicleId }, new { @class = "icon-trash" })
+        </td>
+        <td>
+			@item.Type
+        </td>
+        <td>
+			@item.RegistrationNumber
+        </td>
+        <td>
+			@(item.TransportVendor == null ? "None" : item.TransportVendor.Name)
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

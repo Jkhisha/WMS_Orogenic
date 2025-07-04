@@ -1,0 +1,423 @@
+﻿@model WareHouseMVC.Models.BoxSearchViewModel
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "BoxSearch For Update";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        getSubDepartment();
+
+        $("select#DepartmentID").change(function (evt) {
+            getSubDepartment();
+        });
+
+        function getSubDepartment() {
+            if ($("select#DepartmentID").val() != "" ) {
+                $.ajax({
+                    url: '@Url.Action("GetSubDepartment", "Items")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { deptId : $("select#DepartmentID").val() },
+                    success: function (data) {
+                        var dropdown = $('#SubDeptDropdown');
+                        dropdown.empty();
+                        dropdown.append($('<option></option>').attr('value', '').text('Choose...'));
+
+                        $.each(data, function (i, subDepartment) {
+                            dropdown.append($('<option></option>').attr('value', subDepartment).text(subDepartment));
+                        });
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        }
+
+        $('.modal2').click(function () {
+            $('<div/>').appendTo('body').dialog({
+                close: function (event, ui) {
+                    dialog.remove();
+                },
+
+                show: { effect: 'drop', direction: "up" },
+                title: 'Box Location',
+
+                resizable: false,
+                height: 500,
+                width: 600,
+                draggable: true,
+                modal: true
+            }).load(this.href, {});
+
+            return false;
+        });
+    });
+</script>
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('.modal3').click(function () {
+            $('<div/>').appendTo('body').dialog({
+                close: function (event, ui) {
+                    dialog.remove();
+                },
+
+                show: { effect: 'drop', direction: "up" },
+                title: 'Box History',
+
+                resizable: false,
+                height: 500,
+                width: 600,
+                draggable: true,
+                modal: true
+            }).load(this.href, {});
+
+            return false;
+        });
+    });
+</script>
+<div class="pagetitle">
+    <h1>
+        Box Search
+    </h1>
+    <span>Search Boxes and Update if needed</span>
+</div>
+
+@using (Html.BeginForm("BoxSearch", "Items", FormMethod.Get, ""))
+{
+    @Html.ValidationSummary(true)
+
+
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr style="display: none">
+                <td class="width30">
+                    Client
+                </td>
+                <td class="width70">
+
+                    <strong>@ViewBag.ClientName</strong>
+                    <input type="hidden" id="ClientID" name="ClientID" value="@ViewBag.ClientId" />
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Department
+                </td>
+                <td class="width70">
+                    @if (ViewBag.DeptName.ToLower() != "superadmin")
+                    {
+                        @Html.DropDownListFor(model => model.DepartmentID,
+                            ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+                            {
+                                Text = option.DepartmentName,
+                                Value = option.DepartmentID.ToString(),
+                                Selected = (Model != null) && (option.DepartmentID == Model.DepartmentID)
+                            }), "Choose...", new { @disabled = "disabled", @class = "form-control" })
+
+                        @Html.HiddenFor(model => model.DepartmentID)
+                        @Html.ValidationMessageFor(model => model.DepartmentID)
+
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(model => model.DepartmentID,
+                            ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+                            {
+                                Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+                                Value = option.DepartmentID.ToString()
+                            }), "Choose...")
+
+                        @Html.ValidationMessageFor(model => model.DepartmentID)
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Sub department
+                </td>
+
+                <td class="width70">
+                    @if (ViewBag.SubDept != "")
+                    {
+                        <input type="text" name="SubDepartment" value="@Model.SubDepartment" readonly="readonly" style="background-color: #f3f3f3; color: #949494; border: 1px solid #ccc; " />
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(model => model.SubDepartment, new SelectList(Enumerable.Empty<SelectListItem>()), "Choose...", new { @id = "SubDeptDropdown", @style = "width: 221px", @tabindex = "3" })
+                        @Html.ValidationMessageFor(model => model.SubDepartment)
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Box No
+                </td>
+                <td>
+                    <input id="BoxNo" type="text" name="BoxNo" ,value=@ViewBag.BoxNo />
+                </td>
+
+            </tr>
+            <tr>
+                <td class="width30">
+                    Box Name
+                </td>
+                <td>
+                    <input id="BoxName" type="text" name="BoxName" ,value=@ViewBag.BoxName />
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    From Date
+                </td>
+                <td class="width70">
+                    <input id="datepicker" type="text" name="StartDate" />
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    To Date
+                </td>
+                <td class="width70">
+                    <input id="datepicker2" type="text" name="EndDate" />
+                </td>
+            </tr>
+
+            <tr>
+                <td class="width30">
+                </td>
+                <td class="width70">
+                    <input type="submit" value="Search" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+}
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    Box Name
+                </th>
+                <th>
+                    Box No
+                </th>
+                <th>
+                    Year
+                </th>
+                <th>
+                    Destruction Period
+                </th>
+                <th>
+                    Legal Hold
+                </th>
+                <th>
+                    Assign Date
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Transmittal Status
+                </th>
+                <th>
+                    History
+                </th>
+                <th>
+                    Box Status
+                </th>
+                <th>
+                    Update Info
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.SearchResults != null)
+            {
+                int i = 0;
+                foreach (var item in Model.SearchResults)
+                {
+
+                    if (item.BoxLocation.Count > 0)
+                    {
+
+                        if (item.BoxLocation[i].CurrentStatus == "Box Out")
+                        {
+
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    @item.BoxName
+                                </td>
+                                <td>
+                                    @item.BoxNo
+                                </td>
+                                <td>
+                                    @item.Year
+                                </td>
+                                <td>
+                                    @if (item.DestructionPeriod != null)
+                                    {
+                                        @item.DestructionPeriod.Value.ToShortDateString()
+                                    }
+                                    else
+                                    {
+                                        long _clientID = 0;
+                                        long _deptID = 0;
+
+                                        if (Model.ClientID != null)
+                                        {
+                                            _clientID = Model.ClientID;
+                                        }
+                                        if (Model.DepartmentID.HasValue)
+                                        {
+                                            _deptID = Model.DepartmentID.Value;
+                                        }
+
+                                        @Html.ActionLink("Update Period", "UpdatePeriod", "BoxLocations", new { ItemId = item.ItemId, clientID = _clientID, deptID = _deptID }, new { @Class = "btn btn-warning btn-rounded", @target = "_blank" })
+                                    }
+                                </td>
+                                <td>
+
+                                    @if (item.IsLegalHold)
+                                    {
+                                        <span>Yes</span>
+                                    }
+                                    else
+                                    {
+                                        <span>No</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @String.Format("{0:g}", item.AssignDate.ToShortDateString())
+                                </td>
+                                <td style="max-width: 200px; word-wrap: break-word; white-space: normal;">
+                                    @item.Item.Description
+                                </td>
+                                <td>
+                                    @item.TransmittalINStatus.StatusName
+                                </td>
+                                <td>
+                                    @Html.ActionLink("View History", "ViewBoxHistory", "BoxLocations", new { id = item.AssignBoxId }, new { @class = "modal3" })
+                                </td>
+                                <td>
+                                    @if (item.BoxLocation.Count > 0)
+                                    {
+
+                                        @item.BoxLocation[i].CurrentStatus
+                                    }
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Update Info", "UpdateBoxInfo", "Items", new { ItemId = item.ItemId }, new { @Class = "btn btn-info btn-rounded", @target = "_blank" })
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+
+                        <tr>
+                            <td>
+                            </td>
+                            <td>
+                                @item.BoxName
+                            </td>
+                            <td>
+                                @item.BoxNo
+                            </td>
+                            <td>
+                                @item.Year
+                            </td>
+                            <td>
+                                @if (item.DestructionPeriod != null)
+                                {
+                                    @item.DestructionPeriod.Value.ToShortDateString()
+                                }
+                                else
+                                {
+                                    long _clientID = 0;
+                                    long _deptID = 0;
+
+                                    if (Model.ClientID != null)
+                                    {
+                                        _clientID = Model.ClientID;
+                                    }
+                                    if (Model.DepartmentID.HasValue)
+                                    {
+                                        _deptID = Model.DepartmentID.Value;
+                                    }
+
+                                    @Html.ActionLink("Update Period", "UpdatePeriod", "BoxLocations", new { ItemId = item.ItemId, clientID = _clientID, deptID = _deptID }, new { @Class = "btn btn-warning btn-rounded" })
+                                }
+                            </td>
+                            <td>
+
+                                @if (item.IsLegalHold)
+                                {
+                                    <span>Yes</span>
+                                }
+                                else
+                                {
+                                    <span>No</span>
+                                }
+                            </td>
+                            <td>
+                                @String.Format("{0:g}", item.AssignDate.ToShortDateString())
+                            </td>
+                            <td style="max-width: 200px; word-wrap: break-word; white-space: normal;">
+                                @item.Item.Description
+                            </td>
+                            <td>
+                                @item.TransmittalINStatus.StatusName
+                            </td>
+                            <td>
+                                @Html.ActionLink("View History", "ViewBoxHistory", "BoxLocations", new { id = item.AssignBoxId }, new { @class = "modal3" })
+                            </td>
+                            <td>
+                                @if (item.BoxLocation.Count > 0)
+                                {
+
+                                    @item.BoxLocation[i].CurrentStatus
+                                }
+                            </td>
+                            <td>
+                                @Html.ActionLink("Update Info", "UpdateBoxInfo", "Items", new { ItemId = item.ItemId }, new { @Class = "btn btn-info btn-rounded" })
+                            </td>
+                        </tr>
+                    }
+
+                }
+            }
+        </tbody>
+    </table>
+</div>
+
+<div style="float:right">
+    @Html.PagedListPager(Model.SearchResults,
+                    page => Url.Action("BoxSearch", new RouteValueDictionary() {
+                  { "Page", page },
+                   { "ClientID", Model.ClientID },
+                  { "DepartmentID", Model.DepartmentID },
+                  { "StartDate", Model.StartDate },
+                  { "EndDate", Model.EndDate },
+                  {"BoxName",Model.BoxName},
+                  {"BoxNo",Model.BoxNo}
+
+                        }),
+               PagedListRenderOptions.ClassicPlusFirstAndLast)
+</div>
+<br />

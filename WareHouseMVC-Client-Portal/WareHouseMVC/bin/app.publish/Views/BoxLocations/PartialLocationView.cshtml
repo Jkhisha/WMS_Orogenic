@@ -1,0 +1,165 @@
+﻿@model WareHouseMVC.Models.AssignBox
+@{
+
+   
+    }
+<div>
+    <strong>Box Details :</strong>
+    <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Client :
+                        </td>
+                        <td class="width70">@ViewBag.Client
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Department:
+                        </td>
+                        <td>@ViewBag.Dept
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Project:
+                        </td>
+                        <td>
+                            @ViewBag.Project
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td>
+                            Box Name:
+                        </td>
+                        <td>
+                            @Model.BoxName
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Box No. :
+                        </td>
+                        <td>
+                            @Model.BoxNo
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Year :
+                        </td>
+                        <td>
+                            @Model.Year
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="clearfix">
+        <br />
+    </div>
+    <strong>Location :</strong>
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">
+                    WareHouse :
+                </td>
+                <td class="width70">
+                    @Model.BoxLocation[0].Warehouse.WarehouseName
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Floor :
+                </td>
+                <td>
+                    @Model.BoxLocation[0].Floor.FloorName
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Zone :
+                </td>
+                <td>
+                    @Model.BoxLocation[0].Zone.ZoneName
+                </td>
+            </tr>
+            @if (Model.BoxLocation[0].Train != null)
+            {
+
+
+                <tr>
+                    <td>
+                        Train :
+                    </td>
+                    <td>
+                        @Model.BoxLocation[0].Train.TrainName
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Rack :
+                    </td>
+                    <td>
+                        @Model.BoxLocation[0].Rack.RackName
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Level :
+                    </td>
+                    <td>
+                        @Model.BoxLocation[0].Level.LevelName
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Height :
+                    </td>
+                    <td>
+                        @Model.BoxLocation[0].Height.HeightName
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Column :
+                    </td>
+                    <td>
+                        @Model.BoxLocation[0].Column.ColumnName
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Raw :
+                    </td>
+                    <td>
+                        @Model.BoxLocation[0].Row.RowName
+                    </td>
+                </tr>
+            }
+
+            else
+            {
+                <tr>
+                    <td>
+                        Pallet :
+                    </td>
+                    <td>
+                        @Model.BoxLocation[0].Pallet.PalletName
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,64 @@
+@model WareHouseMVC.Models.Train
+@{
+    ViewBag.Title = "Delete Train";
+}
+<div class="pagetitle">
+    <h1>
+        Delete Train
+    </h1>
+    <span>Are you sure you want to delete this?</span>
+</div>
+@using (Html.BeginForm())
+{
+    
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">
+                    TrainName
+                </td>
+                <td>@Model.TrainName
+                </td>
+            </tr>
+            <tr>
+                <div class="display-label">
+                    TrainCode</div>
+                <div class="display-field">@Model.TrainCode</div>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Zone
+                </td>
+                <td>
+                    @Html.DisplayTextFor(_ => Model.Zone).ToString()
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Floor
+                </td>
+                <td>@Html.DisplayTextFor(_ => Model.Floor).ToString()
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Warehouse
+                </td>
+                <td>@Html.DisplayTextFor(_ => Model.Warehouse).ToString()
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                </td>
+                <td>
+                    <input type="submit" value="Delete" class="btn btn-danger" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+
+    <p>
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+    </p>
+}

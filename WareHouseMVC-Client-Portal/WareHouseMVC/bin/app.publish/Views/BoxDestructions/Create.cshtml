@@ -1,0 +1,80 @@
+@model WareHouseMVC.Models.BoxDestruction
+
+@{
+    ViewBag.Title = "Create Destruction Request";
+}
+
+
+
+<div class="pagetitle">
+    <h1>
+        Create Destruction Request</h1>
+    <span>Add Creates below....</span>
+</div>
+
+
+@{
+
+
+    if (ViewBag.Flag == "1")
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning !</strong> You need to inser Box Name & Box Number.
+        </div>
+    }
+
+    if (ViewBag.Flag == "2")
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning !</strong> Box not found in the System !
+        </div>
+    }
+
+
+    if (ViewBag.Flag == "0")
+    {
+        <div class="alert alert-success">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Success !</strong> Your Request has successfuly created.Please go to Destruction Log to see the status.
+        </div>
+    }
+
+
+}
+
+
+
+@using (Html.BeginForm("Create", "BoxDestructions", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+	
+		@Html.Partial("_CreateOrEdit", Model)
+    <table class="table table-bordered table-invoice">
+	  <tbody>
+            <tr>
+ <td  class="width30">
+                
+                </td>
+                <td  class="width70">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                </td>
+
+		</tr>
+		</tbody>
+    </table>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</div>
+
+
+

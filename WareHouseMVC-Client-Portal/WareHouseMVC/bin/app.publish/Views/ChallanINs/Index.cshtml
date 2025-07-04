@@ -1,0 +1,79 @@
+@model IEnumerable<WareHouseMVC.Models.ChallanIN>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="pagetitle">
+    <h1>
+      Index List</h1>
+    <span>List of Indexs....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+            ChallanBy
+        </th>
+        <th>
+            Status
+        </th>
+        <th>
+            ChallanDate
+        </th>
+        <th>
+            Driver
+        </th>
+        <th>
+            Vehicle
+        </th>
+        <th>
+            TransportVendor
+        </th>
+        <th>
+            TransmittalINs
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.ActionLink(" ", "Edit", new { id=item.ChallanINId }, new { @class = "icon-edit" }) |
+            @Html.ActionLink(" ", "Details", new { id=item.ChallanINId }, new { @class = "icon-list-alt" }) |
+            @Html.ActionLink(" ", "Delete", new { id=item.ChallanINId }, new { @class = "icon-trash" })
+        </td>
+        <td>
+			@item.ChallanBy
+        </td>
+        <td>
+			@item.Status
+        </td>
+        <td>
+			@String.Format("{0:g}", item.ChallanDate)
+        </td>
+        <td>
+			@(item.Driver == null ? "None" : item.Driver.Name)
+        </td>
+        <td>
+			@Html.DisplayTextFor(_ => item.Vehicle).ToString()
+        </td>
+        <td>
+			@(item.TransportVendor == null ? "None" : item.TransportVendor.Name)
+        </td>
+        <td>
+			@(item.TransmittalINs == null ? "None" : item.TransmittalINs.Count.ToString())
+        </td>
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

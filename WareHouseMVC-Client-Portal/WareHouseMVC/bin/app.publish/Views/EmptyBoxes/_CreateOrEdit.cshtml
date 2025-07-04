@@ -1,0 +1,225 @@
+@model WareHouseMVC.Models.EmptyBox
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+
+
+
+
+<script type="text/javascript">
+    jQuery(function ($) {
+
+        getSubDepartment();
+
+        $("select#DepartmentID").change(function (evt) {
+            getSubDepartment();
+        });
+
+        function getSubDepartment() {
+            if ($("select#DepartmentID").val() != "" ) {
+                $.ajax({
+                    url: '@Url.Action("GetSubDepartment", "EmptyBoxes")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { deptId : $("select#DepartmentID").val() },
+                    success: function (data) {
+                        var dropdown = $('#SubDeptDropdown');
+                        dropdown.empty();
+                        dropdown.append($('<option></option>').attr('value', '').text('Choose...'));
+
+                        $.each(data, function (i, subDepartment) {
+                            dropdown.append($('<option></option>').attr('value', subDepartment).text(subDepartment));
+                        });
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        }
+
+        $("select#ORBLOperatorId").change(function (evt) {
+
+            if ($("select#ORBLOperatorId").val() != "") {
+
+                $.ajax({
+                    url: "@Url.Content("~/zones/GetOperatorAddress")",
+                    type: 'POST',
+                    data: { ORBLOperatorId: $("select#ORBLOperatorId").val() },
+                    success: function (response) {
+                        $("#OrblOperatorAddress").val(response)
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+    });
+
+</script>
+
+
+<input type="hidden" id="ClientID" name="ClientID" value="@ViewBag.ClientId" />
+
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+
+        <tr style="display: none">
+            <td class="width30">
+                Client
+            </td>
+            <td class="width70">
+                <h3>@ViewBag.ClientName</h3>
+                <input type="hidden" id="ClientID" name="ClientID" value="@ViewBag.ClientId" />
+            </td>
+        </tr>
+
+        <tr style="display: none">
+            <td class="width30">
+                Requisition Id
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.EmptyBoxNo, new { @Value = @ViewBag.EmptyBoxNo })
+                @Html.ValidationMessageFor(model => model.NoofBoxes)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                No. of Boxes
+            </td>
+            <td class="width70">
+                @if (@ViewBag.IsEdit != 1)
+                {
+                    @Html.TextBoxFor(model => model.NoofBoxes, new { @type = "number", @class = "form-control", @required = "required", @min = "1" })
+                }
+                else
+                {
+                    @Html.TextBoxFor(model => model.NoofBoxes, new { @type = "number", @class = "form-control", @required = "required", @min = "1", @readonly = "readonly"  })
+
+                }
+
+                @Html.ValidationMessageFor(model => model.NoofBoxes)
+                <span id="boxWarning" style="color:red; display:none;">Please enter at least 1 box.</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Date
+            </td>
+            <td class="width70">
+                <input type="date" id="RecuisitionDate" name="RecuisitionDate" class="form-control" value="@Model.RecuisitionDate.ToString("yyyy-MM-dd")" />
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Department
+            </td>
+            <td class="width70">
+                @if (ViewBag.DeptName.ToLower() != "superadmin")
+                {
+                    @Html.DropDownListFor(model => model.DepartmentID,
+                        ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+                        {
+                            Text = option.DepartmentName,
+                            Value = option.DepartmentID.ToString(),
+                            Selected = (Model != null) && (option.DepartmentID == Model.DepartmentID)
+                        }), "Choose...", new { @disabled = "disabled", @class = "form-control" })
+
+                    @Html.HiddenFor(model => model.DepartmentID)
+                    @Html.ValidationMessageFor(model => model.DepartmentID)
+
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.DepartmentID,
+                        ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+                        {
+                            Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+                            Value = option.DepartmentID.ToString()
+                        }), "Choose...", new { @required = "required" })
+
+                    @Html.ValidationMessageFor(model => model.DepartmentID)
+                }
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Sub department
+            </td>
+            <td class="width70">
+                @if (ViewBag.SubDept != "")
+                {
+                    <input type="text" name="SubDepartment" value="@Model.SubDepartment" readonly="readonly" style="background-color: #f3f3f3; color: #949494; border: 1px solid #ccc; " />
+                }
+                else
+                {
+                    @Html.DropDownListFor(model => model.SubDepartment, new SelectList(Enumerable.Empty<SelectListItem>()), "Choose...", new { @id = "SubDeptDropdown", @style = "width: 221px", @tabindex = "3", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.SubDepartment)
+                }
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Received By
+            </td>
+            <td class="width70">
+                <input type="text" name="DeliverTo" value="@Model.DeliverTo" readonly="readonly" style="background-color: #f3f3f3; color: #949494; border: 1px solid #ccc;" />
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                Position
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.Position)
+                @Html.ValidationMessageFor(model => model.Position)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                ReceivedBy Address
+            </td>
+            <td class="width70">
+                <input type="text" name="Address" value="@Model.Address" readonly="readonly" style="background-color: #f3f3f3; color: #949494; border: 1px solid #ccc;" />
+            </td>
+        </tr>
+
+
+        <tr>
+            <td class="width30">
+                Handover By
+            </td>
+            <td class="width70">
+                @Html.DropDownListFor(model => model.ORBLOperatorId, ((IEnumerable<WareHouseMVC.Models.ORBLOperator>)ViewBag.PossibleOperator).Select(option => new SelectListItem
+            {
+                Text = Html.DisplayTextFor(_ => option.Name).ToString(),
+                Value = option.ORBLOperatorId.ToString(),
+                Selected = (Model != null) && (option.ORBLOperatorId == Model.ORBLOperatorId)
+            }), "Choose...", new { @required = "required" })
+                @Html.ValidationMessageFor(model => model.ORBLOperatorId)
+            </td>
+        </tr>
+
+        <tr>
+            <td class="width30">
+                HandoverBy Address
+            </td>
+            <td class="width70">
+                @Html.TextAreaFor(model => model.OrblOperatorAddress, 3, 5, "")
+                @Html.ValidationMessageFor(model => model.OrblOperatorAddress)
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+

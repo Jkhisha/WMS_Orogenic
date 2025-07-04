@@ -1,0 +1,61 @@
+@model IEnumerable<WareHouseMVC.Models.AssignBoxViewModel>
+
+@{
+    ViewBag.Title = "Asign Boxes";
+}
+
+<div class="pagetitle">
+    <h1>
+      Asign Boxes List for Transmittal IN</h1>
+    <span>List of Asign Boxes....</span>
+</div>
+
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable5">
+  <thead>
+    <tr>
+       
+        <th>
+            Transmittal IN
+        </th><th>
+            Transmittal Date
+        </th>
+        <th>
+            Total Box
+        </th>
+        <th>
+            Current Status
+        </th>
+        <th>
+          Show
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in Model) {
+    <tr>
+       
+        <td>
+			@Html.DisplayTextFor(_ => item.TransmittalNo).ToString()
+        </td>
+         <td>
+			@item.TransmittalDate.ToShortDateString()
+        </td>
+        <td>
+			@item.TotalBox
+        </td>
+        <td>
+			@item.Status
+        </td>
+        <td>
+      @Html.ActionLink("Show Boxes", "ShowBoxes", "AssignBoxes", new {trID = item.TransmittalINId }, "")
+      </td>
+      
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

@@ -1,0 +1,98 @@
+﻿@model WareHouseMVC.Models.RegisterModel
+@{
+    ViewBag.Title = "Register";
+   
+}
+<div class="pagetitle">
+    <h1>
+        Create a New User</h1>
+    <span>Use the form below to create a new user....</span>
+</div>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@if (ViewBag.successMessage != null)
+{
+    <div class="alert alert-info" id="msg" runat="server">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        @ViewBag.successMessage
+    </div>
+}
+<div class="widgetcontent">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "stdform" }))
+    {
+    
+        <table class="table table-bordered table-invoice">
+            <tbody>
+                <tr>
+                    <td class="width30">
+                        @Html.LabelFor(m => m.UserName)
+                    </td>
+                    <td class="width70">
+                        @Html.TextBoxFor(m => m.UserName)
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        @Html.LabelFor(m => m.Email)
+                    </td>
+                    <td class="width70">
+                        @Html.TextBoxFor(m => m.Email)
+                        @Html.ValidationMessageFor(m => m.Email)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        @Html.LabelFor(m => m.Password)
+                    </td>
+                    <td class="width70">
+                        @Html.PasswordFor(m => m.Password)
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        @Html.LabelFor(m => m.ConfirmPassword)
+                    </td>
+                    <td class="width70">
+                        @Html.PasswordFor(m => m.ConfirmPassword)
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        @Html.LabelFor(m => m.RoleNames)
+                    </td>
+                    <td class="width70">
+                        <table>
+                            @foreach (var role in Model.RoleList)
+                            {  
+                         
+                                <tr>
+                                    <td>
+                                        @Html.Raw("<input  class='cbox' type='checkbox' name='RoleNames' value='" + role.RoleName + "' id='" + role.RoleName + "' ></input>")
+                                         @role.RoleName
+                                       
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                    </td>
+                    <td class="width70">
+                        <input type="submit" value="Add User" class="btn btn-primary" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        
+    }
+    <div>
+        @Html.ActionLink("Back to User List", "UserList", "", new { @class = "btn" })
+    </div>
+</div>

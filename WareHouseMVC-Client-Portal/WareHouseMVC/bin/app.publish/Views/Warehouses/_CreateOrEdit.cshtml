@@ -1,0 +1,24 @@
+@model WareHouseMVC.Models.Warehouse
+@* This partial view defines form fields that will appear when creating and editing entities *@
+<table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.WarehouseName)
+            </td>
+            <td class="width70">
+                @Html.EditorFor(model => model.WarehouseName)
+                @Html.ValidationMessageFor(model => model.WarehouseName)
+            </td>
+        </tr>
+        <tr>
+            <td class="width30">
+                @Html.LabelFor(model => model.WarehouseCode)
+            </td>
+            <td class="width30">
+                @Html.EditorFor(model => model.WarehouseCode)
+                @Html.ValidationMessageFor(model => model.WarehouseCode)
+            </td>
+        </tr>
+    </tbody>
+</table>

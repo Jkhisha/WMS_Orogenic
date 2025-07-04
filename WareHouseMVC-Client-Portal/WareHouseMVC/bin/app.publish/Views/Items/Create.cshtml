@@ -1,0 +1,506 @@
+@model WareHouseMVC.Models.Item
+@{
+    ViewBag.Title = "Add Boxes";
+
+
+    ViewBag.Title = "Add Boxes";
+
+}
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#AssignBoxButton").click(function (e) {
+            var boxRowCount = $('#boxTable tbody tr').length;
+            var fileRowCount = $('#fileTable tbody tr').length;
+
+            if (boxRowCount == 0 && fileRowCount == 0) {
+                e.preventDefault();
+                alert('Please add a box.');
+            } else {
+
+            }
+        });
+
+    });
+
+</script>
+
+<div class="pagetitle">
+
+    <h1>
+        Add Boxes
+    </h1>
+
+</div>
+@{
+
+    if (ViewBag.Flag == 0)
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning !</strong> Box no Must be contains 10 characters.
+        </div>
+    }
+    if (ViewBag.Flag == 1)
+    {
+    }
+
+    if (ViewBag.Flag == 3)
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning !</strong> This box Already located at your warehouse.
+        </div>
+    }
+
+    if (ViewBag.Flag == 4)
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning !</strong> This box Already Added in This Transmittal IN.
+        </div>
+    }
+    if (ViewBag.Flag == 69)
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning !</strong> BarCodeText", "Invalid barcode. Check again!
+        </div>
+    }
+
+    if (ViewBag.Flag == 68)
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning !</strong> BarCodeText", "Already assigned barcode.
+        </div>
+    }
+
+    if (ViewBag.Flag == 2)
+    {
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">
+                ×
+            </button>
+            <strong>Warning !</strong> This box has been used before.If You think this is Re-archieving
+            ,then please check "Re-Archieve" Button.
+        </div>
+    }
+
+
+}
+<div class="contentinner">
+    <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Transmittal No :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.TransmittalNo</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transmittal Type :
+                        </td>
+                        <td>
+                            @ViewBag.TransmittalType
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transmittal Date :
+                        </td>
+                        <td>
+                            @ViewBag.TransmittalDate
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Client :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.ClientName</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Department :
+                        </td>
+                        <td>
+                            @ViewBag.Department
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="clearfix">
+        <br>
+    </div>
+    @using (Html.BeginForm("Create", "Items", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(model => model.TransmittalINs[0].TransmittalNo, new { @Value = ViewBag.TransmittalNo })
+        @Html.HiddenFor(model => model.TransmittalINs[0].ClientRequestreference, new { @Value = ViewBag.TransmittalRefNo })
+        @Html.HiddenFor(model => model.TransmittalINs[0].TransmittalINId, new { @Value = ViewBag.TransmittalId })
+        @Html.HiddenFor(model => model.TransmittalINs[0].TransmittalDate, new { @Value = ViewBag.TransmittalDate })
+        @Html.HiddenFor(model => model.TransmittalINs[0].TotalArchieveItem, new { @Value = ViewBag.TotalArchieveItem })
+
+        if (ViewBag.File == "1")
+        {
+            @Html.Partial("CreateOrEditFile", Model)
+        }
+        if (ViewBag.File == "0")
+        {
+            @Html.Partial("_CreateOrEdit", Model)
+        }
+
+
+        <table class="table table-bordered table-invoice">
+            <tbody>
+                <tr>
+                    <td class="width30">
+                    </td>
+                    <td class="width70">
+                        @*@{
+
+                                int flag = Convert.ToInt32(ViewBag.status);
+
+                                if (flag == 1)
+                                {
+
+
+                                    <input type="submit" value="Add Box/File" class="btn btn-primary" disabled="disabled" />
+                                }
+                                else if (flag == 0)
+                                {
+
+                                    <input type="submit" value="Add Box/File" class="btn btn-primary" />
+                                }
+                            }*@
+                        <input type="submit" value="Add Box/File" class="btn btn-primary" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    }
+    <br />
+
+    @*AddBoxes in bulk*@
+
+    @using (Html.BeginForm("AddBoxBulk", "Items", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+
+
+        <table class="table table-bordered table-invoice">
+            <tbody>
+                <tr>
+                    <td class="width30">
+                        Bulk Box upload
+
+                    </td>
+                    <input type="hidden" name="TransmittalNo" value="@ViewBag.TransmittalNo" />
+                    <td>
+                        <div data-provides="fileupload" class="fileupload fileupload-exists">
+                            <input type="hidden" value="" name="filename">
+                            <div class="input-append">
+                                <div class="uneditable-input span3">
+                                    <i class="icon-file fileupload-exists"></i><span class="fileupload-preview"></span>
+                                </div>
+                                <span class="btn btn-file">
+                                    <span class="fileupload-new">Select file</span> <span class="fileupload-exists">Choose file</span>
+                                    <input type="file" name="filename">
+                                </span> <a data-dismiss="fileupload" class="btn fileupload-exists"
+                                           href="#">Remove</a>
+                            </div>
+                        </div>
+                        <span style="margin-left: 75px;">
+                            <a href="@Url.Content("~/Content/StandardXLFiles/AddBoxBulk.xlsx")">
+                                Download Standard CSV Format
+                            </a>
+                        </span>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="width30">
+                    </td>
+                    <td class="width70">
+                        <input type="submit" value="Upload" class="btn btn-primary" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    }
+
+
+
+    @*AddBoxes document upload *@
+    @using (Html.BeginForm("AddBoxDoc", "Items", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.ValidationSummary(true)
+
+
+        <table class="table table-bordered table-invoice">
+            <tbody>
+                <tr>
+                    <td class="width30">
+                        Documentaion upload
+
+                    </td>
+                    <input type="hidden" name="TransmittalNo" value="@ViewBag.TransmittalNo" />
+                    <td>
+                        <div data-provides="fileupload" class="fileupload fileupload-exists">
+                            <input type="hidden" value="" name="filename">
+                            <div class="input-append">
+                                <div class="uneditable-input span3">
+                                    <i class="icon-file fileupload-exists"></i><span class="fileupload-preview"></span>
+                                </div>
+                                <span class="btn btn-file">
+                                    <span class="fileupload-new">Select file</span> <span class="fileupload-exists">Choose file</span>
+                                    <input type="file" name="filename">
+                                </span> <a data-dismiss="fileupload" class="btn fileupload-exists"
+                                           href="#">Remove</a>
+                            </div>
+                        </div>
+                        <span style="margin-left: 75px;">
+                            <a href="@Url.Content("~/Content/StandardXLFiles/AddBoxDOC.xlsx")">
+                                Download Standard CSV Format
+                            </a>
+                        </span>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td class="width30">
+                    </td>
+                    <td class="width70">
+                        <input type="submit" value="Upload" class="btn btn-primary" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+
+    }
+    <table>
+        <tr>
+            <td class="width70">
+                @{
+                    long id = Convert.ToInt64(ViewBag.TransmittalId);
+
+
+                    @Html.ActionLink("Back to TransmittalIN", "Details", "TransmittalINs", new { id = id }, new { @class = "btn" })
+                }
+            </td>
+            <td class="width10">
+            </td>
+            <td class="width40">
+                @{
+
+                    int flag2 = Convert.ToInt32(ViewBag.status);
+
+                    if (flag2 == 0)
+                    {
+                        @Html.ActionLink("Assign Boxes to Warehouse", "AssignBoxes", "Items", new { trID = ViewBag.TransmittalId, flag = 0, isRequestSent = false }, new { @class = "btn btn-info btn-rounded", id = "AssignBoxButton" })
+                    }
+                }
+            </td>
+        </tr>
+    </table>
+
+    @if (ViewBag.File == "0")
+    {
+        <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+            <table class="table table-bordered" id="boxTable">
+                <thead>
+                    <tr>
+                        <th>
+                        </th>
+                        <th>
+                            Box Name
+                        </th>
+                        <th>
+                            BoxNo
+                        </th>
+                        <th>
+                            Year
+                        </th>
+                        <th>
+                            DestructionPeriod
+                        </th>
+                        <th>
+                            Title of Content
+                        </th>
+                        <th>
+                            TransmittalINs
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.AllItems != null)
+                    {
+                        long trid = Convert.ToInt64(ViewBag.TransmittalId);
+                        foreach (var item in ViewBag.AllItems)
+                        {
+                            <tr>
+                                <td>
+
+                                    @Html.ActionLink(" ", "RemoveBox", new { id = item.ItemId, trID = trid }, new { @class = "icon-trash" })
+
+                                </td>
+                                <td>
+                                    @item.ItemName
+                                </td>
+                                <td>
+                                    @item.BoxNo
+                                </td>
+                                <td>
+                                    @item.Year
+                                </td>
+                                <td>
+                                    @item.DestructionPeriod
+                                </td>
+                                <td>
+                                    @item.Description
+                                </td>
+                                <td>
+                                    @(item.TransmittalINs == null ? "None" : item.TransmittalINs[0].TransmittalNo.ToString())
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    @if (ViewBag.File == "1")
+    {
+        <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+            <table class="table table-bordered" id="fileTable">
+                <thead>
+                    <tr>
+                        <th>
+                        </th>
+                        <th>
+                            Box Number
+                        </th>
+
+                        <th>
+                            File Number
+                        </th>
+                        <th>
+                            Referrence Number
+                        </th>
+                        <th>
+                            Ring Number
+                        </th>
+                        <th>
+                            Account Number
+                        </th>
+                        <th>
+                            Year
+                        </th>
+                        <th>
+                            TransmittalINs
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewBag.AllItems != null)
+                    {
+                        long trid = Convert.ToInt64(ViewBag.TransmittalId);
+                        foreach (var item in ViewBag.AllItems)
+                        {
+                            <tr>
+                                <td>
+
+                                    @Html.ActionLink(" ", "RemoveBox", new { id = item.ItemId, trID = trid }, new { @class = "icon-trash" })
+
+                                </td>
+
+                                <td>
+                                    @item.BoxNo
+                                </td>
+
+
+                                <td>
+                                    @item.FileNumber
+                                </td>
+
+                                <td>
+                                    @item.ReferrenceNo
+                                </td>
+                                <td>
+                                    @item.RingNo
+                                </td>
+
+                                <td>
+                                    @item.AccountNo
+                                </td>
+                                <td>
+                                    @item.Year
+                                </td>
+                                <td>
+                                    @(item.TransmittalINs == null ? "None" : item.TransmittalINs[0].TransmittalNo.ToString())
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+    <br />
+    @{
+        if (ViewBag.btnPrint == "1")
+        {
+            <div class="btn-group">
+                <button class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+                    Print <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        @Html.ActionLink("Print on PDF", "PrintAsPDF", "Reports", new { trID = ViewBag.TransmittalId }, new { @target = "_blank" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Print on Excel", "PrintAsExcel", "Reports", new { trID = ViewBag.TransmittalId }, new { @target = "_blank" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Print on Doc", "PrintAsDoc", "Reports", new { trID = ViewBag.TransmittalId }, new { @target = "_blank" })
+                    </li>
+                </ul>
+            </div>
+        }
+
+
+
+    }
+
+</div>

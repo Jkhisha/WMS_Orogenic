@@ -1,0 +1,191 @@
+@model PagedList.IPagedList<WareHouseMVC.Models.TransmittalOUT>
+    @using PagedList.Mvc;
+    @{
+        ViewBag.Title = "Transmittal OUT";
+    }
+    <div class="pagetitle">
+        <h1>
+            Transmittal OUT List
+        </h1>
+        <span>List of Transmittal OUTs....</span>
+    </div>
+    <p>
+        @if (HttpContext.Current.User.IsInRole("Management"))
+        {
+        }
+        else
+        {
+            @Html.ActionLink("New Transmittal OUT", "Create", "", new { @class = "btn btn-primary" })
+        }
+    </p>
+    <div id="dyntable_wrapper5" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                    </th>
+                    <th>
+                        Tr. No
+                    </th>
+                    <th>
+                        Date & Time
+                    </th>
+                    @*<th>
+                            Ref. No
+                        </th>*@
+                    <th>
+                        Issued By
+                    </th>
+                    @*<th>
+                            Client
+                        </th>*@
+                    <th>
+                        Dept.
+                    </th>
+                    <th>
+                        Sub dept.
+                    </th>
+                    <th>
+                        Tr. Out Type
+                    </th>
+                    <th>
+                        Re-archive Date
+                    </th>
+                    <th>
+                        Urgency
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    @*<th>
+                            Project
+                        </th>*@
+                    <th>
+                        Boxes
+                    </th>
+                    <th>
+                        HandOver By
+                    </th>
+                    <th>
+                        Received By
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        @if (HttpContext.Current.User.IsInRole("Management"))
+                        {
+                            <td>
+                                @Html.ActionLink(" ", "Details", new { id = item.TransmittalOUTId }, new { @class = "icon-list-alt" })
+                            </td>
+                        }
+                        else
+                        {
+
+
+                            <td>
+                                @Html.ActionLink(" ", "Edit", new { id = item.TransmittalOUTId }, new { @class = "icon-edit" })
+                                |
+                                @Html.ActionLink(" ", "Details", new { id = item.TransmittalOUTId }, new { @class = "icon-list-alt" })
+                                | @*@Html.ActionLink(" ", "Delete", new { id = item.TransmittalOUTId }, new { @class = "icon-trash" })*@
+                            </td>
+                        }
+                        <td>
+                            @item.TransmittalNo
+                        </td>
+                        <td>
+                            @String.Format("{0:g}", item.TransmittalDate)
+                        </td>
+                        @*<td>
+                                @item.ClientRequestreference
+                            </td>*@
+                        <td>
+                            @Html.DisplayTextFor(_ => item.ContactPerson.ContactPersonName).ToString()
+                        </td>
+                        @*<td>
+                                @Html.DisplayTextFor(_ => item.Client.ClientName).ToString()
+                            </td>*@
+                        <td>
+                            @Html.DisplayTextFor(_ => item.Department.DepartmentName).ToString()
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(_ => item.SubDepartment).ToString()
+                        </td>
+                        <td>
+                            @if (item.IsPermanent == false)
+                            {
+                                @Html.Raw("Temporary");
+                            }
+                            else
+                            {
+                                @Html.Raw("Permanent");
+                            }
+                        </td>
+                        <td>
+                            @if (item.RearchiveDate.HasValue)
+                            {
+                                @item.RearchiveDate.Value.ToString("MM/dd/yyyy hh:mm tt") }
+                            else
+                            {
+                                @Html.Raw("");
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsUrgent == true)
+                            {
+                                @Html.Raw("Urgent");
+                            }
+                            else
+                            {
+                                @Html.Raw("");
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayTextFor(_ => item.TransmittalOUTStatus.StatusName).ToString()
+                        </td>
+                        @*<td>
+                                 @item.Project.ProjectName
+                            </td>*@
+                        <td>
+                            @if (HttpContext.Current.User.IsInRole("Management"))
+                            {
+                            }
+                            else
+                            {
+
+                                @Html.ActionLink("Add/View Boxes", "AddBoxesForTrOUT", "Items", new { trId = item.TransmittalOUTId }, "")
+                            }
+                        </td>
+                        <td>
+                            @if (HttpContext.Current.User.IsInRole("Management"))
+                            {
+                            }
+                            else
+                            {
+                                @Html.ActionLink("HandOver", "HandOverByForTrOUT", "HandOverBies", new { trId = item.TransmittalOUTId }, "")
+                            }
+                        </td>
+                        <td>
+                            @if (HttpContext.Current.User.IsInRole("Management"))
+                            {
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Received", "ReceivedByForTrOUT", "ReceivedBies", new { trId = item.TransmittalOUTId }, "")
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <br />
+        <div style="float:right">
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+            @Html.PagedListPager(Model, page => Url.Action("Index",
+                        new { page }))
+        </div>

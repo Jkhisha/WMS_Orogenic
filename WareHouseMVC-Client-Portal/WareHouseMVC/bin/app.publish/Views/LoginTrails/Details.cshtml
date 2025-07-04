@@ -1,0 +1,52 @@
+@model WareHouseMVC.Models.LoginTrail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+      Details </h1>
+    <span>Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">LoginBy</td>
+        <td>
+       @Model.LoginBy
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">LoginDate</td>
+        <td>
+       @String.Format("{0:g}", Model.LoginDate)
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">LoginTime</td>
+        <td>
+       @Model.LoginTime
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">LocalIP</td>
+        <td>
+       @Model.LocalIP
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.LoginTrainId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

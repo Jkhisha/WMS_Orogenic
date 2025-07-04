@@ -1,0 +1,180 @@
+﻿@model WareHouseMVC.Models.ReceivedBy
+@{
+    ViewBag.Title = "Received By";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="pagetitle">
+    @if (HttpContext.Current.User.IsInRole("Client"))
+    {
+        <h1>
+            View Received By
+        </h1>
+    }
+    else
+    {
+        <h1>
+            Add Received By
+        </h1>
+    }
+</div>
+<div class="contentinner">
+    <div class="row-fluid">
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Transmittal No :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.TransmittalNo</strong>
+                        </td>
+                    </tr>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transmittal Type :
+                        </td>
+                        <td>
+                            @ViewBag.TransmittalType
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Transmittal Date :
+                        </td>
+                        <td>
+                            @ViewBag.TransmittalDate
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="span6">
+            <table class="table table-bordered table-invoice">
+                <tbody>
+                    <tr>
+                        <td class="width30">
+                            Client :
+                        </td>
+                        <td class="width70">
+                            <strong>@ViewBag.ClientName</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Department :
+                        </td>
+                        <td>
+                            @ViewBag.Department
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<div class="clearfix">
+    <br />
+</div>
+
+
+@using (Html.BeginForm("ReceivedByForTrOUT", "ReceivedBies"))
+{
+    @Html.Raw("<input  type='hidden' name='trId' value='" + ViewBag.TransmittalId + "' id='" + ViewBag.TransmittalId + "' ></input>")
+
+
+    @Html.Partial("_CreateOrEdit", Model)
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">
+                </td>
+                <td class="width70">
+                    <input type="submit" value="Add ReceivedBy" class="btn btn-primary" />
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+
+}
+
+<br />
+
+
+<table>
+    <tr>
+        <td class="width70">
+            @{
+                long id = Convert.ToInt64(ViewBag.TransmittalId);
+
+
+                @Html.ActionLink("Back to TransmittalOUT", "Details", "TransmittalOUTs", new { id = id }, new { @class = "btn" })
+            }
+        </td>
+        @*<td>
+             @{
+               long id2 = Convert.ToInt64(ViewBag.TransmittalId);
+
+
+                      @Html.ActionLink("Add/View Boxes", "AddBoxesForTrOUT", "Items", new { trId = id2 }, new { @class = "btn btn-info" })
+                }
+
+            </td>*@
+    </tr>
+</table>
+
+
+@*<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+     <table class="table table-bordered" id="dyntable">
+      <thead>
+        <tr>
+            <th></th>
+            <th>
+                Name
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Date
+            </th>
+        </tr>
+         </thead>
+          <tbody>
+
+            @if (ViewBag.AllReceivedBy != null)
+            {
+                long trid = Convert.ToInt64(ViewBag.TransmittalId);
+                foreach (var item in @ViewBag.AllReceivedBy)
+                {
+        <tr>
+            <td>
+
+                @Html.ActionLink(" ", "RemoveOUT", new { id = item.ReceivedById, trID = trid }, new { @class = "icon-trash" })
+
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @item.Address
+            </td>
+            <td>
+                @String.Format("{0:g}", item.Date)
+            </td>
+
+        </tr>
+                }
+            }
+     </tbody>
+
+    </table>
+
+    </div>*@
+
+
+</div>
+

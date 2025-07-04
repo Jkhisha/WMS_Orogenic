@@ -1,0 +1,135 @@
+@model WareHouseMVC.Models.EmptyBox
+
+@{
+    ViewBag.Title = "Details Empty Box Requisition";
+}
+
+
+@*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        // Add event listener for the printBarcodeButton when the DOM is ready
+        $("#printBarcodeButton").click(function () {
+            // Get the barcodes from the server-side model and pass them to the controller
+            var barcodes = @Html.Raw(Json.Encode(Model.EmptyBoxBarcodes.Select(b => b.BarCodeText).ToList()));
+
+            // Show barcodes in alert for debugging purposes
+            alert(barcodes);
+
+            if (barcodes && barcodes.length > 0) {
+                // Send the barcodes to the controller via AJAX for processing
+                $.ajax({
+                    url: '@Url.Action("PrintEmptyBoxBarCode", "Reports")', // Adjust this URL to your actual controller and action
+                    type: 'POST',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify({ barcodes: barcodes }),
+                    success: function (response) {
+                        alert('Barcodes sent for printing.');
+                    },
+                    error: function (xhr, status, error) {
+                        alert('Error: ' + error);
+                    }
+                });
+            } else {
+                alert('No barcodes available to print.');
+            }
+        });
+    });
+</script>*@
+
+<div class="pagetitle">
+    <h1>
+        Empty Box Requisition Details
+    </h1>
+    <span>Empty Box Requisition Details below....</span>
+</div>
+
+<fieldset>
+    <table class="table table-bordered table-invoice">
+        <tbody>
+
+            <tr>
+                <td class="width30">Requisition Id</td>
+                <td>
+                    @Model.EmptyBoxNo
+                </td>
+            </tr>
+
+            <tr>
+                <td class="width30">No of Boxes</td>
+                <td>
+                    @Model.NoofBoxes
+                </td>
+            </tr>
+
+            <tr>
+                <td class="width30">Requisition Date</td>
+                <td>
+                    @String.Format("{0:g}", Model.RecuisitionDate.ToShortDateString())
+                </td>
+            </tr>
+
+            <tr>
+                <td class="width30">Client</td>
+                <td>
+                    @Html.DisplayTextFor(_ => Model.Client.ClientName).ToString()
+                </td>
+            </tr>
+
+            <tr>
+                <td class="width30">Client</td>
+                <td>
+                    @Html.DisplayTextFor(_ => Model.Department.DepartmentName).ToString()
+                </td>
+            </tr>
+
+            <tr>
+                <td class="width30">Deliver To</td>
+                <td>
+                    @Model.DeliverTo
+                </td>
+            </tr>
+
+            <tr>
+                <td class="width30">Position</td>
+                <td>
+                    @Model.Position
+                </td>
+            </tr>
+
+            <tr>
+                <td class="width30">Address</td>
+                <td>
+                    @Model.Address
+                </td>
+            </tr>
+
+           @* <tr>
+                <td class="width30">Barcodes</td>
+                <td>
+                    @if (Model.EmptyBoxBarcodes != null && Model.EmptyBoxBarcodes.Any())
+                    {
+                        var barcodes = Model.EmptyBoxBarcodes.Select(b => b.BarCodeText).ToList();
+                        @String.Join(", ", barcodes) <!-- Join barcodes with comma and space -->
+                    }
+                    else
+                    {
+                        <span>No Barcodes Available</span>
+                    }
+                </td>
+            </tr>*@
+
+
+
+        </tbody>
+    </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EmptyBoxId }, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+    @Html.ActionLink("Print", "PrintEmptyBox", "Reports", new { empId = Model.EmptyBoxId }, new { @target = "_blank", @class = "btn btn-warning" })
+    <button id="printBarcodeButton" class="btn btn-warning" type="button" style="display: none">Print Barcode</button>
+
+</p>
+
+

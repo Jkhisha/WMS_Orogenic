@@ -1,0 +1,123 @@
+﻿@model WareHouseMVC.Models.LogOnModel
+
+@{
+    Layout = null;
+    ViewBag.Title = "Sign In";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WMS Client Portal - Sign In</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-image: url('../Content/themes/base/img/login_bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .validation-summary-valid ul, .validation-summary-errors ul {
+            list-style-type: none; /* Remove bullet points */
+            padding: 10px;
+        }
+        .signinButton {
+            color: white;
+            background-color: #439a67;
+            border-radius: 15px;
+            border-color: #439a67;
+        }
+        .signinButton:hover {
+            color: white;
+            background-color: #417f5b;
+        }
+        .inputField {
+            border-radius: 15px;
+        }
+        .errorMessage {
+            color: white;
+            background-color: #ff001a99;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body class="">
+    <div class="container d-flex align-items-center justify-content-center min-vh-100">
+        <div class="card p-4 shadow-lg" style="max-width: 400px; width: 100%; background-color: rgb(153 153 152 / 50%); border-radius: 15px;">
+            <div class="text-center">
+                <img src="../../Content/themes/base/images/logo.png" class="img-fluid mb-2" alt="Logo" style="max-width: 100%; height: auto;">
+                <h2 class="mb-3"><i class="fas fa-lock"></i> Sign in</h2>
+                <p class="mb-3" style="color: #343a40;">Welcome! Sign in to the WMS Client Portal.</p>
+            </div>
+
+            @using (Html.BeginForm("LogOn", "Users", FormMethod.Post, new { id = "signupform" }))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "mb-3 errorMessage" })
+
+                <div class="form-group">
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control border-secondary inputField", @placeholder = "Username" })
+                </div>
+                <div class="form-group">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control border-secondary inputField", @placeholder = "Password" })
+                </div>
+                <button type="submit" class="btn btn-block signinButton">Sign in</button>
+            }
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Script -->
+    <script type="text/javascript">
+        jQuery.noConflict();
+
+        jQuery(document).ready(function () {
+            var animationEvent = 'animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd';
+
+            jQuery('.loginwrap').on(animationEvent, function () {
+                jQuery(this).removeClass('animate2 bounceInDown');
+            });
+
+            jQuery('#UserName, #Password').on('focus', function () {
+                jQuery(this).removeClass('error');
+            });
+
+            jQuery('#signupform input[type="submit"]').on('click', function (e) {
+                e.preventDefault();  // Prevent default form submission
+
+                var isValid = true;
+
+                if (jQuery('#UserName').val() === '') {
+                    jQuery('#UserName').addClass('error');
+                    isValid = false;
+                } else {
+                    jQuery('#UserName').removeClass('error');
+                }
+
+                if (jQuery('#Password').val() === '') {
+                    jQuery('#Password').addClass('error');
+                    isValid = false;
+                } else {
+                    jQuery('#Password').removeClass('error');
+                }
+
+                if (!isValid) {
+                    jQuery('.loginwrap').addClass('animate0 wobble').on(animationEvent, function () {
+                        jQuery(this).removeClass('animate0 wobble');
+                    });
+                } else {
+                    jQuery('.loginwrapper').addClass('animate0 fadeOutUp').on(animationEvent, function () {
+                        jQuery('#signupform').off('submit').submit();
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+@model WareHouseMVC.Models.Region
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.RegionName)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.RegionName)
+    @Html.ValidationMessageFor(model => model.RegionName)
+</td>
+</tr>
+
+</tbody>
+</table>
+ 

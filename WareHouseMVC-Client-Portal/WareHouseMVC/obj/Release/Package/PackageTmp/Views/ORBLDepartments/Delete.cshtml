@@ -1,0 +1,49 @@
+@model WareHouseMVC.Models.ORBLDepartment
+
+@{
+    ViewBag.Title = "Delete ORBL Departments";
+}
+<div class="pagetitle">
+    <h1>
+      Delete ORBL Departments </h1>
+    <span>Are you sure you want to delete this?</span>
+</div>
+
+@using (Html.BeginForm()) {
+<table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">ORBLDepartmentName</td>
+        <td>
+        @Model.ORBLDepartmentName
+        </td>
+        </tr>
+
+    
+
+  <tr>
+        <td class="width30">ORBLDepartmentCode</td>
+        <td>
+        @Model.ORBLDepartmentCode
+        </td>
+        </tr>
+
+    
+
+ <tr>
+         <td class="width30"></td>
+        <td>
+    <input type="submit" value="Delete" class="btn btn-danger" /> 
+        </td>
+        </tr>
+		  </tbody>
+        </table>
+    <p>
+       
+      @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+  
+    </p>
+}
+
+

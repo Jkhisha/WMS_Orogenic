@@ -1,0 +1,52 @@
+@model WareHouseMVC.Models.SupportStuff
+
+@{
+    ViewBag.Title = "Support Stuff Details";
+}
+
+<div class="pagetitle">
+    <h1>
+     Support Stuff Details </h1>
+    <span>Support Stuff Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">SupportStuffName</td>
+        <td>
+       @Model.SupportStuffName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">SupportStuffCode</td>
+        <td>
+       @Model.SupportStuffCode
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">SupportStuffMobileNo</td>
+        <td>
+       @Model.SupportStuffMobileNo
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">ORBLDepartment</td>
+        <td>
+       @Html.DisplayTextFor(_ => Model.ORBLDepartment.ORBLDepartmentName).ToString()
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.SupportStuffID }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

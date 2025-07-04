@@ -1,0 +1,83 @@
+﻿@model WareHouseMVC.Models.ChangeDepartmentViewModel
+  <script type="text/javascript">
+      jQuery(document).ready(function () {
+            jQuery('#dyntable').dataTable({
+                "sPaginationType": "full_numbers",
+                "processing": true,
+                "serverSide": true,
+                "aaSortingFixed": [[1, 'desc']],
+                "fnDrawCallback": function (oSettings) {
+                    //jQuery.uniform.update();
+                }
+            });
+
+        });
+    </script>
+
+
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th class="centeralign">
+                        <div class="checker" id="uniform-undefined">
+                            <span class="">
+                                <input type="checkbox" class="checkall" style="opacity: 0;">
+                            </span>
+                        </div>
+                    </th>
+                    @* <th class="centeralign"><div class="checker" id="uniform-undefined"><input type="checkbox" class="checkall" style="opacity: 0;"></div></th>*@
+                     <th>
+                        Box Name
+                    </th>
+                    <th>
+                        BoxNo
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        DestructionPeriod
+                    </th>
+
+                    
+                </tr>
+            </thead>
+            <tbody>
+            @if (Model.itemList.Count > 0)
+            {
+                foreach (var item in Model.itemList)
+                {
+                    <tr>
+                        @* <td class="centeralign"><div class="checker" id="uniform-undefined"><span class=""><input type="checkbox" style="opacity: 0;"></span></div></td>*@
+                        <td class="centeralign">
+                            <div class="checker1" id="uniform-undefined">
+                                @*  <input type="checkbox" >*@
+                                @Html.Raw("<input  type='checkbox' name='ItemIds' value='" + item.ItemId + "' id='" + item.ItemId + "' ></input>")
+                            </div>
+                        </td>
+                           <td>
+                            @item.ItemName
+                        </td>
+                        <td>
+                            @item.BoxNo
+                        </td>
+                         <td>
+                            @item.Year
+                        </td>
+                       <td>
+                        @if (item.DestructionPeriod.HasValue)
+                        {
+                           
+                            @item.DestructionPeriod.Value.ToShortDateString()
+                             
+                        }
+                       </td>
+                       
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>

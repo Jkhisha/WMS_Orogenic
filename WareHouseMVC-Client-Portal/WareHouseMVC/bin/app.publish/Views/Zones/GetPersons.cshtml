@@ -1,0 +1,13 @@
+﻿@model IEnumerable<WareHouseMVC.Models.ContactPerson>
+
+@{
+    Layout = null;
+    <select id="ContactPersontID" name="ContactPersontID">
+    <option value="-1">Select...</option>
+        @foreach (var item in Model)
+        {
+            
+            <option value="@item.ContactPersontID">@item.ContactPersonName</option>
+        }
+    </select>
+}

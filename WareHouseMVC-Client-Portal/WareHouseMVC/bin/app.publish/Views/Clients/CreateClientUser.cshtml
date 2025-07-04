@@ -1,0 +1,162 @@
+﻿@model WareHouseMVC.Models.RegisterModelForClient
+@{
+    ViewBag.Title = "CreateClientUser";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style type="text/css">
+    .skins
+    {
+        position: relative !important;
+        right:0px !important;
+    }
+</style>
+<div class="pagetitle">
+    <h1>
+        Create a New User</h1>
+    <span>Use the form below to create a new user....</span>
+</div>
+<script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+@if (ViewBag.successMessage != null)
+{
+    <div class="alert alert-info" id="msg" runat="server">
+        <button type="button" class="close" data-dismiss="alert">
+            ×</button>
+        @ViewBag.successMessage
+    </div>
+}
+<div class="widgetcontent">
+    @using (Html.BeginForm("CreateClientUser", "Clients", FormMethod.Post, new { @class = "stdform", enctype = "multipart/form-data" }))
+    {
+
+        @Html.HiddenFor(model => model.RoleNames[0], new { @Value = ViewBag.role })
+        <table class="table table-bordered table-invoice">
+            <tbody>
+                <tr>
+                    <td class="width30">
+                        <label>
+                            Select Client</label>
+                    </td>
+                    <td class="width70">
+                        @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.allClient).Select(option => new SelectListItem
+                   {
+                       Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+                       Value = option.ClientID.ToString(),
+                       Selected = (Model != null) && (option.ClientID == Model.ClientID)
+                   }), "Choose...", new { @data_placeholder = "Choose a Country...", @style = "width: 221px", @class = "chzn-select", @tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.ClientID)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        @Html.LabelFor(m => m.UserName)
+                    </td>
+                    <td class="width70">
+                        @Html.TextBoxFor(m => m.UserName)
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </td>
+                </tr>
+                <tr>
+                    <td class="width30">
+                        <label>
+                            Banner Text
+                        </label>
+                    </td>
+                    <td class="width70">
+                        @Html.TextBoxFor(m => m.BannerText)
+                        @Html.ValidationMessageFor(m => m.BannerText)
+                    </td>
+                </tr>
+
+                <tr>
+                <td class="width30">
+                    <label>
+                        Upload Logo</label>
+                </td>
+                <td class="width70">
+                  
+                   <input type="file" name="LogoUrl" /><br />
+				
+                 <span > <strong>Image width :<font color="red">240px </font>  & Height :<font color="red"> 92px </font> will be the best fit</strong></span>
+                </td>
+            </tr>
+
+
+                <tr>
+                    <td class="width30">
+                        <label>
+                            Select Theme
+                        </label>
+                    </td>
+                    <td class="width70">
+                        <ul class="skins">
+                            @foreach (string item in ViewBag.themeList)
+                            {
+                                string themeName = "skin-color " + item;
+                                <li><a href="#" class="@themeName"></a>
+                                    @Html.RadioButtonFor(m => m.ThemeName, item) &nbsp;&nbsp;&nbsp;</li>
+                                
+                            }
+                        </ul>
+                    </td>
+                </tr>
+
+                
+                <tr>
+                    <td class="width30">
+                    </td>
+                    <td class="width70">
+                        <input type="submit" value="Add User" class="btn btn-primary" />
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        
+    }
+    <div>
+        @Html.ActionLink("Back to User List", "UserList", "", new { @class = "btn" })
+    </div>
+</div>
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered" id="dyntable">
+        <thead>
+            <tr>
+            <th>
+            </th>
+                <th>
+                    Client
+                </th>
+                <th>
+                    Email
+                </th>
+                <th>
+                    User Name
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewBag.allUserClient != null)
+            {
+
+                foreach (var item in ViewBag.allUserClient)
+                {
+                <tr>
+                <td>
+                 @Html.ActionLink(" ", "DeleteClientUser","Clients", new { id = item.ClientID }, new { @class = "icon-trash" })
+                </td>
+                    <td>
+                        @item.ClientName
+                    </td>
+                    <td>
+                        @item.Email
+                    </td>
+                    <td>
+                        @item.UserName
+                    </td>
+                </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

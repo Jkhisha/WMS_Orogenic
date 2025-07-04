@@ -1,32 +1,40 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\",
+  "WorkspaceRootPath": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\",
   "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|c:\\users\\joytu\\documents\\asp .net projects\\wms repo 030725_1\\warehousemvc-client-portal\\warehousemvc\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|solutionrelative:warehousemvc\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
     {
       "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|WareHouseMVC||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|c:\\users\\joytu\\documents\\asp .net projects\\warehousemvc-client-portal-sakiblatest2810\\warehousemvc\\controllers\\itemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\.vs\\WareHouseMVC\\config\\applicationhost.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.vs\\WareHouseMVC\\config\\applicationhost.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\warehousemvc\\controllers\\itemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|solutionrelative:warehousemvc\\controllers\\itemscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\warehousemvc\\controllers\\xluploadscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\warehousemvc\\controllers\\xluploadscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|solutionrelative:warehousemvc\\controllers\\xluploadscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\warehousemvc\\context\\datacontextinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\warehousemvc\\context\\datacontextinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|solutionrelative:warehousemvc\\context\\datacontextinitializer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\warehousemvc\\models\\clientbarcodemap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\warehousemvc\\models\\clientbarcodemap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|solutionrelative:warehousemvc\\models\\clientbarcodemap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\warehousemvc\\context\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\warehousemvc\\context\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|solutionrelative:warehousemvc\\context\\datacontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|c:\\users\\joytu\\documents\\asp .net projects\\warehousemvc-client-portal-sakiblatest2810\\warehousemvc\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|909d16b3-c8e8-43d1-a2b8-26ea0d4b6b57"
+      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WareHouseMVC\\WareHouseMVC.csproj|c:\\users\\joytu\\documents\\asp .net projects\\wms repo 030725_1\\warehousemvc-client-portal\\warehousemvc\\||{B270807C-D8C6-49EB-8EBE-8E8D566637A1}|909d16b3-c8e8-43d1-a2b8-26ea0d4b6b57"
     }
   ],
   "DocumentGroupContainers": [
@@ -36,7 +44,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -48,23 +56,50 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "XLUploadsController.cs",
-              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\WareHouseMVC\\Controllers\\XLUploadsController.cs",
-              "RelativeDocumentMoniker": "WareHouseMVC\\Controllers\\XLUploadsController.cs",
-              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\WareHouseMVC\\Controllers\\XLUploadsController.cs",
-              "RelativeToolTip": "WareHouseMVC\\Controllers\\XLUploadsController.cs",
-              "ViewState": "AgIAAHgHAAAAAAAAAAAmwEEGAAAlAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-02T10:10:52.701Z"
+              "DocumentIndex": 0,
+              "Title": "Web.config",
+              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\Web.config",
+              "RelativeDocumentMoniker": "WareHouseMVC\\Web.config",
+              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\Web.config",
+              "RelativeToolTip": "WareHouseMVC\\Web.config",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-07-04T16:13:22.596Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
+              "Title": "applicationhost.config",
+              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\.vs\\WareHouseMVC\\config\\applicationhost.config",
+              "RelativeDocumentMoniker": ".vs\\WareHouseMVC\\config\\applicationhost.config",
+              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\.vs\\WareHouseMVC\\config\\applicationhost.config",
+              "RelativeToolTip": ".vs\\WareHouseMVC\\config\\applicationhost.config",
+              "ViewState": "AgIAAJ4AAAAAAAAAAAAswLgAAABSAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
+              "WhenOpened": "2025-07-04T16:11:33.709Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "XLUploadsController.cs",
+              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\Controllers\\XLUploadsController.cs",
+              "RelativeDocumentMoniker": "WareHouseMVC\\Controllers\\XLUploadsController.cs",
+              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\Controllers\\XLUploadsController.cs",
+              "RelativeToolTip": "WareHouseMVC\\Controllers\\XLUploadsController.cs",
+              "ViewState": "AgIAAHgHAAAAAAAAAAAmwEEGAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-07-02T10:10:52.701Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "ItemsController.cs",
-              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\WareHouseMVC\\Controllers\\ItemsController.cs",
+              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\Controllers\\ItemsController.cs",
               "RelativeDocumentMoniker": "WareHouseMVC\\Controllers\\ItemsController.cs",
-              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\WareHouseMVC\\Controllers\\ItemsController.cs",
+              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\Controllers\\ItemsController.cs",
               "RelativeToolTip": "WareHouseMVC\\Controllers\\ItemsController.cs",
               "ViewState": "AgIAAFgCAAAAAAAAAAAUwH0CAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -73,47 +108,50 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "DataContext.cs",
-              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\WareHouseMVC\\Context\\DataContext.cs",
+              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\Context\\DataContext.cs",
               "RelativeDocumentMoniker": "WareHouseMVC\\Context\\DataContext.cs",
-              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\WareHouseMVC\\Context\\DataContext.cs",
+              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\Context\\DataContext.cs",
               "RelativeToolTip": "WareHouseMVC\\Context\\DataContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T08:53:15.5Z"
+              "WhenOpened": "2025-07-01T08:53:15.5Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
               "Title": "DataContextInitializer.cs",
-              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\WareHouseMVC\\Context\\DataContextInitializer.cs",
+              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\Context\\DataContextInitializer.cs",
               "RelativeDocumentMoniker": "WareHouseMVC\\Context\\DataContextInitializer.cs",
-              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\WareHouseMVC\\Context\\DataContextInitializer.cs",
+              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\Context\\DataContextInitializer.cs",
               "RelativeToolTip": "WareHouseMVC\\Context\\DataContextInitializer.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T08:53:11.291Z"
+              "WhenOpened": "2025-07-01T08:53:11.291Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "ClientBarCodeMap.cs",
-              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\WareHouseMVC\\Models\\ClientBarCodeMap.cs",
+              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\Models\\ClientBarCodeMap.cs",
               "RelativeDocumentMoniker": "WareHouseMVC\\Models\\ClientBarCodeMap.cs",
-              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\WareHouseMVC\\Models\\ClientBarCodeMap.cs",
+              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\Models\\ClientBarCodeMap.cs",
               "RelativeToolTip": "WareHouseMVC\\Models\\ClientBarCodeMap.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-01T07:53:55.667Z"
+              "WhenOpened": "2025-07-01T07:53:55.667Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "WareHouseMVC",
-              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\WareHouseMVC\\WareHouseMVC.csproj",
+              "DocumentMoniker": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\WareHouseMVC.csproj",
               "RelativeDocumentMoniker": "WareHouseMVC\\WareHouseMVC.csproj",
-              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WareHouseMVC-Client-Portal-SakibLatest2810\\WareHouseMVC\\WareHouseMVC.csproj",
+              "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WareHouseMVC-Client-Portal\\WareHouseMVC\\WareHouseMVC.csproj",
               "RelativeToolTip": "WareHouseMVC\\WareHouseMVC.csproj",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
               "WhenOpened": "2025-07-01T07:03:11.771Z",

@@ -1,0 +1,37 @@
+@model WareHouseMVC.Models.Warehouse
+
+@{
+    ViewBag.Title = "Edit WareHouse";
+}
+
+<div class="pagetitle">
+    <h1>
+       Edit WareHouse </h1>
+    <span>Edit Warehouses below....</span>
+</div>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+        
+
+        @Html.HiddenFor(model => model.WarehouseID)
+		@Html.Partial("_CreateOrEdit", Model)
+
+        <table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+        <td class="width30"></td>
+        <td>
+         <input type="submit" value="Save" class="btn btn-primary" />
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</div>

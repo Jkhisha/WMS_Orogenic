@@ -1,0 +1,90 @@
+@model WareHouseMVC.Models.Project
+
+@* This partial view defines form fields that will appear when creating and editing entities *@
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ClientID").change(function (evt) {
+
+            if ($("select#ClientID").val() != "-1") {
+
+                $.ajax({
+                    url:"@Url.Content("~zones/GetDepts")",
+                    type: 'POST',
+                    data: { ClientID: $("select#ClientID").val() },
+                    success: function (response) {
+                        $("select#DepartmentID").replaceWith(response)
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+</script>
+
+
+
+<table class="table table-bordered table-invoice">
+ <tbody>
+
+
+   <tr>
+<td class="width30">
+    Client
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.PossibleClients).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option.ClientName).ToString(), 
+        Value = option.ClientID.ToString(),
+        Selected = (Model != null) && (option.ClientID == Model.ClientID) || (Model == null) && (option.ClientID == ViewBag.clID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.ClientID)
+</td></tr>
+
+
+
+ <tr>
+<td class="width30">
+    Department
+</td>
+<td class="width70">
+    @Html.DropDownListFor(model => model.DepartmentID, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem {
+        Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(), 
+        Value = option.DepartmentID.ToString(),
+        Selected = (Model != null) && (option.DepartmentID == Model.DepartmentID) || (Model == null) && (option.DepartmentID == ViewBag.dpID)
+    }), "Choose...")
+    @Html.ValidationMessageFor(model => model.DepartmentID)
+</td></tr>
+
+
+
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.ProjectName)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.ProjectName)
+    @Html.ValidationMessageFor(model => model.ProjectName)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+    @Html.LabelFor(model => model.ProjectCode)
+</td>
+<td class="width70">
+    @Html.EditorFor(model => model.ProjectCode)
+    @Html.ValidationMessageFor(model => model.ProjectCode)
+</td>
+</tr>
+
+
+</tbody>
+</table>
+ 

@@ -1,0 +1,80 @@
+@model WareHouseMVC.Models.TransmittalOUTAuditTrail
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="pagetitle">
+    <h1>
+      Details </h1>
+    <span>Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">TransmittalOUTNo</td>
+        <td>
+       @Model.TransmittalOUTNo
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">CreateDate</td>
+        <td>
+       @String.Format("{0:g}", Model.CreateDate)
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">CreateTime</td>
+        <td>
+       @Model.CreateTime
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">CreatorIP</td>
+        <td>
+       @Model.CreatorIP
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">BoxOutBy</td>
+        <td>
+       @Model.BoxOutBy
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">BoxOutDate</td>
+        <td>
+       @String.Format("{0:g}", Model.BoxOutDate)
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">BoxOutTime</td>
+        <td>
+       @Model.BoxOutTime
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">BoxOutIP</td>
+        <td>
+       @Model.BoxOutIP
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.TransmittalOUTAuditTrailId }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

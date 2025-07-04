@@ -1,0 +1,45 @@
+﻿@model WareHouseMVC.Models.WareHousePartialViewModel
+@{
+    Layout = null;
+   
+
+    
+    <script type="text/javascript">
+        jQuery(function ($) {
+            $("select#ID").change(function (evt) {
+
+                if ($("select#ID").val() != "-1") {
+
+                    $.ajax({
+                        url:"@Url.Content("~/Home/ChangeWareHouse")",
+                        type: 'POST',
+                        data: { ID: $("select#ID").val() },
+                        success: function (response) {
+                            location.reload();
+                        },
+                        error: function (xhr) {
+                            alert("Something went wrong, please try again");
+                        }
+                    });
+                }
+            });
+
+
+        });
+
+</script>
+    
+
+     <span class="formwrapper">
+     @Html.DropDownListFor(model => model.ID, ((IEnumerable<WareHouseMVC.Models.WareHousePartialViewModel>)ViewBag.PossibleWarehouses).Select(option => new SelectListItem
+{
+    Text = Html.DisplayTextFor(_ => option.WarehouseName).ToString(),
+    Value = option.ID.ToString(),
+    Selected = (Model != null) && (option.ID == Model.ID) || (Model == null) && (option.ID == ViewBag.Wid)
+}), "Choose...", new { @data_placeholder = "Choose a Country...", @style = "width: 221px", @class = "chzn-select", @tabindex = "2" })
+</span>
+                @Html.ValidationMessageFor(model => model.ID)
+    
+   
+}
+

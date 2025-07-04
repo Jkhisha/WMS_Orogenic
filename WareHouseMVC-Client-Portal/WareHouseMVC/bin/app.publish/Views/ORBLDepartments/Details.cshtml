@@ -1,0 +1,38 @@
+@model WareHouseMVC.Models.ORBLDepartment
+
+@{
+    ViewBag.Title = "ORBL Departments Details";
+}
+
+<div class="pagetitle">
+    <h1>
+     ORBL Departments Details </h1>
+    <span>ORBL Departments Details below....</span>
+</div>
+
+<fieldset>
+  <table class="table table-bordered table-invoice">
+    <tbody>
+
+  <tr>
+        <td class="width30">ORBLDepartmentName</td>
+        <td>
+       @Model.ORBLDepartmentName
+        </td>
+        </tr> 
+
+  <tr>
+        <td class="width30">ORBLDepartmentCode</td>
+        <td>
+       @Model.ORBLDepartmentCode
+        </td>
+        </tr> 
+    </tbody>
+  </table>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.ORBLDepartmentID }, new { @class = "btn btn-primary" }) |
+        @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</p>
+
+

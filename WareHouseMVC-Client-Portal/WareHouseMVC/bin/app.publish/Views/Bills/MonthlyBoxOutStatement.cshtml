@@ -1,0 +1,103 @@
+﻿@model WareHouseMVC.Models.BoxStatementViewModel
+@{
+    ViewBag.Title = "MonthlyBoxOutStatement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>
+       Monthly Box OUT Statement</h1>
+    <span>Monthly Box OUT Statement below....</span>
+</div>
+
+
+@using (Html.BeginForm("MonthlyBoxOUTStatement", "Bills", FormMethod.Post, new { target = "_blank" }))
+{
+    @Html.ValidationSummary(true)
+
+    
+    <table class="table table-bordered table-invoice">
+ <tbody>
+ <tr>
+<td class="width30">
+  Select Month
+</td>
+  <td class="width70">
+  <input type="text" id="default_widget" class="mtz-monthpicker-widgetcontainer"  name="Month"/>
+</td>
+</tr>
+
+ <tr>
+<td class="width30">
+  Select Client
+</td>
+  <td class="width70">
+       @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.ClientList).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+               Value = option.ClientID.ToString(),
+               Selected = (Model != null) && (option.ClientID == Model.ClientID) 
+           }), "Choose...")
+    @Html.ValidationMessageFor(model => model.ClientID)
+</td>
+</tr>
+
+ <tr>
+<td class="width30">
+  Enter Rate per Box
+</td>
+  <td class="width70">
+    @Html.EditorFor(model => model.Rate)
+    @Html.ValidationMessageFor(model => model.Rate)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+  Enter Base Box Nomber
+</td>
+  <td class="width70">
+    @Html.EditorFor(model => model.BaseBoxNo)
+    @Html.ValidationMessageFor(model => model.BaseBoxNo)
+</td>
+</tr>
+
+<tr>
+<td class="width30">
+  Enter Rate for Extra Box after Base Boxes
+</td>
+  <td class="width70">
+    @Html.EditorFor(model => model.ExtraRate)
+    @Html.ValidationMessageFor(model => model.ExtraRate)
+</td>
+</tr>
+
+<tr>
+                <td class="width30">
+                    Report Format
+                </td>
+                 <td>
+                 <select id="ReportType" name="ReportType">
+  
+     <option value="1" selected="selected">PDF</option>
+     <option value="2">XL Sheet</option>
+     <option value="3">MS Word Doc</option>
+        
+    </select>
+                </td>
+            </tr>
+
+ <tr>
+                <td  class="width30">
+                
+                </td>
+                <td  class="width70">
+                <input type="submit" value="Print Report" class="btn btn-primary" />
+                </td>
+            </tr>
+
+</tbody>
+</table>
+    
+    
+}

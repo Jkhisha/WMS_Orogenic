@@ -1,0 +1,137 @@
+﻿@model WareHouseMVC.Models.User
+@{
+    ViewBag.Title = "Set WareHouse";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pagetitle">
+    <h1>
+        Set WareHouse</h1>
+    <span>Set WareHouse below....</span>
+</div>
+
+
+
+@{ 
+
+    if (ViewBag.Flag == 0)
+   {
+<div class="alert alert-error">
+                	<button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>Warning !</strong> You have not selected Any User or Any WareHouse.
+                </div>
+   }
+    if (ViewBag.Flag == 1)
+    {
+        <div class="alert alert-success">
+                              <button type="button" class="close" data-dismiss="alert">×</button>
+                              <strong>Well done!</strong> You successfully Assign user to Warehouse.
+                            </div>
+        
+    }
+   }
+
+
+
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    
+    
+    <table class="table table-bordered table-invoice">
+        <tbody>
+
+        <tr>
+        <td  class="width30">
+                User
+                </td>
+        <td class="width70">
+                @Html.DropDownListFor(model => model.UserId, ((IEnumerable<WareHouseMVC.Models.User>)ViewBag.PossibleUsers).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.Username).ToString(),
+               Value = option.UserId.ToString(),
+               Selected = (Model != null) && (option.UserId == Model.UserId)
+           }), "Choose...")
+                @Html.ValidationMessageFor(model => model.UserId)
+            </td>
+        </tr>
+
+
+        <tr>
+        <td  class="width30">
+                WareHouse Name
+                </td>
+        <td class="width70">
+                @Html.DropDownListFor(model => model.WarehouseID, ((IEnumerable<WareHouseMVC.Models.Warehouse>)ViewBag.PossibleWarehouses).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.WarehouseName).ToString(),
+               Value = option.WarehouseID.ToString(),
+               Selected = (Model != null) && (option.WarehouseID == Model.WarehouseID)
+           }), "Choose...")
+                @Html.ValidationMessageFor(model => model.WarehouseID)
+            </td>
+        </tr>
+
+            <tr>
+                <td  class="width30">
+                
+                </td>
+                <td  class="width70">
+                <input type="submit" value="Set" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</div>
+
+
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+ <table class="table table-bordered" id="dyntable">
+  <thead>
+    <tr>
+        <th></th>
+        <th>
+           User Name
+        </th>
+        <th>
+            Role
+        </th>
+        <th>
+            Assigned WareHouse
+        </th>
+    </tr>
+	 </thead>
+	  <tbody>
+@foreach (var item in @ViewBag.PossibleUsers)
+{
+    <tr>
+        <td>
+        </td>
+        <td>
+			@item.Username
+        </td>
+        <td>
+		  @foreach (var role in item.Roles)
+    {
+                      <strong>  @role.RoleName.ToString()</strong>
+                                                 
+                                                 <br />
+    }
+
+        </td>
+        <td>
+			@item.WarehouseName
+        </td>
+       
+    </tr>
+}
+ </tbody>
+
+</table>
+
+</div>

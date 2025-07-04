@@ -1,0 +1,104 @@
+﻿@model WareHouseMVC.Models.BoxSummaryViewModel
+@{
+    ViewBag.Title = "Box Summary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("select#ClientID").change(function (evt) {
+
+            if ($("select#ClientID").val() != "-1") {
+
+                $.ajax({
+                    url:"@Url.Content("~/zones/GetDepts")",
+                    type: 'POST',
+                    data: { ClientID: $("select#ClientID").val() },
+                    success: function (response) {
+                        $("select#DepartmentID").replaceWith(response)
+                    },
+                    error: function (xhr) {
+                        alert("Something went wrong, please try again");
+                    }
+                });
+            }
+        });
+
+
+    });
+
+</script>
+
+
+
+<div class="pagetitle">
+    <h1>
+        Box Summary</h1>
+    <span>Box Summary Report....</span>
+</div>
+
+
+
+@using (Html.BeginForm("BoxSummary", "BoxLocations", FormMethod.Post, ""))
+{
+    @Html.ValidationSummary(true)
+
+    
+    <table class="table table-bordered table-invoice">
+        <tbody>
+            <tr>
+                <td class="width30">
+                    Select Client
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.ClientID, ((IEnumerable<WareHouseMVC.Models.Client>)ViewBag.ClientList).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.ClientName).ToString(),
+               Value = option.ClientID.ToString(),
+               Selected = (Model != null) && (option.ClientID == Model.ClientID)
+           }), "Choose...")
+                    @Html.ValidationMessageFor(model => model.ClientID)
+                </td>
+            </tr>
+            <tr>
+                <td class="width30">
+                    Select Department
+                </td>
+                <td class="width70">
+                    @Html.DropDownListFor(model => model.DepartmentID, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+           {
+               Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+               Value = option.DepartmentID.ToString(),
+               Selected = (Model != null) && (option.DepartmentID == Model.DepartmentID)
+           }), "Choose...")
+                    @Html.ValidationMessageFor(model => model.DepartmentID)
+                </td>
+            </tr>
+         
+         <tr>
+                <td class="width30">
+                    Report Format
+                </td>
+                 <td>
+                 <select id="ReportType" name="ReportType">
+  
+     <option value="1" selected="selected">PDF</option>
+     <option value="2">XL</option>
+        
+    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="width30">
+                </td>
+                <td class="width70">
+                    <input type="submit" value="Print" class="btn btn-primary" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    
+}

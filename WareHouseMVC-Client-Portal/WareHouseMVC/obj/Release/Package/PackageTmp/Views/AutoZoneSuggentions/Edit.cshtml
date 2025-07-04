@@ -1,0 +1,48 @@
+@model WareHouseMVC.Models.AutoZoneSuggention
+
+@{
+    ViewBag.Title = "Edit Zone Suggestion";
+}
+
+
+
+
+
+<div class="pagetitle">
+    <h1>
+       Edit Zone Suggestion</h1>
+    <span>Editone Suggestion below....</span>
+</div>
+
+@using (Html.BeginForm()) {
+    @Html.ValidationSummary(true)
+    <fieldset>
+      
+
+
+        @Html.HiddenFor(model => model.AutoZoneSuggentionId)
+		@Html.Partial("_CreateOrEdit", Model)
+
+         <table class="table table-bordered table-invoice">
+    <tbody>
+        <tr>
+        <td class="width30"></td>
+        <td>
+         <input type="submit" value="Save" class="btn btn-primary" />
+        </td>
+        </tr>
+        </tbody>
+        </table>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</div>
+
+
+
+
+
+
+

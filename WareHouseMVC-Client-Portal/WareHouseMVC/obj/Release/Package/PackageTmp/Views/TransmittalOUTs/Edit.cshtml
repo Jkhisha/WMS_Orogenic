@@ -1,0 +1,60 @@
+@model WareHouseMVC.Models.TransmittalOUT
+
+@{
+    ViewBag.Title = "Edit Transmittal OUT";
+}
+
+<div class="pagetitle">
+    <h1>
+        Edit Transmittal OUT
+    </h1>
+    <span>Edit Transmittal OUT below....</span>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+    <fieldset>
+
+
+
+        @Html.HiddenFor(model => model.TransmittalOUTId)
+        @Html.Partial("_CreateOrEdit", Model)
+
+        <table class="table table-bordered table-invoice">
+            <tbody>
+                <tr>
+                    <td class="width30"></td>
+                    <td class="width5">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                    </td>
+
+                    <td>
+                        @*@{
+                            if (ViewBag.id == null)
+                            {
+                                long id = Convert.ToInt64(ViewBag.id);
+
+
+                                @Html.ActionLink("Add HandOverBy", "HandOverByForTrOUT", "HandOverBies", new { trId = id }, new { disabled = "disabled", @class = "btn btn-warning" })
+                            }
+
+                            else
+                            {
+                                long id = Convert.ToInt64(ViewBag.id);
+                                @Html.ActionLink("Add HandOverBy", "HandOverByForTrOUT", "HandOverBies", new { trId = id }, new { @class = "btn btn-warning" })
+
+                            }
+                        }*@
+                    </td>
+
+
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", "", new { @class = "btn" })
+</div>

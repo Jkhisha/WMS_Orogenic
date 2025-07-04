@@ -1,0 +1,26 @@
+@model WareHouseMVC.Models.Country
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<fieldset>
+    <legend>Country</legend>
+
+    <div class="display-label">CountryName</div>
+    <div class="display-field">@Model.CountryName</div>
+
+    <div class="display-label">Status</div>
+    <div class="display-field">@Model.Status</div>
+
+    <div class="display-label">IsRemoved</div>
+    <div class="display-field">@Model.IsRemoved</div>
+</fieldset>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id=Model.CountryID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+

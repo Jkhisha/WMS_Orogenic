@@ -1,0 +1,51 @@
+@model IEnumerable<WareHouseMVC.Models.Warehouse>
+@{
+    ViewBag.Title = "WareHouse";
+}
+<div class="pagetitle">
+    <h1>
+        User List</h1>
+    <span>List of Users....</span>
+</div>
+<p>
+    @Html.ActionLink("Create New", "Create", "", new { @class = "btn btn-primary" })
+</p>
+<br />
+<div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+    <table class="table table-bordered" id="dyntable">
+        <thead>
+            <tr>
+                <th>
+                </th>
+                <th>
+                    WarehouseName
+                </th>
+                <th>
+                    WarehouseCode
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(" ", "Edit", new { id = item.WarehouseID }, new { @class = "icon-edit" })
+                        |
+                        @Html.ActionLink(" ", "Details", new { id = item.WarehouseID }, new { @class = "icon-list-alt" })
+                        |
+                        @Html.ActionLink(" ", "Delete", new { id = item.WarehouseID }, new { @class = "icon-trash" })
+                        |
+                        @Html.ActionLink("Add Floor", "CreateWithWH", "Floors", new { wHid = item.WarehouseID }, "")
+                    </td>
+                    <td>
+                        @item.WarehouseName
+                    </td>
+                    <td>
+                        @item.WarehouseCode
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

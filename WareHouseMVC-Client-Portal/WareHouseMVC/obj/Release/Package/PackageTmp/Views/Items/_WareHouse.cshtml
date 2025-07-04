@@ -1,0 +1,17 @@
+﻿@model WareHouseMVC.Models.Warehouse
+@{
+    Layout = null;
+  
+    
+    
+    <td class="width70">
+                        @Html.DropDownListFor(model => model.WarehouseID, ((IEnumerable<WareHouseMVC.Models.Warehouse>)ViewBag.PossibleWarehouses).Select(option => new SelectListItem
+                   {
+                       Text = Html.DisplayTextFor(_ => option.WarehouseName).ToString(),
+                       Value = option.WarehouseID.ToString(),
+                       Selected = (Model != null) && (option.WarehouseID == Model.WarehouseID)
+                   }), "Choose...", new { @data_placeholder = "Choose a Country...", @style = "width: 221px", @class = "chzn-select", @tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.WarehouseID)
+                    </td>
+    
+}

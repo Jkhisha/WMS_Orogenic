@@ -1,0 +1,137 @@
+@model WareHouseMVC.Models.DesBoxViewModel
+                      
+    @{
+        ViewBag.Title = "Destruction Log";
+    }
+
+                      
+
+
+    <div class="pagetitle">
+        <h1>
+          Upcoming Destruction 
+        </h1>
+        <span>List of Upcoming Destructions....</span>
+    </div>
+    
+
+
+                      @using (Html.BeginForm("UpcomingList", "BoxDestructions", FormMethod.Get, ""))
+                      {
+                          @Html.ValidationSummary(true)
+
+
+                          <table class="table table-bordered table-invoice">
+                              <tbody>
+                                  <tr>
+                                      <td class="width30">
+                                          Select Client
+                                      </td>
+                                      <td class="width70">
+                                         <h3>@ViewBag.ClientName</h3>
+                                      </td>
+                                  </tr>
+                                  <tr>
+                                      <td class="width30">
+                                          Select Department
+                                      </td>
+                                      <td class="width70">
+                                          <span class="formwrapper" id="cznDept">
+                                              @Html.DropDownListFor(model => model.DepartmentID, ((IEnumerable<WareHouseMVC.Models.Department>)ViewBag.PossibleDepartments).Select(option => new SelectListItem
+               {
+                   Text = Html.DisplayTextFor(_ => option.DepartmentName).ToString(),
+                   Value = option.DepartmentID.ToString(),
+                   Selected = (Model != null) && (option.DepartmentID == Model.DepartmentID)
+               }), "Choose...", new { @data_placeholder = "Choose a Country...", @style = "width: 221px", @class = "chzn-select", @tabindex = "2" })
+                                          </span>
+                                          @Html.ValidationMessageFor(model => model.DepartmentID)
+                                      </td>
+                                  </tr>
+                                  
+                                  
+                                  
+                                  
+                                  <tr>
+                                      <td class="width30"></td>
+                                      <td class="width70">
+                                          <input type="submit" value="Search" class="btn btn-primary" />
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+
+
+                      }
+
+
+
+    <div id="dyntable_wrapper" class="dataTables_wrapper" role="grid">
+        <table class="table table-bordered" id="dyntable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>
+                        Client Name
+                    </th>
+                    <th>
+                        Department Name
+                    </th>
+                    <th>
+                        Box Name
+                    </th>
+
+                    <th>
+                        Box Number
+                    </th>
+                    <th>
+                        Year
+                    </th>
+                    <th>
+                        Destruction Period
+                    </th>
+                    <th>
+                       Destroy
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.SearchResults)
+                {
+                    <tr>
+                        <td>
+
+                           
+                        </td>
+                        <td>
+                            @item.Client.ClientName
+                        </td>
+                        <td>
+                            @item.Department.DepartmentName
+                        </td>
+                        <td>
+                            @item.ItemName
+                        </td>
+                        <td>
+                            @item.BoxNo
+                        </td>
+                        <td>
+                           
+
+                            @item.Year
+
+                        </td>
+                        <td>
+                           
+
+                            @item.DestructionPeriod
+                        </td>
+                        <td>
+                          
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+    </div>
