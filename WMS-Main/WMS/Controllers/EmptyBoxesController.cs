@@ -191,53 +191,51 @@ namespace WareHouseMVC.Controllers
         {
             try
             {
+                var clientBarcodeMap = db.ClientBarCodeMaps.FirstOrDefault(b => b.OrogenicBarCodeText == originalBarcode);
+                if (clientBarcodeMap != null && !string.IsNullOrEmpty(clientBarcodeMap.ClientBarCodeText))
+                {
+                    return Json(new { success = true, barcode = clientBarcodeMap.ClientBarCodeText }, JsonRequestBehavior.AllowGet);
+                }
                 string jsonPath = Server.MapPath("~/clientbarcode.json");
                 string jsonContent = System.IO.File.ReadAllText(jsonPath);
                 JObject jsonObject = JObject.Parse(jsonContent);
                 string code = "";
+
                 var hsbc1Entry = jsonObject["clientBarCode"]
                     .Children()
                     .FirstOrDefault(x => x["encoding"].ToString() == "HSBC1");
+
                 if (hsbc1Entry != null)
                 {
                     string lastBarcode = hsbc1Entry["lastbarcode"]?.ToString();
                     if (!string.IsNullOrEmpty(lastBarcode))
                     {
-                        string prefix = lastBarcode.Substring(0, 3); 
-                        int number = int.Parse(lastBarcode.Substring(3)); 
+                        string prefix = lastBarcode.Substring(0, 3);
+                        int number = int.Parse(lastBarcode.Substring(3));
                         number++; // Increment number
                         string newBarcode = $"{prefix}{number:D4}";
-                        System.Diagnostics.Debug.WriteLine($"Last barcode for HSBC1: {newBarcode}");
-                        var clientBarcodeMap = db.ClientBarCodeMaps.FirstOrDefault(b => b.OrogenicBarCodeText == originalBarcode);
-                        if (clientBarcodeMap != null)
+
+                        System.Diagnostics.Debug.WriteLine($"Generated new barcode for HSBC1: {newBarcode}");
+
+                        // Create new database record
+                        clientBarcodeMap = new ClientBarCodeMap
                         {
-                            if (string.IsNullOrEmpty(clientBarcodeMap.ClientBarCodeText))
-                            {
-                                clientBarcodeMap.ClientBarCodeText = newBarcode;
-                            }
-                            else
-                            {
-                                newBarcode = clientBarcodeMap.ClientBarCodeText; 
-                            }
-                        }
-                        else
-                        {
-                            clientBarcodeMap = new ClientBarCodeMap
-                            {
-                                OrogenicBarCodeText = originalBarcode,
-                                ClientBarCodeText = newBarcode,
-                                Encoding = "HSBC1" 
-                            };
-                            db.ClientBarCodeMaps.Add(clientBarcodeMap);
-                        }
+                            OrogenicBarCodeText = originalBarcode,
+                            ClientBarCodeText = newBarcode,
+                            Encoding = "HSBC1"
+                        };
+                        db.ClientBarCodeMaps.Add(clientBarcodeMap);
                         db.SaveChanges();
+
+                        // Update JSON file with new barcode
                         hsbc1Entry["lastbarcode"] = newBarcode;
                         System.IO.File.WriteAllText(jsonPath, jsonObject.ToString());
+
                         code = newBarcode;
                     }
-                    System.Diagnostics.Debug.WriteLine($"Last barcode for HSBC1: {code}");
                 }
-                return Json(new { success = true, barcode = code}, JsonRequestBehavior.AllowGet);
+
+                return Json(new { success = true, barcode = code }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

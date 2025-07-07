@@ -1,0 +1,31 @@
+0. modify connectionstring in web.debug for both files. publish.
+1. backupdb restore db change location of files db and log
+2. modify AssignBoxes table
+
+ALTER TABLE AssignBoxes 
+ADD ClientBarCode VARCHAR(MAX) NULL;
+
+3. create new table
+
+CREATE TABLE ClientBarCodeMaps (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Encoding NVARCHAR(255) NULL,
+    OrogenicBarCodeText NVARCHAR(255) NULL,
+    ClientBarCodeText NVARCHAR(255) NULL
+);
+
+4. give permission to json file client barcode maps
+
+Go to the folder where the JSON file is stored (e.g., D:\YourFolder\)
+Right-click the folder > Properties > Security tab > Edit
+Click Add
+Enter the app pool identity name (e.g., IIS AppPool\YourAppPoolName)
+Click Check Names (it should underline if valid)
+Grant at least Read and Read & execute permissions
+Click OK
+
+5. point paths in iismanager
+
+ngrok client link
+ https://3e23-119-148-19-130.ngrok-free.app
+https://48cb-119-148-19-130.ngrok-free.app 

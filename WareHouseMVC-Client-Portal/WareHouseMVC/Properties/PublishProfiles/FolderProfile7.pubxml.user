@@ -3,6 +3,8 @@
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\joytu\Documents\ASP .net projects\WMS Repo 030725_1\WareHouseMVC-Client-Portal\WareHouseMVC\bin\app.publish\</_PublishTargetUrl>
+    <History>True|2025-07-07T06:56:57.7576514Z||;</History>
+    <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/Content/BoxinfoXL/DataExport_20240919.xlsx">
@@ -1863,28 +1865,28 @@
       <publishTime>06/26/2025 20:58:49</publishTime>
     </File>
     <File Include="bin/Content/Images/UploadedDocument/XLUpload/638870692069908851AddBoxBulk %283%29.xlsx">
-      <publishTime>07/02/2025 16:06:46</publishTime>
+      <publishTime>02/07/2025 16:06:46</publishTime>
     </File>
     <File Include="bin/Content/Images/UploadedDocument/XLUpload/638870694211497018AddBoxBulk %283%29.xlsx">
-      <publishTime>07/02/2025 16:10:21</publishTime>
+      <publishTime>02/07/2025 16:10:21</publishTime>
     </File>
     <File Include="bin/Content/Images/UploadedDocument/XLUpload/638870695267485602AddBoxBulk %283%29.xlsx">
-      <publishTime>07/02/2025 16:12:06</publishTime>
+      <publishTime>02/07/2025 16:12:06</publishTime>
     </File>
     <File Include="bin/Content/Images/UploadedDocument/XLUpload/638870704435099234AddBoxBulk %283%29.xlsx">
-      <publishTime>07/02/2025 16:27:23</publishTime>
+      <publishTime>02/07/2025 16:27:23</publishTime>
     </File>
     <File Include="bin/Content/Images/UploadedDocument/XLUpload/638870740995618987AddBoxBulk %284%29.xlsx">
-      <publishTime>07/02/2025 17:28:19</publishTime>
+      <publishTime>02/07/2025 17:28:19</publishTime>
     </File>
     <File Include="bin/Content/Images/UploadedDocument/XLUpload/638870784423680108AddBoxBulk %285%29.xlsx">
-      <publishTime>07/02/2025 18:40:42</publishTime>
+      <publishTime>02/07/2025 18:40:42</publishTime>
     </File>
     <File Include="bin/Content/Images/UploadedDocument/XLUpload/638871406784118987AddBoxBulk %281%29.xlsx">
-      <publishTime>07/03/2025 11:57:58</publishTime>
+      <publishTime>03/07/2025 11:57:58</publishTime>
     </File>
     <File Include="bin/Content/Images/UploadedDocument/XLUpload/638871420009171308AddBoxBulk %281%29.xlsx">
-      <publishTime>07/03/2025 12:20:00</publishTime>
+      <publishTime>03/07/2025 12:20:00</publishTime>
     </File>
     <File Include="bin/Content/ItemDescription/UploadedDocument/XLUpload/638621880823358541_PreviousBarcodeXL.xlsx">
       <publishTime>04/17/2025 17:52:19</publishTime>
@@ -4029,10 +4031,10 @@
       <publishTime>04/17/2025 17:52:19</publishTime>
     </File>
     <File Include="bin/WareHouseMVC.dll">
-      <publishTime>07/04/2025 22:15:07</publishTime>
+      <publishTime>04/07/2025 22:15:07</publishTime>
     </File>
     <File Include="bin/WareHouseMVC.pdb">
-      <publishTime>07/04/2025 22:15:07</publishTime>
+      <publishTime>04/07/2025 22:15:07</publishTime>
     </File>
     <File Include="Content/BoxinfoXL/DataExport_20240919.xlsx">
       <publishTime>04/17/2025 17:52:19</publishTime>
@@ -5892,28 +5894,28 @@
       <publishTime>06/26/2025 20:58:49</publishTime>
     </File>
     <File Include="Content/Images/UploadedDocument/XLUpload/638870692069908851AddBoxBulk %283%29.xlsx">
-      <publishTime>07/02/2025 16:06:46</publishTime>
+      <publishTime>02/07/2025 16:06:46</publishTime>
     </File>
     <File Include="Content/Images/UploadedDocument/XLUpload/638870694211497018AddBoxBulk %283%29.xlsx">
-      <publishTime>07/02/2025 16:10:21</publishTime>
+      <publishTime>02/07/2025 16:10:21</publishTime>
     </File>
     <File Include="Content/Images/UploadedDocument/XLUpload/638870695267485602AddBoxBulk %283%29.xlsx">
-      <publishTime>07/02/2025 16:12:06</publishTime>
+      <publishTime>02/07/2025 16:12:06</publishTime>
     </File>
     <File Include="Content/Images/UploadedDocument/XLUpload/638870704435099234AddBoxBulk %283%29.xlsx">
-      <publishTime>07/02/2025 16:27:23</publishTime>
+      <publishTime>02/07/2025 16:27:23</publishTime>
     </File>
     <File Include="Content/Images/UploadedDocument/XLUpload/638870740995618987AddBoxBulk %284%29.xlsx">
-      <publishTime>07/02/2025 17:28:19</publishTime>
+      <publishTime>02/07/2025 17:28:19</publishTime>
     </File>
     <File Include="Content/Images/UploadedDocument/XLUpload/638870784423680108AddBoxBulk %285%29.xlsx">
-      <publishTime>07/02/2025 18:40:42</publishTime>
+      <publishTime>02/07/2025 18:40:42</publishTime>
     </File>
     <File Include="Content/Images/UploadedDocument/XLUpload/638871406784118987AddBoxBulk %281%29.xlsx">
-      <publishTime>07/03/2025 11:57:58</publishTime>
+      <publishTime>03/07/2025 11:57:58</publishTime>
     </File>
     <File Include="Content/Images/UploadedDocument/XLUpload/638871420009171308AddBoxBulk %281%29.xlsx">
-      <publishTime>07/03/2025 12:20:00</publishTime>
+      <publishTime>03/07/2025 12:20:00</publishTime>
     </File>
     <File Include="Content/ItemDescription/UploadedDocument/XLUpload/638621880823358541_PreviousBarcodeXL.xlsx">
       <publishTime>04/17/2025 17:52:19</publishTime>
@@ -9078,7 +9080,7 @@
       <publishTime>04/17/2025 17:52:19</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/04/2025 22:15:11</publishTime>
+      <publishTime>04/07/2025 22:15:11</publishTime>
     </File>
     <File Include="XMLTest.asmx">
       <publishTime>04/17/2025 17:52:19</publishTime>
