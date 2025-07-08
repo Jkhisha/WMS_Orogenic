@@ -7,15 +7,15 @@
       "RelativeMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WMS\\WareHouseMVC.csproj|solutionrelative:wms\\web.config||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WMS\\WareHouseMVC.csproj|c:\\users\\joytu\\documents\\asp .net projects\\wms repo 030725_1\\wms-main\\wms\\clientbarcode.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WMS\\WareHouseMVC.csproj|C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WMS-Main\\wms\\clientbarcode.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WMS\\WareHouseMVC.csproj|solutionrelative:wms\\clientbarcode.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WMS\\WareHouseMVC.csproj|c:\\users\\joytu\\documents\\asp .net projects\\wms repo 030725_1\\wms-main\\wms\\controllers\\emptyboxescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WMS\\WareHouseMVC.csproj|C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WMS-Main\\wms\\controllers\\emptyboxescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WMS\\WareHouseMVC.csproj|solutionrelative:wms\\controllers\\emptyboxescontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WMS\\WareHouseMVC.csproj|c:\\users\\joytu\\documents\\asp .net projects\\wms repo 030725_1\\wms-main\\wms\\views\\emptyboxes\\clientbarcode.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "AbsoluteMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WMS\\WareHouseMVC.csproj|C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WMS-Main\\wms\\views\\emptyboxes\\clientbarcode.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{97EA0688-0392-4711-BC0E-EB1601AFA7B1}|WMS\\WareHouseMVC.csproj|solutionrelative:wms\\views\\emptyboxes\\clientbarcode.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
@@ -54,8 +54,7 @@
               "RelativeToolTip": "WMS\\clientbarcode.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-07-07T06:44:04.258Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-07T06:44:04.258Z"
             },
             {
               "$type": "Document",
@@ -67,8 +66,7 @@
               "RelativeToolTip": "WMS\\Controllers\\EmptyBoxesController.cs",
               "ViewState": "AgIAANQAAAAAAAAAAAAmwMUAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-07-07T06:01:35.784Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-07T06:01:35.784Z"
             },
             {
               "$type": "Document",
@@ -80,8 +78,7 @@
               "RelativeToolTip": "WMS\\Views\\EmptyBoxes\\ClientBarcode.cshtml",
               "ViewState": "AgIAADwAAAAAAAAAAAAAAJ4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-07T05:20:00.843Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-07-07T05:20:00.843Z"
             },
             {
               "$type": "Document",
@@ -115,7 +112,7 @@
               "RelativeDocumentMoniker": "WMS\\Web.config",
               "ToolTip": "C:\\Users\\joytu\\Documents\\ASP .net projects\\WMS Repo 030725_1\\WMS-Main\\WMS\\Web.config",
               "RelativeToolTip": "WMS\\Web.config",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAACpAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAABPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000601|",
               "WhenOpened": "2025-07-04T12:22:21.241Z",
               "EditorCaption": ""

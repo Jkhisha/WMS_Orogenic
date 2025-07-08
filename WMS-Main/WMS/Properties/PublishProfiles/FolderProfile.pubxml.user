@@ -6,7 +6,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\Users\joytu\Documents\ASP .net projects\WMS Repo 030725_1\WMS-Main\WMS\bin\app.publish\</_PublishTargetUrl>
-    <History>True|2025-07-07T06:55:44.3211389Z||;True|2025-07-04T22:16:49.8171389+06:00||;True|2025-07-04T22:16:29.8528357+06:00||;True|2025-07-04T22:16:08.9274861+06:00||;True|2025-07-04T22:10:15.6772952+06:00||;True|2025-07-04T20:33:49.7531247+06:00||;True|2025-07-04T20:10:42.9732119+06:00||;True|2025-07-04T19:35:05.1574035+06:00||;True|2025-07-04T19:17:12.6049029+06:00||;True|2025-07-04T18:26:42.7950227+06:00||;</History>
+    <History>True|2025-07-08T12:57:26.9837352Z||;True|2025-07-07T12:55:44.3211389+06:00||;True|2025-07-04T22:16:49.8171389+06:00||;True|2025-07-04T22:16:29.8528357+06:00||;True|2025-07-04T22:16:08.9274861+06:00||;True|2025-07-04T22:10:15.6772952+06:00||;True|2025-07-04T20:33:49.7531247+06:00||;True|2025-07-04T20:10:42.9732119+06:00||;True|2025-07-04T19:35:05.1574035+06:00||;True|2025-07-04T19:17:12.6049029+06:00||;True|2025-07-04T18:26:42.7950227+06:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -6461,7 +6461,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/05/2025 17:03:46</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>07/07/2025 12:55:39</publishTime>
+      <publishTime>07/08/2025 18:57:22</publishTime>
     </File>
     <File Include="XMLTest.asmx">
       <publishTime>03/05/2025 17:03:46</publishTime>
